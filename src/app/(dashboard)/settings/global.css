@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main-container {
+    @apply flex mx-auto mt-10 gap-10 flex-col lg:flex-row w-[95%] xl:w-[85%] lg:w-[90%] px-4 py-2 justify-between pb-5 sm:mx-auto;
+}
+
+.settings-left-section {
+    @apply flex flex-col w-full lg:w-1/3;
+}
+
+.settings-right-section {
+    @apply flex flex-col w-full lg:w-2/3;
+}
+
+.setting-box-shadow {
+    @apply w-full shadow-[0px_0px_8px_2px_rgba(0,0,0,0.06)];
+}
+
+.setting-horizontal-divider {
+    @apply h-px w-full bg-grayAC;
+}
+
+.setting-input-container {
+    @apply mt-[30px] pl-5 pr-5;
+}
+
+.setting-input-field {
+    @apply w-full pt-5 pl-5 pb-5 font-Mulish text-lg font-medium border border-grayAC text-fontColor;
+}
+
+.button-update {
+    @apply w-[200px] h-[50px] text-white font-semibold text-xl bg-themeColor;
+}
+
+.button-cancel {
+    @apply w-[140px] h-[50px] text-white font-semibold text-xl bg-grayAC ; 
+}
+
+.buttons-container{
+    @apply  mt-[30px] pl-5 pr-5 mb-[30px] font-Jost flex gap-7;
+}
+
+.user-name {
+    @apply pl-5 pt-6 text-2xl font-bold leading-[20px] text-left font-Jost;
+}
+
+.user-description {
+    @apply pl-5 pt-3.5 text-lg font-medium leading-[20px] text-left font-Mulish text-fontColor;
+}   
+
+.setting-icon-container {
+    @apply pl-5 pt-10 mb-[20px] flex;
+}
+
+.setting-icon-img {
+    @apply w-9 h-5 pr-2;
+}
+
+.setting-icon-text {
+    @apply text-lg font-medium leading-[20px] text-left text-themeColor font-Jost;
+}
+
+
+.setting-image-container {
+    @apply flex-shrink-0 pt-6 pr-5;
+}
+
+.setting-image-element {
+    @apply h-[80px] w-[80px] lg:w-[110px] lg:h-[110px];
+}
+
+.chat-btn-container {
+    @apply w-full h-[50px] bg-themeColor mt-[35px] flex justify-center items-center;
+}
+
+.chat-btn-text {
+    @apply text-white text-center font-Jost text-lg font-semibold leading-[20px];
+}
+
+.editprofile-header-container {
+    @apply mt-[30px] mb-[30px];
+}
+
+.editprofile-header-text {
+    @apply pl-5 font-Jost font-semibold text-2xl leading-5 text-left;
+}

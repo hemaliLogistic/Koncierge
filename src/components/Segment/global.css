@@ -1,0 +1,107 @@
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* segment.css */
+.segment-container {
+  @apply flex items-center justify-center mt-5 sm:mt-14;
+}
+
+.segment-nav {
+  @apply hidden sm:flex w-[85%] bg-white overflow-hidden border-b;
+}
+
+.segment-link {
+  @apply flex justify-center items-center w-[15%] py-4 px-1 space-x-1 text-fontColor hover:text-white hover:bg-themeColor transition duration-300;
+}
+
+.segment-icon {
+  @apply w-5 h-5;
+}
+
+.segment-link:hover .segment-icon {
+  filter: brightness(0) invert(1);
+}
+.segment-link:hover .segment-text {
+  @apply text-white;
+}
+
+.segment-text {
+  @apply block text-[16px] text-fontColor font-Jost tracking-wide text-center;
+}
+
+/* modal.css */
+.modal-overlay-div-content {
+  @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50;
+}
+
+.modal-content {
+  @apply bg-white p-6 rounded-none shadow-lg w-[70%] sm:w-[50%] lg:w-[30%] xl:w-[30%] 2xl:w-[20%];
+}
+
+.modal-body {
+  @apply font-Jost font-bold text-black33 text-[22px] w-[100%] sm:w-[80%] text-center;
+}
+
+.modal-footer-div {
+  @apply flex items-center justify-center space-x-2 sm:space-x-8 bg-white;
+}
+
+.confirm-button {
+  @apply bg-themeColor p-2 font-Jost font-normal text-[14px] text-white w-16 sm:w-24;
+}
+
+.cancel-button {
+  @apply bg-grayAC p-2 font-Jost font-normal text-[14px] text-white w-16 sm:w-24;
+}
+.modal-content-div {
+  @apply bg-white p-6 rounded-none shadow-lg  w-[70%] sm:w-[50%] lg:w-[30%] xl:w-[30%] 2xl:w-[20%];
+}
+.center-footer-div {
+  @apply flex items-center justify-center;
+}
+.menu-link {
+  @apply flex  w-[100%]  py-4 px-1 space-x-1 pl-5 text-fontColor hover:text-white  hover:bg-themeColor transition duration-300;
+}
+/* .menu-link:hover {
+  @apply text-white !important;
+} */
+.segment-menu-text {
+  @apply block text-[16px] text-fontColor hover:text-white font-Jost tracking-wide text-center;
+}
+.menu-segment-link {
+  @apply flex  w-[100%] py-4 px-1 space-x-1 text-fontColor hover:text-white hover:bg-themeColor transition duration-300;
+}
+.segement-dropdown {
+  filter: brightness(100) contrast(100%);
+  height: 24px;
+  width: 24px;
+}
+.mobile-segment-btn {
+  @apply flex w-full px-5 space-x-2 py-4 text-center bg-themeColor text-white;
+}
+.mobile-segment {
+  @apply sm:hidden w-[90%];
+}
+.mobile-dropdown-view {
+  @apply flex w-[80%] space-x-2 text-white;
+}
+.mobile-dropdown-btn {
+  @apply flex w-[20%] justify-end;
+}
+.mobile-segment-view {
+  @apply w-full bg-white shadow-lg;
+}
+.mobile-segment-text-view {
+  @apply w-[100%] justify-start pl-5;
+}
+.segment-link.active {
+  @apply bg-themeColor;
+}
+.segment-link.active .segment-icon {
+  filter: brightness(0) invert(1);
+}
+.segment-link.active .segment-text {
+  color: white;
+}

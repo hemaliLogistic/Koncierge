@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+html,
+body {
+  @apply m-0 p-0 h-full sm:overflow-hidden;
+}
+
+.property-image {
+  @apply w-full h-full object-cover rounded-t-xl sm:rounded-none;
+}
+
+.container-div {
+  @apply flex w-full h-full sm:h-[97vh] m-0 sm:m-3 xl:m-3 flex-col sm:flex-row;
+}
+
+.image-div {
+  @apply w-full sm:w-1/2 lg:w-3/5 h-[100%] relative mt-4 sm:mt-0 p-5 sm:p-0 bg-white;
+}
+.overlay {
+  @apply absolute inset-0 bg-black opacity-50 m-5 sm:m-0 rounded-t-xl sm:rounded-none;
+}
+
+.form-div {
+  @apply w-[100%] sm:w-1/2 lg:w-[50%] h-full flex flex-col  sm:p-0 mt-5 bg-white  justify-center;
+}
+
+.text-content {
+  @apply absolute bottom-0 left-0 flex flex-col justify-end items-start p-5 text-white mx-2;
+}
+.property-title {
+  @apply text-[18px] sm:text-[25px] lg:text-[25px] xl:text-[40px] font-Jost mb-0 text-titleColor sm:tracking-wider font-[700];
+}
+.property-description {
+  @apply text-[16px] sm:text-[20px] font-Mulish font-light text-titleColor  mt-1 sm:mt-0 sm:tracking-wider mb-6 sm:mb-12;
+}
+.logo-image {
+  @apply w-56 hidden sm:block;
+}
+.center-div {
+  @apply flex justify-center items-center;
+}
+.center-form-div {
+  @apply flex justify-center items-center my-auto flex-col bg-white;
+}
+.login-title {
+  @apply text-gray33 font-Jost text-[25px] sm:text-[25px] lg:text-[25px] xl:text-[35px] font-[700] tracking-wide text-center mt-0;
+}
+.login-desc {
+  @apply font-Mulish font-normal text-fontColor opacity-[80%] mb-5 text-[18px] sm:text-[22px] tracking-wide text-center;
+}
+.title-div {
+  @apply flex flex-col;
+}
+.input-login-div {
+  @apply w-full h-12 border-[1px] border-fontColor/20 shadow-xl bg-transparent outline-0 rounded-none;
+}
+.input-div-text {
+  @apply text-fontColor opacity-[60%] shadow-xl text-[16px] sm:text-[16px] font-Mulish font-extralight bg-transparent outline-0;
+}
+.input-left-icon {
+  @apply absolute inset-y-0 left-0 flex items-center pl-3;
+}
+.input-right-icon {
+  @apply absolute inset-y-0 right-0 flex items-center pr-3;
+}
+.inside-form {
+  @apply mt-7 relative w-[80%] sm:w-[80%] lg:w-[70%];
+}
+.forgot-text {
+  @apply flex w-[90%] sm:w-[85%] justify-end text-[16px] sm:text-[18px]  text-fontColor opacity-[60%] font-Mulish font-extralight mt-5 sm:mt-6 cursor-pointer;
+}
+.save-btn {
+  @apply bg-themeColor text-white font-Mulish font-normal text-[16px] sm:text-[18px]  outline-0 w-[50%] sm:w-[30%] h-12 mt-20 sm:mt-10;
+}
+.register-text {
+  @apply text-[16px] sm:text-[18px] text-gray33  font-Mulish font-extralight mt-[10px] opacity-[80%];
+}
+.bottom-div {
+  @apply mt-5  sm:mt-0 bottom-1 lg:bottom-5 sm:fixed;
+}
+.register-btn {
+  @apply text-black font-Mulish font-normal text-[16px] sm:text-[18px]  pl-3;
+}
+.logo-div-section {
+  @apply w-40 flex sm:hidden justify-center mx-auto mt-5 self-center;
+}
+/* Custom styles for the slider dots */
+/* Ensure these styles are applied globally */
+
+.slider-image-div {
+  @apply w-full h-[30%] sm:h-[97vh] object-cover rounded-t-xl sm:rounded-none;
+}
+.slider-overlay-div {
+  @apply absolute inset-0 bg-black opacity-20 rounded-t-xl sm:rounded-none;
+}
+.slider-text-div {
+  @apply absolute bottom-12 left-4 text-white font-Jost text-[20px] sm:text-[25px] lg:text-[25px] xl:text-[40px] font-[700];
+}
+.bottom-start-div {
+  @apply mt-5 sm:mt-0 bottom-10 lg:bottom-5 sm:fixed flex justify-center items-center self-center mb-5;
+}
+.provider-div {
+  @apply mt-0 sm:mt-0 flex flex-col w-full;
+}
+.column-div {
+  @apply justify-center items-center flex flex-col;
+}

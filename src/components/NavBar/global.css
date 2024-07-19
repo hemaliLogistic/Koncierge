@@ -1,0 +1,95 @@
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles */
+.navbar {
+  @apply bg-white w-[100%] flex justify-center items-center mt-5;
+}
+
+.nav-container {
+  @apply w-[95%] lg:w-[85%]  px-4 py-2 flex justify-between sm:items-center pb-5 sm:mx-auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-logo {
+  @apply flex items-center sm:w-[10%] md:w-[20%];
+}
+
+.nav-links {
+  @apply hidden sm:space-x-5 lg:space-x-10  xl:space-x-16 md:flex sm:w-[60%] lg:w-[60%] xl:w-[90%] 2xl:w-[90%] sm:justify-center lg:justify-end lg:mr-1 xl:mr-3;
+}
+
+.nav-link {
+  @apply text-fontColor hover:text-themeColor font-Jost text-[16px] font-[500];
+}
+
+.nav-right {
+  @apply hidden sm:flex justify-end items-center  space-x-2 lg:space-x-4 w-[50%] sm:w-[25%] lg:w-[20%] xl:w-[18%] 2xl:w-[15%] bg-white;
+}
+
+.nav-language-btn {
+  @apply bg-green-700 text-white sm:h-8 sm:w-24 h-5 w-20 font-Jost text-[14px] font-[500];
+}
+
+.nav-avatar {
+  @apply flex items-center space-x-2;
+}
+
+.nav-notification {
+  @apply flex items-center justify-center;
+}
+
+.mobile-menu-btn {
+  @apply md:hidden text-gray-700 hover:text-green-700;
+}
+
+.mobile-menu {
+  @apply flex flex-col space-y-2 md:hidden;
+}
+
+.mobile-nav-link {
+  @apply text-gray-700 hover:text-green-700;
+}
+
+.full-width {
+  @apply flex w-[100%];
+}
+.btn-text-width {
+  @apply w-[70%];
+}
+.btn-icon-width {
+  @apply w-[30%];
+}
+.drop-down-icon {
+  @apply h-5 w-5;
+}
+.dropdown-box {
+  @apply absolute top-[100%] mt-0 bg-white rounded-md shadow-lg w-24;
+}
+.dropdown-li {
+  @apply font-Jost text-[14px] font-[400];
+}
+.nav-img-size {
+  @apply w-28 h-8 sm:w-32 sm:h-10 lg:w-60 lg:h-16;
+}
+
+/* Side Menu */
+
+.nav-menu-right {
+  @apply flex sm:hidden justify-center items-center w-[10%] rounded-md bg-themeColor;
+}
+
+.nav-menu-icon {
+  @apply w-5 h-4;
+}
+.mobile-menu-item {
+  @apply block px-4 py-2 hover:bg-themeColor hover:text-white font-Jost text-[20px];
+}
+.dropdown-menu-box {
+  @apply absolute top-[100%] mt-0 bg-white rounded-md shadow-lg w-24;
+}
+.nav-menu-language-btn {
+  @apply bg-green-700 text-white sm:h-8 sm:w-24 h-5 w-24 font-Jost text-[14px] font-[500];
+}

@@ -1,0 +1,576 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+} */
+
+.logo-div {
+  @apply absolute top-8 left-12 text-[20px] logotext text-[#95ACB9] font-semibold sm:top-20 sm:left-28 sm:text-[40px];
+}
+.text-question {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #5a5a5a;
+}
+
+.select-main {
+  @apply pt-[3.75rem] pb-[3.75rem] flex flex-col  space-y-5 space-x-0;
+}
+
+.select-div {
+  @apply w-[18rem] h-14 md:h-20 bg-transparent border border-[#054141] rounded-lg text-select pl-[30px] pr-6 py-0 md:py-[21px] text-input selectimage  appearance-none;
+}
+
+.profile-question-main {
+  @apply flex relative;
+  display: flex;
+  flex-direction: column;
+}
+.page-div {
+  @apply justify-between flex;
+}
+.header-div {
+  @apply justify-start relative;
+}
+.get-started-bar {
+  @apply mt-5  justify-center;
+}
+.started-div {
+  @apply md:text-left md:text-[59px];
+}
+.toggle-button-div {
+  @apply justify-center flex mr-4 mt-4 bg-[#64FFDA] rounded-lg xl:mr-24 xl:mt-20 w-[4.37rem] h-[4.37rem];
+}
+.profile-question-text-div {
+  @apply pt-[2.25rem] max-w-[63.44rem] mx-auto  sm:pl-0 xl:px-0 md:mx-0 min-[920px]:pr-0;
+  max-width: 920px;
+}
+.button-div {
+  @apply px-5 md:px-0 max-md:mx-auto;
+}
+.button {
+  @apply lg:w-[18.75rem] w-full rounded-lg text-step h-20 bg-[#64FFDA] shadow-lg shadow-gray-400;
+}
+
+.logotext {
+  font-family: "Roboto";
+}
+
+.text-started {
+  font-family: var(--font-rubik);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 35.55px;
+  letter-spacing: 0em;
+  color: #054141;
+}
+
+.text-input {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #5a5a5a;
+}
+
+.text-hours {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 50px;
+  letter-spacing: 0.0025em;
+  text-align: left;
+  color: #95acb9;
+}
+
+.text-select {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #95acb9;
+}
+
+.text-div {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.container {
+  max-width: 1760px;
+  margin: auto;
+  width: 100%;
+}
+
+.selectimage {
+  background-image: url("/images/down-drop-arrow.svg"); /* Specify the path to your arrow icon */
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+.text-step {
+  font-family: var(--font-rubik);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #054141;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 1780px) {
+  .profile-question-main {
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+  }
+}
+
+@media screen and (min-width: 780px) {
+  .select-div {
+    width: 25rem;
+  }
+  .grid-div {
+    @apply grid-cols-2;
+  }
+  .select-main {
+    @apply space-x-5 space-y-0;
+    flex-direction: row;
+  }
+  .text-question {
+    font-size: 30px;
+    line-height: 50px;
+  }
+  .text-started {
+    font-size: 44px;
+    line-height: 59px;
+  }
+  .text-input {
+    font-size: 30px;
+  }
+}
+.sidebar {
+  position: fixed;
+  width: 300px;
+  overflow-y: scroll;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.steps {
+  height: 116px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #95acb9;
+  @apply text-steps;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(149, 172, 185, 0.5); /* 50% opacity */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #95acb9;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #95acb9;
+}
+
+.text-steps {
+  font-family: var(--font-inter);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #767777;
+}
+
+.right-div-login {
+  border-radius: 10px;
+}
+.text-welcome {
+  font-family: var(--font-rubik);
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 59.25px;
+  letter-spacing: 0em;
+  color: #054141;
+}
+
+.sign-in-title {
+  font-family: var(--font-inter);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: 0em;
+  color: #054141;
+}
+
+.input-tag {
+  @apply h-full w-full border-b border-gray-950	 bg-transparent pb-7 outline-0;
+}
+
+.input-text {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.text-login-button {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  color: #ffffff;
+}
+
+.text-forget-password {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.text-create-account-link {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.text-google-login {
+  font-family: var(--font-inter);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+}
+@media screen and (max-width: 1024px) {
+  .input-text {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .text-welcome {
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .sign-in-title {
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: 0em;
+  }
+  .text-forget-password {
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .text-create-account-link {
+    font-size: 16px;
+    line-height: 30px;
+  }
+  .text-dropable-que4 {
+    font-size: 18px !important;
+    line-height: 22px !important;
+  }
+
+  .text-dropable-que5 {
+    font-size: 24px !important;
+    line-height: 29px !important;
+  }
+}
+
+.text-dropable-que4 {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #95acb9;
+}
+
+.text-dropable-que5 {
+  font-family: var(--font-inter);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 34px;
+  letter-spacing: 0em;
+}
+
+/* Question 1 */
+
+.input-main {
+  @apply pt-[3.75rem] flex flex-col  space-y-5 space-x-0;
+}
+
+.input-div {
+  @apply sm:w-4/5 w-full h-14 md:h-20 bg-transparent border border-[#054141] rounded-lg text-div pl-[30px] pr-6  py-0 md:py-[21px] text-input max-sm:text-sm;
+}
+
+.input-div-que7 {
+  @apply sm:w-full w-full h-14 md:h-20 bg-transparent border border-[#054141] rounded-lg text-select pl-[30px] pr-6  py-0 md:py-[21px] text-input max-sm:text-sm;
+}
+
+.camera-btn {
+  @apply absolute cursor-pointer sm:bottom-[10%] bottom-0 sm:right-[25%] right-[10%];
+}
+.profile-main-div {
+  @apply relative;
+}
+
+.profile-div {
+  @apply relative rounded-full flex justify-center items-center object-none bg-[#64FFDA29] w-[31.25rem] h-[31.25rem] max-md:w-[20rem] max-md:h-[20rem] max-sm:w-[17rem] max-sm:h-[17rem];
+}
+
+.profile-img {
+  @apply w-28 h-28 md:w-auto md:h-auto;
+}
+
+/* Question-2 */
+
+.date-div {
+  @apply relative pt-[3.75rem] pb-[3.75rem]  w-3/5  flex flex-col  space-y-5 space-x-0;
+}
+.date-input {
+  @apply relative bg-transparent border h-20 border-[#054141] rounded-lg text-div pl-[30px] pr-6  py-0 md:py-[21px] text-input;
+}
+.calendar {
+  @apply absolute right-[3%] max-md:w-8 max-md:h-8;
+}
+
+.text-select-date {
+  font-family: var(--font-inter);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #5a5a5a;
+}
+.select-date-div {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.select-date {
+  @apply h-12 bg-transparent border border-[#054141] mb-5 rounded-lg text-select-date pl-[3%] selectimage text-center appearance-none;
+}
+.selected-date {
+  @apply flex justify-between;
+}
+
+/* Customize Calendar */
+
+.cal-font {
+  font-family: var(--font-inter);
+  font-size: 25px;
+  font-weight: normal;
+  line-height: 36px;
+  letter-spacing: 0em;
+}
+
+.react-calendar__month-view__weekdays {
+  background-color: #d9d9d9;
+  text-decoration: none;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #000 !important;
+}
+.react-calendar__tile--active {
+  background-color: transparent !important;
+  border: solid 1px blue !important;
+  color: black !important;
+}
+
+.react-calendar__tile--now {
+  background-color: #64ffda !important;
+}
+
+.demo {
+  @apply w-[640px] lg:w-[550px] max-lg:w-auto !important;
+}
+
+.react-calendar button {
+  @apply border-[0.2px] border-solid border-[#d9d9d9] h-[70px] max-md:h-auto !important;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  /* height: 70px !important;
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border: 0.2px solid #ffffff !important; */
+
+  @apply border-[0.2px] border-solid border-[#ffffff] text-center justify-center flex items-center h-[70px] max-md:h-auto !important;
+}
+
+/* comman button */
+@media screen and (max-width: 1780px) {
+  .button-main {
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+  }
+}
+.button-main {
+  @apply grid lg:grid-cols-2 md:max-w-[1760px] mx-auto pt-3;
+}
+
+.hobby-div {
+  @apply w-[12.5rem] rounded-lg text-hobby h-20 bg-[#64ffda29] shadow-lg shadow-gray-400 flex items-center justify-center;
+}
+
+.text-hobby {
+  font-family: var(--font-inter);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #054141;
+}
+
+/* Question 7 */
+.radio-main-div {
+  @apply grid md:grid-cols-2 gap-3 space-y-5 space-x-0;
+}
+input[type="radio"] {
+  display: none;
+}
+.radio-btn {
+  @apply w-auto h-14 md:h-20 bg-transparent border  border-[#054141] rounded-lg text-select pl-[30px] pr-6 py-0 md:py-[21px] text-input appearance-none text-center;
+}
+input[type="radio"]:checked + label {
+  color: #054141;
+}
+.select-radio {
+  @apply grid grid-cols-2 gap-3 space-y-5 space-x-0;
+}
+.label-text {
+  @apply text-center !important;
+}
+.slide-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.slide-content h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.slide-content p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+/* .custom-dots-container {
+  @apply absolute  w-full flex justify-center;
+}
+
+.custom-dots {
+  @apply flex bottom-10;
+}
+
+.custom-dots li {
+  @apply list-none;
+}
+
+.custom-dots li button:before {
+  @apply text-white opacity-75 text-sm;
+}
+
+.custom-dots li.slick-active button:before {
+  @apply text-white opacity-100;
+} */
+.slick-dots {
+  @apply flex left-5 sm:left-5 bottom-5 sm:bottom-8  !important;
+}
+
+.slick-dots li button {
+  @apply bg-transparent;
+}
+.slick-arrow {
+  @apply hidden !important;
+}
+
+/* .slick-dots li button:before {
+  @apply text-red-500 !important;
+} */
+
+.slick-dots li button:before {
+  @apply text-white opacity-75 text-[10px] !important;
+}
+
+.slick-dots li.slick-active button:before {
+  @apply h-2 w-6 items-center border-[0px] text-transparent border-themeColor rounded-none opacity-100 bg-green00 mt-[5px] block !important;
+}
+
+/* Get started page */
+
+.auth-div {
+  @apply flex flex-col justify-center items-center w-full sm:w-[90%] lg:w-[80%] xl:w-[70%] mt-0 sm:mt-5;
+}
+
+.social-div {
+  @apply flex space-x-1 bg-blue19 w-[80%] h-[80%] mt-5;
+}
+.social-image {
+  @apply w-16 h-12 relative items-center justify-center flex;
+}
+.social-image-overlay {
+  @apply absolute inset-0 bg-[#00591B1A] opacity-100;
+}
+.social-text-div {
+  @apply w-full h-12 flex items-center;
+}
+.social-text {
+  @apply text-white w-full text-left pl-2;
+}

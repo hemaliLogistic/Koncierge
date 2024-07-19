@@ -119,7 +119,7 @@ const Home = () => {
               <button onClick={googleLogin} className='social-div bg-redEB'>
                 <div className='social-image bg-redEB'>
                   <div className='social-image-overlay'></div>
-                  <img src='images/google.png' className='w-6 h-6' />
+                  <img src='images/Google.png' className='w-6 h-6' />
                 </div>
                 <div className='social-text-div bg-redEB'>
                   <p className='social-text'>{t("Continue with Google")}</p>

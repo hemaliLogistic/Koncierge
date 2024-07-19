@@ -17,7 +17,6 @@ export const registerAction = createAsyncThunk(
     try {
       const { data, status } = await RegisterUser(payload);
       console.log("data", data);
-      localStorage.setItem("isRegistreation", status);
 
       return data;
     } catch (err) {

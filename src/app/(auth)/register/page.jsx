@@ -122,7 +122,7 @@ const RegistrationPage = () => {
       }
       if (res.payload.status) {
         setIsLoading(false);
-
+        localStorage.setItem("isRegistreation", true);
         toaster(TOAST_ALERTS.REGISTER_SUCCESS, TOAST_TYPES.SUCCESS);
         methods.reset();
         dispatch(setVerfyEmail(email));

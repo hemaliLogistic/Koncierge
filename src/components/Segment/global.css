@@ -9,11 +9,11 @@
 }
 
 .segment-nav {
-  @apply hidden sm:flex w-[85%] bg-white overflow-hidden border-b;
+  @apply hidden lg:flex w-[85%]  bg-white overflow-hidden border-b;
 }
 
 .segment-link {
-  @apply flex justify-center items-center w-[15%] py-4 px-1 space-x-1 text-fontColor hover:text-white hover:bg-themeColor transition duration-300;
+  @apply flex justify-center items-center w-[15%] sm:w-[15%] md:w-[20%] lg:w-[15%] xl:w-[15%] 2xl:w-[15%] py-4 px-1 space-x-1 text-fontColor hover:text-white hover:bg-themeColor transition duration-300;
 }
 
 .segment-icon {
@@ -82,7 +82,7 @@
   @apply flex w-full px-5 space-x-2 py-4 text-center bg-themeColor text-white;
 }
 .mobile-segment {
-  @apply sm:hidden w-[90%];
+  @apply lg:hidden w-[90%];
 }
 .mobile-dropdown-view {
   @apply flex w-[80%] space-x-2 text-white;

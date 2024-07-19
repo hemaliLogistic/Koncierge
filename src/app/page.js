@@ -21,7 +21,8 @@ import HomePage from "./(visitor)/home/page";
 const Home = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log("rocess.env", process.env.HOST_API);
+  console.log("rocess.env", process.env.NODE_ENV);
   const { t } = useTranslation("common");
   const { location } = useContext(LocationContext);
   const router = useRouter();

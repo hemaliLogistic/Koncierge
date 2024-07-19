@@ -4,20 +4,8 @@ import React from "react";
 import "../../../components/NavBar/global.css";
 import "./global.css";
 import Navbar from "../../../components/NavBar/NavBar";
-// import {
-//   Modal,
-//   ModalContent,
-//   ModalHeader,
-//   ModalBody,
-//   ModalFooter,
-//   Button,
-//   useDisclosure,
-// } from "@nextui-org/react";
 
 const UserDashBoard = () => {
-  // const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // const [modalPlacement, setModalPlacement] = React.useState("auto");
-
   return (
     <>
       {/* <div className='p-4'> */}

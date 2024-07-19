@@ -26,7 +26,7 @@ import { SessionProvider } from "next-auth/react";
 import "@/utils/global";
 import { getData } from "@/utils/storage";
 import Navbar from "@/components/NavBar/NavBar";
-import { NextUIProvider } from "@nextui-org/react";
+// import { NextUIProvider } from "@nextui-org/react";
 import Authlayout from "./(auth)/layout";
 import VisitorLayout from "./(visitor)/layout";
 import DashBoardLayout from "./(dashboard)/layout";
@@ -85,31 +85,31 @@ function RootLayout({ children }) {
         <meta name='description' content='Koncierge description' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <Provider store={store}>
-          <NextUIProvider>
-            <LocationProvider>
-              <I18nextProvider i18n={i18next}>
-                <SessionProvider>
-                  {/* <GoogleOAuthProvider clientId='598913711908-ps1ud5pqp6diuci99laprr35pkbqffoa.apps.googleusercontent.com'> */}
-                  <ProtectedPageService />
-                  <ToastWrapper />
+          {/* <NextUIProvider> */}
+          <LocationProvider>
+            <I18nextProvider i18n={i18next}>
+              <SessionProvider>
+                {/* <GoogleOAuthProvider clientId='598913711908-ps1ud5pqp6diuci99laprr35pkbqffoa.apps.googleusercontent.com'> */}
+                <ProtectedPageService />
+                <ToastWrapper />
+                <div>
                   <div>
-                    <div>
-                      {!isLoginPage && isSidebarOpen && (
-                        <Stepbardiv $isvisible={isSidebarOpen}>
-                          <Sidebar />
-                        </Stepbardiv>
-                      )}
-                      <MainDiv $isvisible={isSidebarOpen}>
-                        {/* {userAuth && <Navbar />} */}
-                        <StyledJsxRegistry>{children}</StyledJsxRegistry>
-                      </MainDiv>
-                    </div>
+                    {!isLoginPage && isSidebarOpen && (
+                      <Stepbardiv $isvisible={isSidebarOpen}>
+                        <Sidebar />
+                      </Stepbardiv>
+                    )}
+                    <MainDiv $isvisible={isSidebarOpen}>
+                      {/* {userAuth && <Navbar />} */}
+                      <StyledJsxRegistry>{children}</StyledJsxRegistry>
+                    </MainDiv>
                   </div>
-                  {/* </GoogleOAuthProvider> */}
-                </SessionProvider>
-              </I18nextProvider>
-            </LocationProvider>
-          </NextUIProvider>
+                </div>
+                {/* </GoogleOAuthProvider> */}
+              </SessionProvider>
+            </I18nextProvider>
+          </LocationProvider>
+          {/* </NextUIProvider> */}
         </Provider>
       </body>
     </html>

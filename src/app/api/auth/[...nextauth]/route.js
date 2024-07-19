@@ -2,24 +2,30 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
+import {
+  FACEBOOK_ID,
+  FACEBOOK_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+} from "../../../../../predict";
 
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
   throw new Error("Missing Google OAuth environment variables");
 }
 
-if (!process.env.FACEBOOK_ID || !process.env.FACEBOOK_SECRET) {
+if (!FACEBOOK_ID || !FACEBOOK_SECRET) {
   throw new Error("Missing Facebook OAuth environment variables");
 }
 
 const handler = NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
     }),
     FacebookProvider({
-      clientId: process.env.FACEBOOK_ID,
-      clientSecret: process.env.FACEBOOK_SECRET,
+      clientId: FACEBOOK_ID,
+      clientSecret: FACEBOOK_SECRET,
     }),
   ],
   session: {

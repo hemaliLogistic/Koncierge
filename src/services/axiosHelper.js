@@ -6,7 +6,8 @@ export const axiosPost = async (
   contentType = "application/json"
 ) => {
   let response = {};
-
+  console.log("rocess.env", process.env.HOST_API);
+  console.log("rocess.env", process.env.NODE_ENV);
   try {
     const result = await axiosInstance.post(url, JSON.stringify(data), {
       headers: {

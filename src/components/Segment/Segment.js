@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "@/components/Modal/Modal";
 import { removeData } from "@/utils/storage";
 import { usePathname, useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 const Segment = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -49,11 +50,12 @@ const Segment = () => {
     };
   }, [isModalVisible]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log("Logged out");
     localStorage.clear();
     setIsModalVisible(false);
     removeData("user");
+    await signOut({ redirect: false });
     router.push("/");
   };
 

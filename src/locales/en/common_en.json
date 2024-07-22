@@ -33,5 +33,10 @@
   "validConfirmPassword": "Enter valid confirm password",
   "enterCode": "Please enter the verification code",
   "validCode": "Enter valid code",
-  "enterDigitCode": "Enter a 6 digit code"
+  "enterDigitCode": "Enter a 6 digit code",
+
+  "TotalBookings": "Total Bookings",
+  "UpcomingBookings": "Upcoming Bookings",
+  "PendingBookings": "Pending Bookings",
+  "CompletedBookings": "Completed Bookings"
 }

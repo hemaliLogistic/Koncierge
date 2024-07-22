@@ -1,10 +1,11 @@
+// src/app/(auth)/getStarted/page.js
 "use client";
 
 import Image from "next/image";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
-import "../login/global.css";
+import "../../(auth)/login/global.css";
 import CustomSlider from "@/components/CustomSlider/customeSlider";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
@@ -16,11 +17,13 @@ import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
 import useToaster from "@/hooks/useToaster";
 import "@/utils/global";
 import Loader from "@/components/Loader";
+import { HOST_API } from "../../../../predict";
 
-const Home = () => {
+const GetStarted = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log("isLoading", isLoading);
+  console.log("rocess.env", HOST_API);
+  console.log("rocess.env", process.env.NODE_ENV);
   const { t } = useTranslation("common");
   const { location } = useContext(LocationContext);
   const router = useRouter();
@@ -32,6 +35,7 @@ const Home = () => {
     console.log("translate", t("Welcome Back"));
     const loginType = localStorage.getItem("loginType");
     if (session?.user && !isLoggingIn && loginType) {
+      console.log("issssss=====");
       setIsLoggingIn(true);
       loginUserCall(session.user);
     }
@@ -39,53 +43,56 @@ const Home = () => {
 
   const googleLogin = async () => {
     localStorage.setItem("loginType", "google");
-    await signIn("google");
+    await signIn("google", { callbackUrl: "/getStarted" });
   };
 
   const handleFacebookSignIn = async () => {
     localStorage.setItem("loginType", "facebook");
-    await signIn("facebook", { prompt: "select_account" });
+    await signIn(
+      "facebook",
+      { callbackUrl: "/" },
+      { prompt: "select_account" }
+    );
   };
 
-  const loginUserCall = async (data) => {
-    console.log("loginUserCall data", data);
-    try {
-      const loginType = localStorage.getItem("loginType");
-      const socialLoginParam = {
-        name: data?.name,
-        email: data?.email,
-        loginType,
-        loggedTimeLatitude: location.latitude,
-        loggedTimeLongitude: location.longitude,
-        socialId: data?.id,
-      };
+  const loginUserCall = useCallback(
+    async (data) => {
+      try {
+        const loginType = localStorage.getItem("loginType");
+        const socialLoginParam = {
+          name: data?.name,
+          email: data?.email,
+          loginType,
+          loggedTimeLatitude: location.latitude,
+          loggedTimeLongitude: location.longitude,
+          socialId: data?.id,
+        };
 
-      setIsLoading(true);
-      const res = await dispatch(loginAction(socialLoginParam));
+        setIsLoading(true);
+        const res = await dispatch(loginAction(socialLoginParam));
 
-      if (!res.payload.status) {
+        if (!res.payload.status) {
+          setIsLoading(false);
+          toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+          return;
+        }
+        if (res.payload.status) {
+          setIsLoading(false);
+          toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
+          router.push("/dashboard");
+        }
+      } catch (error) {
         setIsLoading(false);
+
         toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-        return;
+        console.error("Error", error);
       }
-      if (res.payload.status) {
-        setIsLoading(false);
-        localStorage.removeItem("loginType");
-        toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      setIsLoading(false);
-
-      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.error("Error", error);
-    }
-  };
-  //   [location, dispatch, router, toaster];
+    },
+    [location, dispatch, router, toaster]
+  );
 
   return (
     <>
-      {isLoading && <Loader />}
       <div className='container-div'>
         <div className='logo-div-section'>
           <img src='/images/webLogo.png' alt='Property' />
@@ -119,7 +126,7 @@ const Home = () => {
               <button onClick={googleLogin} className='social-div bg-redEB'>
                 <div className='social-image bg-redEB'>
                   <div className='social-image-overlay'></div>
-                  <img src='images/google.png' className='w-6 h-6' />
+                  <img src='images/Google.png' className='w-6 h-6' />
                 </div>
                 <div className='social-text-div bg-redEB'>
                   <p className='social-text'>{t("Continue with Google")}</p>
@@ -148,8 +155,10 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {isLoading && <Loader />}
+      {/* <HomePage /> */}
     </>
   );
 };
 
-export default Home;
+export default GetStarted;

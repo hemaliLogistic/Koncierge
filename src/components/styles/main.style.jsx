@@ -11,4 +11,5 @@ const MainDiv = styled.div`
   }
 `;
 
+
 export default MainDiv;

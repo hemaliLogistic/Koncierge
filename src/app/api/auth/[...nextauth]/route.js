@@ -46,7 +46,7 @@ const handler = NextAuth({
     },
     async redirect({ url, baseUrl }) {
       console.log("redirect callback:", { url, baseUrl });
-      return baseUrl;
+      return baseUrl + "/getStarted";
     },
     async session({ session, token, user }) {
       console.log("session callback:", { session, token, user });

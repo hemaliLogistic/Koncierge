@@ -2,6 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-.main-prefrences-div {
-  @apply flex items-center justify-center mx-auto mt-4;
+.main-container {
+  @apply flex mx-auto mt-10 gap-10 flex-col lg:flex-row w-[95%] xl:w-[85%] lg:w-[90%] px-4 py-2 justify-between pb-5 sm:mx-auto;
+}
+
+.prefrences-box-shadow {
+  @apply w-full shadow-[0px_0px_8px_2px_rgba(0,0,0,0.06)] flex flex-col h-full;
+}
+
+.select-input {
+  @apply w-full pl-5 h-[60px] font-Mulish text-lg font-medium border border-grayAC text-fontColor bg-white  mt-3;
+  appearance: none;
+}
+
+.prefrences-header {
+  @apply font-Jost text-2xl font-semibold mt-[32px] ml-[20px] mb-[30px];
+}
+
+.horizontal-divider {
+  @apply h-px w-full bg-grayAC;
+}
+
+.prefrences-container {
+  @apply lg:flex mt-10 mb-[78px] gap-[100px];
+}
+
+.prefrences-left-section {
+  @apply lg:w-2/5 w-full;
+}
+
+.selection-container {
+  @apply ml-[20px] relative lg:w-full max-lg:pr-5;
+}
+
+.selection-label {
+  @apply font-Jost font-medium text-xl pl-2;
+}
+
+.selection-image {
+  @apply absolute right-10 top-[62px];
+}
+
+.submit-btn-container {
+  @apply pl-5 lg:mt-[154px] mt-[30px];
+}
+
+.submit-btn {
+  @apply bg-themeColor w-[140px] h-[50px] font-Jost font-bold text-xl text-white;
+}
+
+.prefrences-right-section {
+  @apply lg:w-3/5 flex max-sm:flex-col  max-lg:items-center md:mt-10 md:ml-[20px] max-sm:mt-10;
+}
+
+.service-chart-image {
+  @apply lg:h-[420px] lg:w-[420px] h-[330px] w-[330px];
+}
+
+.service-list-container {
+  @apply lg:mt-[63px] max-sm:mt-[40px] lg:ml-[60px] md:ml-[20px] flex-col;
+}
+
+.service-element-container {
+  @apply flex pt-5;
+}
+
+.service-name {
+  @apply font-Jost font-medium text-2xl pl-[10px] w-max;
+}
+
+.service-subtext {
+  @apply font-Nunito font-medium text-xl pt-1 text-subTextColor;
 }

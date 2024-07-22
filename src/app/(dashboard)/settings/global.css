@@ -27,7 +27,7 @@
 }
 
 .setting-input-field {
-    @apply w-full pt-5 pl-5 pb-5 font-Mulish text-lg font-medium border border-grayAC text-fontColor;
+    @apply w-full pl-5 h-[60px] font-Mulish text-lg font-medium border border-grayAC text-fontColor;
 }
 
 .button-update {
@@ -39,7 +39,7 @@
 }
 
 .buttons-container{
-    @apply  mt-[30px] pl-5 pr-5 mb-[30px] font-Jost flex gap-7;
+    @apply  mt-[30px] pl-5 pr-5 mb-[30px] font-Jost flex gap-7  max-md:justify-center;
 }
 
 .user-name {
@@ -86,3 +86,8 @@
 .editprofile-header-text {
     @apply pl-5 font-Jost font-semibold text-2xl leading-5 text-left;
 }
+
+.select-input{
+    @apply setting-input-field bg-white;
+    appearance: none;
+} 

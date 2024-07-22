@@ -5,3 +5,30 @@
 .main-container-div {
   @apply flex items-center justify-center mx-auto mt-4;
 }
+.total-booking {
+  @apply bg-greenDC p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+}
+.column-view {
+  @apply flex flex-col;
+}
+.title-text {
+  @apply text-fontColor text-[24px] font-normal font-Jost tracking-wide opacity-[60%];
+}
+.upcoming-booking {
+  @apply bg-purpleF3 p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+}
+.calendar-div {
+  @apply mt-2 flex justify-between items-center;
+}
+.booking-text {
+  @apply text-[50px] font-semibold text-black33 font-Jost;
+}
+.pending-booking {
+  @apply bg-pitchFF p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+}
+.completed-booking {
+  @apply bg-yellowFF p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+}
+.dashboard-view {
+  @apply flex w-[85%] gap-6 flex-col lg:flex-row;
+}

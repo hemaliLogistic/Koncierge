@@ -109,7 +109,7 @@ const Home = () => {
               <p className='login-desc'>{t("Log in or Create an account")}</p>
             </div>
             <div className='auth-div'>
-              <button className='social-div'>
+              <button onClick={handleFacebookSignIn} className='social-div'>
                 <div className='social-image'>
                   <div className='social-image-overlay'></div>
                   <img src='images/facebook.png' className='w-6 h-6' />
@@ -118,7 +118,7 @@ const Home = () => {
                   <p className='social-text'>{t("Continue with Facebook")}</p>
                 </div>
               </button>
-              <button className='social-div bg-redEB'>
+              <button onClick={googleLogin} className='social-div bg-redEB'>
                 <div className='social-image bg-redEB'>
                   <div className='social-image-overlay'></div>
                   <img src='images/Google.png' className='w-6 h-6' />

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 export default function ErrorPage({ searchParams }) {
   const error = searchParams.error;
-
+  console.log("error-=-=", error);
   if (error === "Callback") {
     redirect("/");
   }

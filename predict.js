@@ -13,3 +13,5 @@ export const FACEBOOK_ID =
 export const FACEBOOK_SECRET =
   process.env.NEXT_PUBLIC_FACEBOOK_SECRET || process.env.FACEBOOK_SECRET || "";
 export const HTTP = process.env.NEXT_PUBLIC_HTTP || process.env.HTTP || "";
+export const NEXTAUTH_SECRET =
+  process.env.NEXTAUTH_SECRET || process.env.NEXTAUTH_SECRET || "";

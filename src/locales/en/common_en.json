@@ -38,5 +38,35 @@
   "TotalBookings": "Total Bookings",
   "UpcomingBookings": "Upcoming Bookings",
   "PendingBookings": "Pending Bookings",
-  "CompletedBookings": "Completed Bookings"
+  "CompletedBookings": "Completed Bookings",
+
+  "Home": "Home",
+  "About": "About",
+  "OurServices": "Our Services",
+  "Portfolio": "Portfolio",
+  "Contact": "Contact",
+  "English": "English",
+  "Spanish": "Spanish",
+
+  "Dashboard": "Dashboard",
+  "PastServices": "Past Services",
+  "Preferences": "Preferences",
+  "PaymentHistory": "Payment History",
+  "Settings": "Settings",
+  "Logout": "Log out",
+
+  "SrNo.": "Sr No.",
+  "ServiceType": "Service Type",
+  "AccountName": "Account Holder Name & Number",
+  "Instruction": "Service Instruction",
+  "TransferDate": "Transfer Date",
+  "ServiceDate": "Service Date",
+  "TransferTime": "Transfer Time",
+  "ServiceTime": "Service Time",
+  "Status": "Status",
+
+  "AllList": "All Booking List",
+  "UpcomingList": "Upcoming Booking List",
+  "PastList": "Past Booking List",
+  "PaymentList": "All Payment History"
 }

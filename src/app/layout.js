@@ -80,7 +80,7 @@ function RootLayout({ children }) {
 
   return (
     <html lang='en'>
-      <body className={`${inter.className} ${open_sans.className}`}>
+      <body>
         <title>Koncierge</title>
         <meta name='description' content='Koncierge description' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />

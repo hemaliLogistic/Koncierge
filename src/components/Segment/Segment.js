@@ -7,6 +7,7 @@ import Modal from "@/components/Modal/Modal";
 import { removeData } from "@/utils/storage";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useTranslation } from "next-i18next";
 
 const Segment = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -15,6 +16,8 @@ const Segment = () => {
   const [selectedIcon, setSelectedIcon] = useState("");
   const router = useRouter();
   const path = usePathname();
+  const { t } = useTranslation("common");
+
   const isActive = (pathName) => path === pathName;
   console.log("isActive--=-=-", path, isActive(path));
 
@@ -70,49 +73,49 @@ const Segment = () => {
           href='/dashboard'
           className={`segment-link ${isActive("/dashboard") ? "active" : ""}`}>
           <img src='/images/dashboard.png' className='segment-icon' />
-          <span className='segment-text'>Dashboard</span>
+          <span className='segment-text'>{t("Dashboard")}</span>
         </a>
 
         <a
           href='/bookings'
           className={`segment-link ${isActive("/bookings") ? "active" : ""}`}>
           <img src='/images/upcoming.png' className='segment-icon' />
-          <span className='segment-text'>Upcoming Bookings</span>
+          <span className='segment-text'>{t("UpcomingBookings")}</span>
         </a>
 
         <a
           href='/service'
           className={`segment-link ${isActive("/service") ? "active" : ""}`}>
           <img src='/images/service.png' className='segment-icon' />
-          <span className='segment-text'>Past Services</span>
+          <span className='segment-text'>{t("PastServices")}</span>
         </a>
 
         <a
           href='/prefrences'
           className={`segment-link ${isActive("/prefrences") ? "active" : ""}`}>
           <img src='/images/prefrences.png' className='segment-icon' />
-          <span className='segment-text'>Preferences</span>
+          <span className='segment-text'>{t("Preferences")}</span>
         </a>
 
         <a
           href='/history'
           className={`segment-link ${isActive("/history") ? "active" : ""}`}>
           <img src='/images/review.png' className='segment-icon' />
-          <span className='segment-text'>Payment History</span>
+          <span className='segment-text'>{t("PaymentHistory")}</span>
         </a>
 
         <a
           href='/settings'
           className={`segment-link ${isActive("/settings") ? "active" : ""}`}>
           <img src='/images/settings.png' className='segment-icon' />
-          <span className='segment-text'>Settings</span>
+          <span className='segment-text'>{t("Settings")}</span>
         </a>
 
         <button
           className='segment-link'
           onClick={() => setIsModalVisible(true)}>
           <img src='/images/logout.png' className='segment-icon' />
-          <span className='segment-text'>Log out</span>
+          <span className='segment-text'>{t("Logout")}</span>
         </button>
       </div>
 
@@ -144,7 +147,7 @@ const Segment = () => {
             <a
               href='/dashboard'
               onClick={() => {
-                // setSelectedSegment("Dashboard");
+                // setSelectedSegment("{t('Dashboard')}");
                 setIsMobileDropdownVisible(false);
                 // setSelectedIcon("dashboard.png");
               }}
@@ -152,13 +155,13 @@ const Segment = () => {
                 isActive("/dashboard") ? "active" : ""
               } mobile-segment-text-view `}>
               <img src='/images/dashboard.png' className='segment-icon' />
-              <span className='segment-text'>Dashboard</span>
+              <span className='segment-text'>{t("Dashboard")}</span>
             </a>
 
             <a
               href='/bookings'
               onClick={() => {
-                // setSelectedSegment("Upcoming Bookings");
+                // setSelectedSegment("{t('Upcoming Bookings')}");
                 setIsMobileDropdownVisible(false);
                 // setSelectedIcon("upcoming.png");
               }}
@@ -166,13 +169,13 @@ const Segment = () => {
                 isActive("/bookings") ? "active" : ""
               } mobile-segment-text-view `}>
               <img src='/images/upcoming.png' className='segment-icon' />
-              <span className='segment-text'>Upcoming Bookings</span>
+              <span className='segment-text'>{t("UpcomingBookings")}</span>
             </a>
 
             <a
               href='/service'
               onClick={() => {
-                // setSelectedSegment("Past Services");
+                // setSelectedSegment("{t('PastServices')}");
                 setIsMobileDropdownVisible(false);
                 // setSelectedIcon("service.png");
               }}
@@ -180,7 +183,7 @@ const Segment = () => {
                 isActive("/service") ? "active" : ""
               } mobile-segment-text-view `}>
               <img src='/images/service.png' className='segment-icon' />
-              <span className='segment-text'>Past Services</span>
+              <span className='segment-text'>{t("PastServices")}</span>
             </a>
 
             <a
@@ -194,13 +197,13 @@ const Segment = () => {
                 isActive("/prefrences") ? "active" : ""
               } mobile-segment-text-view `}>
               <img src='/images/prefrences.png' className='segment-icon' />
-              <span className='segment-text'>Preferences</span>
+              <span className='segment-text'>{t("Preferences")}</span>
             </a>
 
             <a
               href='/history'
               onClick={() => {
-                // setSelectedSegment("Payment History");
+                // setSelectedSegment("{t('PaymentHistory')}");
                 setIsMobileDropdownVisible(false);
                 // setSelectedIcon("review.png");
               }}
@@ -208,13 +211,13 @@ const Segment = () => {
                 isActive("/history") ? "active" : ""
               } mobile-segment-text-view `}>
               <img src='/images/review.png' className='segment-icon' />
-              <span className='segment-text'>Payment History</span>
+              <span className='segment-text'>{t("PaymentHistory")}</span>
             </a>
 
             <a
               href='/settings'
               onClick={() => {
-                // setSelectedSegment("Settings");
+                // setSelectedSegment("{t('Settings')}");
                 setIsMobileDropdownVisible(false);
                 // setSelectedIcon("settings.png");
               }}
@@ -222,14 +225,14 @@ const Segment = () => {
                 isActive("/settings") ? "active" : ""
               } mobile-segment-text-view `}>
               <img src='/images/settings.png' className='segment-icon' />
-              <span className='segment-text'>Settings</span>
+              <span className='segment-text'>{t("Settings")}</span>
             </a>
 
             <button
               className='segment-link mobile-segment-text-view'
               onClick={() => setIsModalVisible(true)}>
               <img src='/images/logout.png' className='segment-icon' />
-              <span className='segment-text'>Log out</span>
+              <span className='segment-text'>{t("Logout")}</span>
             </button>
           </div>
         )}

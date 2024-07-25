@@ -57,6 +57,7 @@ const GetStarted = () => {
 
   const loginUserCall = useCallback(
     async (data) => {
+      console.log("location", location);
       try {
         const loginType = localStorage.getItem("loginType");
         const socialLoginParam = {

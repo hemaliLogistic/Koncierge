@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.main-container {
+.prefrences-main-container {
   @apply flex mx-auto mt-10 gap-10 flex-col lg:flex-row w-[95%] xl:w-[85%] lg:w-[90%] px-4 py-2 justify-between pb-5 sm:mx-auto;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .prefrences-container {
-  @apply lg:flex mt-10 mb-[78px] gap-[100px];
+  @apply lg:flex mt-10 mb-[78px] 2xl:gap-[100px] gap-[50px] max-lg:flex-col;
 }
 
 .prefrences-left-section {
@@ -32,7 +32,7 @@
 }
 
 .selection-container {
-  @apply ml-[20px] relative lg:w-full max-lg:pr-5;
+  @apply ml-[20px] relative lg:w-full max-2xl:pr-10;
 }
 
 .selection-label {
@@ -40,11 +40,11 @@
 }
 
 .selection-image {
-  @apply absolute right-10 top-[62px];
+  @apply absolute right-10 top-[62px] max-2xl:right-20;
 }
 
 .submit-btn-container {
-  @apply pl-5 lg:mt-[154px] mt-[30px];
+  @apply pl-5 2xl:mt-[154px] mt-[30px];
 }
 
 .submit-btn {
@@ -52,15 +52,15 @@
 }
 
 .prefrences-right-section {
-  @apply lg:w-3/5 flex max-sm:flex-col  max-lg:items-center md:mt-10 md:ml-[20px] max-sm:mt-10;
+  @apply lg:w-3/5 flex max-sm:flex-col  max-lg:items-center mt-5 md:ml-[20px] max-2xl:justify-center;
 }
 
 .service-chart-image {
-  @apply lg:h-[420px] lg:w-[420px] h-[330px] w-[330px];
+  @apply 2xl:h-[420px] 2xl:w-[420px] h-[330px] w-[330px] max-sm:w-[60%];
 }
 
 .service-list-container {
-  @apply lg:mt-[63px] max-sm:mt-[40px] lg:ml-[60px] md:ml-[20px] flex-col;
+  @apply 2xl:mt-[63px] lg:mt-[30px] max-sm:mt-[40px] 2xl:ml-[60px] ml-[20px] flex-col;
 }
 
 .service-element-container {

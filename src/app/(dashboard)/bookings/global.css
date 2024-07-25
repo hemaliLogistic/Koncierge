@@ -5,3 +5,21 @@
 .main-booking-div {
   @apply flex items-center justify-center mx-auto mt-4;
 }
+.main-booking-table-div {
+  @apply flex flex-col w-[85%] border-[1px] border-gray-300 shadow-lg mb-10 mt-10;
+}
+.main-booking-table-title {
+  @apply m-5 text-[26px] font-Jost;
+}
+.main-booking-table-column {
+  @apply flex justify-center items-center flex-col;
+}
+.table-booking-div-content {
+  @apply flex w-[98%] border-[1px] border-gray-300 mb-10 justify-center items-center;
+}
+.pagination-booking-div {
+  @apply flex w-[85%] mb-10 justify-center items-center;
+}
+.content-booking-border {
+  @apply border-b-[1px] mb-5;
+}

@@ -4,10 +4,40 @@ import React from "react";
 import "../../../components/NavBar/global.css";
 
 import "./global.css";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+const data = {
+  datasets: [
+    {
+      label: "# of Votes",
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        "rgba(82, 82, 82, 0.2)",
+        "rgba(82, 82, 82, 0.4)",
+        "rgba(82, 82, 82, 0.6)",
+        "rgba(82, 82, 82, 0.8)",
+        "rgba(82, 82, 82, 1)",
+        "rgba(82, 82, 82, 0.2)",
+      ],
+      borderColor: [
+        "rgba(82, 82, 82, 1)",
+        "rgba(82, 82, 82, 1)",
+        "rgba(82, 82, 82, 1)",
+        "rgba(82, 82, 82, 1)",
+        "rgba(82, 82, 82, 1)",
+        "rgba(82, 82, 82, 1)",
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
 
 const UserDashBoard = () => {
   return (
-    <div className='main-container'>
+    <div className='prefrences-main-container'>
       <div className='prefrences-box-shadow'>
         <p className='prefrences-header'>Service Preferences</p>
         <div className='horizontal-divider'></div>
@@ -48,7 +78,8 @@ const UserDashBoard = () => {
 
           <div className='prefrences-right-section'>
             <div className='flex'>
-              <img src='/images/Pie.svg' className='service-chart-image' />
+              {/* <img src="/images/Pie.svg" className="service-chart-image" />  */}
+              <Pie data={data} className='service-chart-image' />
             </div>
 
             <div className='service-list-container'>

@@ -15,14 +15,14 @@ export const LocationProvider = ({ children }) => {
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          //console.log("Position obtained:", position);
+          console.log("Position obtained:", position);
 
           if (position && position.coords) {
             const { latitude, longitude } = position.coords;
-            //console.log("Location coordinates:", latitude, longitude);
+            console.log("Location coordinates:", latitude, longitude);
             setLocation({ latitude, longitude });
           } else {
-            //console.log("Position or position.coords is null.");
+            console.log("Position or position.coords is null.");
             setError("Failed to obtain location coordinates.");
           }
         },

@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 .main-container-div {
-  @apply flex items-center justify-center mx-auto mt-4;
+  @apply flex w-full items-center justify-center mx-auto mt-4 overflow-x-hidden flex-col;
+}
+.dashboard-view {
+  @apply flex w-[85%] gap-6 flex-col lg:flex-row mb-10;
 }
 .total-booking {
   @apply bg-greenDC p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
@@ -29,6 +32,35 @@
 .completed-booking {
   @apply bg-yellowFF p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
 }
-.dashboard-view {
-  @apply flex w-[85%] gap-6 flex-col lg:flex-row;
+.custom-pagination .nextui-pagination-item {
+  @apply w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300;
+}
+
+.custom-pagination .nextui-pagination-item--active {
+  @apply bg-green-700 text-white;
+}
+
+.custom-pagination .nextui-pagination-control {
+  @apply w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300;
+}
+
+/* table style */
+
+.main-table-div {
+  @apply flex flex-col w-[85%] border-[1px] border-gray-300 shadow-lg mb-10;
+}
+.main-table-title {
+  @apply m-5 text-[26px] font-Jost;
+}
+.main-table-column {
+  @apply flex justify-center items-center flex-col;
+}
+.table-div-content {
+  @apply flex w-[98%] border-[1px] border-gray-300 mb-10 justify-center items-center;
+}
+.pagination-div {
+  @apply flex w-[85%] mb-10 justify-center items-center;
+}
+.content-border {
+  @apply border-b-[1px] mb-5;
 }

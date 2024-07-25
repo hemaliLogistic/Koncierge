@@ -3,15 +3,19 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "next-i18next";
 
 const Navbar = () => {
   const [language, setLanguage] = useState("English");
   const [showDropdown, setShowDropdown] = useState(false);
   const [menuDropdown, setMenuDropdown] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const menuRef = useRef(null);
   const dropdownRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const { t } = useTranslation("common");
   const windowSize = useWindowSize();
 
   useEffect(() => {
@@ -67,19 +71,19 @@ const Navbar = () => {
         {/* Navigation Links */}
         <div className='nav-links md:flex hidden'>
           <a href='/home' className='nav-link'>
-            Home
+            {t("Home")}
           </a>
           <a href='#' className='nav-link'>
-            About
+            {t("About")}
           </a>
           <a href='#' className='nav-link'>
-            Our Services
+            {t("OurServices")}
           </a>
           <a href='#' className='nav-link'>
-            Portfolio
+            {t("Portfolio")}
           </a>
           <a href='#' className='nav-link'>
-            Contact
+            {t("Contact")}
           </a>
         </div>
 
@@ -121,7 +125,7 @@ const Navbar = () => {
                         setLanguage("English");
                         setShowDropdown(false);
                       }}>
-                      English
+                      {t("English")}
                     </a>
                   </li>
                   <li className='dropdown-li'>
@@ -135,7 +139,7 @@ const Navbar = () => {
                         setLanguage("Spanish");
                         setShowDropdown(false);
                       }}>
-                      Spanish
+                      {t("Spanish")}
                     </a>
                   </li>
                 </ul>
@@ -155,7 +159,9 @@ const Navbar = () => {
           </div>
 
           {/* Notification Icon */}
-          <div className='nav-notification relative'>
+          <button
+            className='nav-notification relative'
+            onClick={() => router.push("/notification")}>
             <span className='absolute bottom-[10px] left-[8px] bg-themeColor text-white rounded-full h-3 w-3 font-Jost text-[10px] items-center justify-center flex p-[8px]'>
               99
             </span>
@@ -165,7 +171,7 @@ const Navbar = () => {
               width={20}
               height={20}
             />
-          </div>
+          </button>
         </div>
 
         <div className='nav-menu-right'>
@@ -198,7 +204,9 @@ const Navbar = () => {
               </div>
 
               {/* Notification Icon */}
-              <div className='nav-notification relative'>
+              <button
+                className='nav-notification relative'
+                onClick={() => router.push("/notification")}>
                 <span className='absolute bottom-[22px] left-[10px] bg-themeColor text-white rounded-full h-3 w-3 font-Jost text-[10px] items-center justify-center flex p-[8px]'>
                   99
                 </span>
@@ -209,23 +217,23 @@ const Navbar = () => {
                   height={25}
                   className='mt-1'
                 />
-              </div>
+              </button>
             </div>
 
             <a href='#' className='mobile-menu-item'>
-              Home
+              {t("Home")}
             </a>
             <a href='#' className='mobile-menu-item'>
-              About
+              {t("About")}
             </a>
             <a href='#' className='mobile-menu-item'>
-              Our Services
+              {t(" OurServices")}
             </a>
             <a href='#' className='mobile-menu-item'>
-              Portfolio
+              {t("Portfolio")}
             </a>
             <a href='#' className='mobile-menu-item'>
-              Contact
+              {t("Contact")}
             </a>
 
             <div className='relative flex m-0 sm:m-4'>
@@ -262,7 +270,7 @@ const Navbar = () => {
                           setLanguage("English");
                           setShowDropdown(false);
                         }}>
-                        English
+                        {t("English")}
                       </a>
                     </li>
                     <li className='dropdown-li'>
@@ -276,7 +284,7 @@ const Navbar = () => {
                           setLanguage("Spanish");
                           setShowDropdown(false);
                         }}>
-                        Spanish
+                        {t("Spanish")}
                       </a>
                     </li>
                   </ul>

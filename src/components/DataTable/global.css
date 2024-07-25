@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.table-main-div {
+  @apply flex justify-center items-center;
+}
+.table-header-text {
+  @apply font-Jost font-semibold text-[18px];
+}
+.table-text {
+  @apply font-Jost font-light text-[16px] text-fontColor tracking-normal;
+}
+.table-button-text {
+  @apply font-Jost font-light text-[14px] text-fontColor tracking-normal;
+}

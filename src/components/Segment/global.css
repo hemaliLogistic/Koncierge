@@ -49,11 +49,11 @@
 }
 
 .confirm-button {
-  @apply bg-themeColor p-2 font-Jost font-normal text-[14px] text-white w-16 sm:w-24;
+  @apply flex justify-center items-center bg-themeColor p-2 font-Jost font-normal text-[14px] text-white w-16 sm:w-24;
 }
 
 .cancel-button {
-  @apply bg-grayAC p-2 font-Jost font-normal text-[14px] text-white w-16 sm:w-24;
+  @apply flex justify-center items-center bg-grayAC p-2 font-Jost font-normal text-[14px] text-white w-16 sm:w-24 text-center;
 }
 .modal-content-div {
   @apply bg-white p-6 rounded-none shadow-lg  w-[70%] sm:w-[50%] lg:w-[30%] xl:w-[30%] 2xl:w-[20%];
@@ -104,4 +104,7 @@
 }
 .segment-link.active .segment-text {
   color: white;
+}
+.textInput-modal {
+  @apply w-full h-12 border-[1px] p-2 border-fontColor/20 shadow-sm bg-transparent outline-0 rounded-none;
 }

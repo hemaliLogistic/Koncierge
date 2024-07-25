@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import DataTable from "react-data-table-component";
 import "./global.css";
 import { useTranslation } from "next-i18next";
+import Loader from "../Loader";
 
 const DataTableComponent = ({ data, isLoading, isPayment }) => {
   const tableRef = useRef(null);

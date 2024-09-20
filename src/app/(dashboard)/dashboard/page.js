@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { TOAST_ALERTS } from "@/constants/keywords";
 import { getMessaging, onMessage } from "firebase/messaging";
 import useFcmToken from "@/hooks/useFcmToken";
-import firebaseApp from "@/utils/Firebase/firebase";
+// import firebaseApp from "@/utils/Firebase/firebase";
 
 const UserDashBoard = () => {
   const { t } = useTranslation("common");

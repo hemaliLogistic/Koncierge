@@ -26,13 +26,15 @@ import Loader from "@/components/Loader";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const storedFormData = getData("FormData");
+  const BookingId = getData("Bookingid");
   const router = useRouter();
   const { toaster } = useToaster();
   const { t } = useTranslation("common");
 
   const { location, error } = useContext(LocationContext);
 
-  const [isHidden, setIsHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   // Form Config
@@ -45,13 +47,14 @@ const LoginPage = () => {
   );
 
   const formSchema = useMemo(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     return yup
       .object()
       .shape({
         email: yup
           .string()
           .required(t("enterEmail"))
-          .email(t("validEmail"))
+          .matches(emailRegex, t("validEmail"))
           .trim(t("validEmail")),
         password: yup
           .string()
@@ -100,27 +103,35 @@ const LoginPage = () => {
       const res = await dispatch(loginAction(loginParams));
 
       console.log("res-=-=-=-", res);
-      if (!res.payload.status) {
-        setIsLoading(false);
-        return toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      }
-      if (res.payload.status) {
-        setIsLoading(false);
 
-        toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
-        methods.reset();
-        router.push("/dashboard");
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          // toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
+          methods.reset();
+          if (storedFormData) {
+            router.push(`/bookService/${BookingId}`);
+          } else {
+            router.push("/dashboard");
+          }
+          //   router.push("/dashboard");
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          toast.error(res.payload.message);
+        }
+      } else {
+        setIsLoading(false);
+        toast.error(res.error.message || res.payload.message);
       }
     } catch (error) {
       setIsLoading(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      console.log("Error", error);
+      console.log("error", error);
     }
   };
 
   return (
-    <>
+    <div className='main-login-container'>
       <div className='container-div'>
         <div className='logo-div-section'>
           <div className=''>
@@ -224,8 +235,8 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      {isLoading && <Loader />}
-    </>
+      {isLoading && <Loader isAuth={true} />}
+    </div>
   );
 };
 

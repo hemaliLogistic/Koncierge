@@ -20,7 +20,6 @@ import { useTranslation } from "next-i18next";
 const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const selector = useSelector((state) => state.registerApi);
   const router = useRouter();
 
   const { t } = useTranslation("common");
@@ -45,13 +44,14 @@ const ForgotPassword = () => {
   );
 
   const formSchema = useMemo(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     return yup
       .object()
       .shape({
         email: yup
           .string()
           .required(t("enterEmail"))
-          .email(t("validEmail"))
+          .matches(emailRegex, t("validEmail"))
           .trim(t("validEmail")),
       })
       .required()
@@ -79,24 +79,26 @@ const ForgotPassword = () => {
           email,
         })
       );
-      //   const res = await axiosPost(API_ROUTER.LOGIN, {
-      //     is_google_login: 0,
-      //     email,
-      //     password,
-      //   });
 
-      console.log("res", res);
-      if (!res.payload.status) {
+      console.log("res----", res, res.meta.requestStatus);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          setIsLoading(false);
+          toaster(TOAST_ALERTS.FORGOT_PASSWORD, TOAST_TYPES.SUCCESS);
+          methods.reset();
+          router.push("/login");
+        } else {
+          setIsLoading(false);
+          toast.error(res.payload.message);
+        }
+      } else {
+        console.log("abc");
         setIsLoading(false);
-        return toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      }
-      if (res.payload.status) {
-        setIsLoading(false);
-        toaster(TOAST_ALERTS.FORGOT_PASSWORD, TOAST_TYPES.SUCCESS);
-        methods.reset();
-        router.push("/login");
+        toast.error(res.error.message || res.payload.message);
       }
     } catch (error) {
+      console.log("xyz");
       setIsLoading(false);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
@@ -104,7 +106,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <>
+    <div className='main-forgot-container'>
       <div className='container-div'>
         <div className='logo-div-section'>
           <div className=''>
@@ -176,8 +178,8 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
-      {isLoading && <Loader />}
-    </>
+      {isLoading && <Loader isAuth={true} />}
+    </div>
   );
 };
 

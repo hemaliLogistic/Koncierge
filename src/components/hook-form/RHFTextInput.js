@@ -2,7 +2,12 @@ import PropTypes from "prop-types";
 import { Controller, useFormContext } from "react-hook-form";
 
 RHFTextInput.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  defaultValue: PropTypes.string,
 };
 
 export default function RHFTextInput({
@@ -11,6 +16,7 @@ export default function RHFTextInput({
   type = "text",
   disabled = false,
   className = "",
+  defaultValue = "",
   ...other
 }) {
   const { control } = useFormContext();
@@ -19,6 +25,7 @@ export default function RHFTextInput({
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
         <div className='relative'>
           <input

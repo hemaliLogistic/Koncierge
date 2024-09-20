@@ -32,13 +32,45 @@ const RegistrationPage = () => {
   const dispatch = useDispatch();
   const verifyEmail = useSelector((state) => state?.registerApi?.verifyEmail);
   const { t } = useTranslation("common");
-
+  const storedFormData = getData("FormData");
+  console.log("storedFormData", storedFormData);
+  const BookingId = getData("Bookingid");
+  console.log("BookingId", BookingId);
   const router = useRouter();
   const user = getData("user");
   const userAuth = user?.token;
   const [isHidden, setIsHidden] = useState(false);
   const [isConfirmHidden, setIsConfirmHidden] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
+  const [remainingSeconds, setRemainingSeconds] = useState(60);
+
+  useEffect(() => {
+    if (isResendDisabled) {
+      const timer = setInterval(() => {
+        setRemainingSeconds((prev) => {
+          const newValue = prev - 1;
+          return newValue < 10 ? `0${newValue}` : newValue;
+        });
+      }, 1000);
+
+      const timeout = setTimeout(() => {
+        setIsResendDisabled(false);
+        setRemainingSeconds(60); // Reset the timer
+        clearInterval(timer);
+      }, 60000);
+
+      return () => {
+        clearInterval(timer);
+        clearTimeout(timeout);
+      };
+    }
+  }, [isResendDisabled]);
+
+  const startResendTimer = () => {
+    setIsResendDisabled(true);
+    setRemainingSeconds(60);
+  };
 
   // Form Config
   const defaultValues = useMemo(
@@ -60,7 +92,7 @@ const RegistrationPage = () => {
           .typeError(t("enterDigitCode")),
       })
       .strict(true);
-  }, []);
+  }, [t]);
 
   //Hooks
   const methods = useForm({
@@ -88,24 +120,28 @@ const RegistrationPage = () => {
           verificationCode: code,
         })
       );
-      //   const res = await axiosPost(API_ROUTER.LOGIN, {
-      //     is_google_login: 0,
-      //     email,
-      //     password,
-      //   });
 
       console.log("res", res);
-      if (!res.payload.status) {
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          localStorage.removeItem("isRegistreation");
+          // toaster(TOAST_ALERTS.VERIFIED_SUCCESSFULLY, TOAST_TYPES.SUCCESS);
+          methods.reset();
+          localStorage.removeItem("verifyEmail");
+          if (storedFormData) {
+            router.push(`/bookService/${BookingId}`);
+          } else {
+            router.push("/dashboard");
+          }
+          //   router.push("/dashboard");
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          toast.error(res.payload.message);
+        }
+      } else {
         setIsLoading(false);
-        return toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      }
-      if (res.payload.status) {
-        setIsLoading(false);
-        localStorage.removeItem("isRegistreation");
-        toaster(TOAST_ALERTS.VERIFIED_SUCCESSFULLY, TOAST_TYPES.SUCCESS);
-        methods.reset();
-        localStorage.removeItem("verifyEmail");
-        router.push("/dashboard");
+        toast.error(res.error.message || res.payload.message);
       }
     } catch (error) {
       setIsLoading(false);
@@ -113,6 +149,7 @@ const RegistrationPage = () => {
       console.log("Error", error);
     }
   };
+
   const resendApi = async () => {
     try {
       const email = localStorage.getItem("verifyEmail");
@@ -122,14 +159,19 @@ const RegistrationPage = () => {
           email: email,
         })
       );
-      if (!res.payload.status) {
-        return toast.error(res.payload.message);
-      }
-      if (res.payload.status) {
-        toaster(TOAST_ALERTS.RESEND_LINK, TOAST_TYPES.SUCCESS);
-        methods.reset();
-
-        dispatch(setVerfyEmail(""));
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          toaster(TOAST_ALERTS.RESEND_LINK, TOAST_TYPES.SUCCESS);
+          methods.reset();
+          dispatch(setVerfyEmail(""));
+          startResendTimer(); // Start the resend timer
+        } else {
+          setIsLoading(false);
+          toast.error(res.payload.message);
+        }
+      } else {
+        setIsLoading(false);
+        toast.error(res.error.message || res.payload.message);
       }
     } catch (error) {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
@@ -138,7 +180,7 @@ const RegistrationPage = () => {
   };
 
   return (
-    <>
+    <div className='main-verify-container'>
       <div className='container-div'>
         <div className='logo-div-section'>
           <div className=''>
@@ -179,10 +221,24 @@ const RegistrationPage = () => {
                   />
                 </div>
               </div>
-              <div className='forgot-text'>
-                <button type='button' onClick={() => resendApi()}>
-                  {t("Resend")}
-                </button>
+              <div
+                className={`forgot-resend-text ${
+                  isResendDisabled && "opacity-40 font-light"
+                }`}>
+                {isResendDisabled && (
+                  <p className='timer-text'>{`Time remaining: 00: ${remainingSeconds}`}</p>
+                )}
+                {!isResendDisabled && (
+                  <button
+                    type='button'
+                    onClick={resendApi}
+                    disabled={isResendDisabled}
+                    title={
+                      isResendDisabled ? t("Resend after given time") : ""
+                    }>
+                    {t("Resend")}
+                  </button>
+                )}
               </div>
               <div className='center-div'>
                 <button type='submit' className='save-btn'>
@@ -190,19 +246,32 @@ const RegistrationPage = () => {
                 </button>
               </div>
             </FormProvider>
-            <div className='bottom-div'>
-              <text className='register-text'>{t("Go to")}</text>
-              <button onClick={() => router.replace("/login")}>
-                {/* <Link className='register-btn' href='/register'> */}
-                <div className='register-btn'>{t("Log in")}</div>
-                {/* </Link> */}
+            <div className='mt-5 mb-10'>
+              <text className='register-text'>{"Edit your"}</text>
+
+              <button
+                className='email-btn'
+                onClick={() => {
+                  localStorage.removeItem("isRegistreation");
+
+                  methods.reset();
+                  localStorage.removeItem("verifyEmail");
+                  router.push("/register");
+                }}>
+                <div className=' border-b-[1px] border-black'>{t("Email")}</div>
               </button>
             </div>
+            {/* <div className='bottom-div'>
+              <text className='register-text'>{t("Go to")}</text>
+              <button onClick={() => router.replace("/login")}>
+                <div className='register-btn'>{t("Log in")}</div>
+              </button>
+            </div> */}
           </div>
         </div>
       </div>
-      {isLoading && <Loader />}
-    </>
+      {isLoading && <Loader isAuth={true} />}
+    </div>
   );
 };
 

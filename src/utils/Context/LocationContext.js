@@ -15,19 +15,19 @@ export const LocationProvider = ({ children }) => {
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log("Position obtained:", position);
+          // console.log("Position obtained:", position);
 
           if (position && position.coords) {
             const { latitude, longitude } = position.coords;
-            console.log("Location coordinates:", latitude, longitude);
+            // console.log("Location coordinates:", latitude, longitude);
             setLocation({ latitude, longitude });
           } else {
-            console.log("Position or position.coords is null.");
+            // console.log("Position or position.coords is null.");
             setError("Failed to obtain location coordinates.");
           }
         },
         (error) => {
-          console.error("Error obtaining position:", error);
+          // console.error("Error obtaining position:", error);
           setError(error.message);
         },
         {
@@ -37,7 +37,7 @@ export const LocationProvider = ({ children }) => {
         }
       );
     } else {
-      console.error("Geolocation is not supported by this browser.");
+      // console.error("Geolocation is not supported by this browser.");
       setError("Geolocation is not supported by this browser.");
     }
   }, []);
@@ -51,7 +51,7 @@ export const LocationProvider = ({ children }) => {
         setError("Geolocation permission denied");
       }
     } catch (err) {
-      console.error("Error checking permissions:", err);
+      // console.error("Error checking permissions:", err);
       setError("Error checking permissions");
     }
   };

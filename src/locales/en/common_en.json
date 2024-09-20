@@ -25,6 +25,8 @@
   "enterEmail": "Please enter email address",
   "validEmail": "Please enter valid email address",
   "passwordRequired": "Password is required",
+  "oldPasswordRequired": "Old Password is required",
+  "oldPasswordIncorrect": "Entered old Password is incorrect",
   "validpassword": "Enter valid password",
   "enterName": "Please enter your name",
   "validName": "Enter valid name",
@@ -34,10 +36,12 @@
   "enterCode": "Please enter the verification code",
   "validCode": "Enter valid code",
   "enterDigitCode": "Enter a 6 digit code",
+  "enterAddress": "Please enter your address",
+  "validAddress": "Enter valid address",
 
   "TotalBookings": "Total Bookings",
   "UpcomingBookings": "Upcoming Bookings",
-  "PendingBookings": "Pending Bookings",
+  "PendingBookings": "Expired Bookings",
   "CompletedBookings": "Completed Bookings",
 
   "Home": "Home",
@@ -68,5 +72,20 @@
   "AllList": "All Booking List",
   "UpcomingList": "Upcoming Booking List",
   "PastList": "Past Booking List",
-  "PaymentList": "All Payment History"
+  "PaymentList": "All Payment History",
+  "editProfile": "Edit Profile",
+  "updateProfile": "Update Profile",
+  "Cancel": "Cancel",
+  "changePassword": "Change Password",
+  "Chat": "Chat",
+  "servicePreferences": "Service Preferences",
+  "serviceType": "Service Type",
+  "serviceTypeName": "Service Type Name",
+  "Submit": "Submit",
+  "Notifications": "Notifications",
+  "Accept": "Accept",
+  "Decline": "Decline",
+  "Payment": "Payment",
+
+  "ViewQuote": "View Quote"
 }

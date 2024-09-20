@@ -31,9 +31,10 @@ const RegistrationPage = () => {
   const router = useRouter();
   const user = getData("user");
   const userAuth = user?.token;
-  const [isHidden, setIsHidden] = useState(false);
-  const [isConfirmHidden, setIsConfirmHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
+  const [isConfirmHidden, setIsConfirmHidden] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const selector = useSelector((state) => state.registerApi);
 
   const { t } = useTranslation("common");
 
@@ -53,6 +54,7 @@ const RegistrationPage = () => {
   );
 
   const formSchema = useMemo(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     return yup
       .object()
       .shape({
@@ -60,7 +62,7 @@ const RegistrationPage = () => {
         email: yup
           .string()
           .required(t("enterEmail"))
-          .email(t("validEmail"))
+          .matches(emailRegex, t("validEmail"))
           .trim(t("validEmail")),
         password: yup
           .string()
@@ -91,6 +93,53 @@ const RegistrationPage = () => {
 
   const { toaster } = useToaster();
 
+  // const onSubmitForm = async (formData) => {
+  //   try {
+  //     const { userName, email, password } = formData;
+
+  //     let registrationParams = {};
+  //     if (location) {
+  //       registrationParams = {
+  //         name: userName,
+  //         email: email,
+  //         password: password,
+  //         loginType: "email",
+  //         loggedTimelongitude: location.longitude,
+  //         loggedTimelatitude: location.latitude,
+  //       };
+  //     } else {
+  //       registrationParams = {
+  //         name: userName,
+  //         email: email,
+  //         password: password,
+  //         loginType: "email",
+  //       };
+  //     }
+  //     setIsLoading(true);
+  //     const res = await dispatch(registerAction(registrationParams));
+  //     console.log("res.payload.status", res);
+  //     if (!res?.payload?.status) {
+  //       setIsLoading(false);
+
+  //       return toast.error(res.payload.message);
+  //     }
+  //     if (res?.payload?.status) {
+  //       setIsLoading(false);
+  //       localStorage.setItem("isRegistreation", true);
+  //       toaster(TOAST_ALERTS.REGISTER_SUCCESS, TOAST_TYPES.SUCCESS);
+  //       methods.reset();
+  //       dispatch(setVerfyEmail(email));
+  //       localStorage.setItem("verifyEmail", email);
+  //       router.push("/verifyEmail");
+  //     }
+  //   } catch (error) {
+  //     setIsLoading(false);
+
+  //     toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+  //     console.log("error", error);
+  //   }
+  // };
+
   const onSubmitForm = async (formData) => {
     try {
       const { userName, email, password } = formData;
@@ -115,30 +164,33 @@ const RegistrationPage = () => {
       }
       setIsLoading(true);
       const res = await dispatch(registerAction(registrationParams));
-      if (!res.payload.status) {
-        setIsLoading(false);
 
-        return toast.error(res.payload.message);
-      }
-      if (res.payload.status) {
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          localStorage.setItem("isRegistreation", true);
+          // toast(TOAST_ALERTS.REGISTER_SUCCESS, TOAST_TYPES.SUCCESS);
+          methods.reset();
+          dispatch(setVerfyEmail(email));
+          localStorage.setItem("verifyEmail", email);
+          router.push("/verifyEmail");
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          toast.error(res.payload.message);
+        }
+      } else {
         setIsLoading(false);
-        localStorage.setItem("isRegistreation", true);
-        toaster(TOAST_ALERTS.REGISTER_SUCCESS, TOAST_TYPES.SUCCESS);
-        methods.reset();
-        dispatch(setVerfyEmail(email));
-        localStorage.setItem("verifyEmail", email);
-        router.push("/verifyEmail");
+        toast.error(res.error.message || res.payload.message);
       }
     } catch (error) {
       setIsLoading(false);
-
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("error", error);
     }
   };
 
   return (
-    <>
+    <div className='main-register-container'>
       <div className='container-div'>
         <div className='logo-div-section'>
           <div className=''>
@@ -254,15 +306,15 @@ const RegistrationPage = () => {
                 </div>
               </div>
 
-              <div className='forgot-text'>
+              {/* <div className='forgot-text'>
                 <Link
                   href='/forgotPassword'
                   onClick={() => dispatch(setIsForgotPassword(true))}>
                   {t("Forgot Password ?")}
                 </Link>
-              </div>
+              </div> */}
               <div className='center-div'>
-                <button type='submit' className='login-btn'>
+                <button type='submit' className='register-btn-div'>
                   {t("Register")}
                 </button>
               </div>
@@ -287,8 +339,8 @@ const RegistrationPage = () => {
           </div>
         </div>
       </div>
-      {isLoading && <Loader />}
-    </>
+      {isLoading && <Loader isAuth={true} />}
+    </div>
   );
 };
 

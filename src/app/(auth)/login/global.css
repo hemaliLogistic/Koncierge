@@ -9,13 +9,15 @@ html,
 body {
   @apply m-0 p-0 h-full;
 }
-
+.main-login-container {
+  @apply h-full sm:overflow-hidden sm:h-[100vh];
+}
 .property-image {
   @apply w-full h-full object-cover rounded-t-xl sm:rounded-none;
 }
 
 .container-div {
-  @apply flex w-full h-full sm:h-[97vh] m-0 sm:m-3 xl:m-3 flex-col sm:flex-row;
+  @apply flex w-full h-full sm:h-[97vh] m-0 sm:m-3 xl:m-3 flex-col sm:flex-row overflow-hidden;
 }
 
 .image-div {
@@ -60,7 +62,7 @@ body {
   @apply w-full h-12 border-[1px] border-fontColor/20 shadow-xl bg-transparent outline-0 rounded-none;
 }
 .input-div-text {
-  @apply text-fontColor opacity-[60%] shadow-xl text-[16px] sm:text-[16px] font-Mulish font-extralight bg-transparent outline-0;
+  @apply text-fontColor opacity-[60%] shadow-xl text-[16px] sm:text-[16px] font-Mulish font-normal bg-transparent outline-0;
 }
 .input-left-icon {
   @apply absolute inset-y-0 left-0 flex items-center pl-3;
@@ -75,16 +77,16 @@ body {
   @apply flex w-[90%] sm:w-[85%] justify-end text-[16px] sm:text-[18px]  text-fontColor opacity-[60%] font-Mulish font-extralight mt-5 sm:mt-6 cursor-pointer;
 }
 .login-btn {
-  @apply bg-themeColor text-white font-Mulish font-normal text-[16px] sm:text-[18px]  outline-0 w-[50%] sm:w-[30%] h-12 mt-5 sm:mt-10;
+  @apply bg-themeColor text-white font-Jost font-normal text-[16px] sm:text-[18px]  outline-0 w-[50%] sm:w-[30%] h-12 mt-5 sm:mt-10;
 }
 .register-text {
-  @apply text-[16px] sm:text-[18px] text-gray33  font-Mulish font-extralight mt-[10px] opacity-[80%];
+  @apply text-[16px] sm:text-[18px] text-gray33  font-Jost font-normal mt-[10px] opacity-[80%];
 }
 .bottom-div {
-  @apply mt-5  sm:mt-0 bottom-1 lg:bottom-5 sm:fixed;
+  @apply mt-5 mb-5  sm:mt-0 bottom-1 lg:bottom-5 sm:fixed;
 }
 .register-btn {
-  @apply text-black font-Mulish font-normal text-[16px] sm:text-[18px]  pl-3;
+  @apply text-black font-Jost font-semibold text-[16px] sm:text-[18px]  pl-3;
 }
 .logo-div-section {
   @apply w-40 flex sm:hidden justify-center mx-auto mt-5 self-center;

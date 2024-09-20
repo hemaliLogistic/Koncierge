@@ -16,7 +16,8 @@ const DashBoardLayout = ({ children }) => {
       {/* <NextUIProvider> */}
       <Navbar />
       {/* Conditionally render the Segment component */}
-      {pathname !== routeWithoutSegment && <Segment />}
+      {<Segment />}
+      {/* {pathname !== routeWithoutSegment && <Segment />} */}
       <Modal />
       {children}
       <Footer />

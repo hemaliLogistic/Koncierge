@@ -1,22 +1,32 @@
 "use client";
 
-import rootReducers from "./rootReducers";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { authApiSliceReducer } from "./Auth/AuthSlice";
+import { dashboardApiSliceReducer } from "./Dashboard/DashboardSlice";
+import { homeApiSliceReducer } from "./Home/HomeSlice";
+import { chatApiSliceReducer } from "./Chat/ChatSlice";
 
-// const persistConfig = {
-//   key: "auth",
-//   storage: storage,
-//   whitelist: ["auth", "email"],
-// };
-// const pReducer = persistReducer(persistConfig, rootReducer);
-
-const initialState = {};
-
-// const store = legacy_createStore(pReducer, initialState);
-const store = configureStore({
-  reducer: rootReducers,
+const rootReducer = combineReducers({
+    registerApi: authApiSliceReducer,
+    dashboardApi: dashboardApiSliceReducer,
+    homeApi: homeApiSliceReducer,
+    chatApi: chatApiSliceReducer
 });
 
-// const persistor = persistStore(store);
+const persistConfig = {
+    key: "root",
+    storage,
+};
 
-export { store };
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+    reducer: persistedReducer,
+});
+
+const persistor = persistStore(store);
+
+export { store, persistor };

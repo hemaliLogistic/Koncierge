@@ -26,16 +26,21 @@ const ProtectedPageService = () => {
     "/verifyEmail",
     "/resetPassword",
     "/forgotPassword",
+    "/getStarted",
   ];
 
   useEffect(() => {
     if (afterLoginNotAccessiblePages.includes(path)) {
+      console.log("path", path);
       const isRegistered = localStorage.getItem("isRegistreation");
+      console.log("isRegistered", isRegistered);
       if (userAuth) {
         let dashboard_url = `/dashboard`;
         router.push(dashboard_url);
       } else if (isRegistered) {
         router.push("/verifyEmail");
+      } else if (path === "/verifyEmail" && !isRegistered) {
+        router.push("/");
       }
     } else {
       let isProtectedDynamicPath = false;

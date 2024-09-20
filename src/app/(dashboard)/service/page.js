@@ -8,65 +8,65 @@ import Loader from "@/components/Loader";
 import DataTableComponent from "@/components/DataTable";
 import PaginationComponent from "@/components/Pagination";
 import { useTranslation } from "next-i18next";
+import useToaster from "@/hooks/useToaster";
+import { useDispatch } from "react-redux";
+import { pastBookingAction } from "@/redux/Dashboard/action";
+import { toast } from "react-toastify";
+import { TOAST_ALERTS } from "@/constants/keywords";
 
 const PastServices = () => {
+  const { t } = useTranslation("common");
   const [isLoading, setIsLoading] = useState(true);
   const [active, setActive] = React.useState(1);
   const tableRef = useRef(null);
+
   const [currentPage, setCurrentPage] = useState(1);
-
-  const { t } = useTranslation("common");
-
-  const totalPages = 15; // Adjust this as per your requirement
+  const [totalPages, setTotalPages] = useState(0);
+  const [appointmentData, setAppointmentData] = useState([]);
+  // const totalPages = 15; // Adjust this as per your requirement
+  const { toaster } = useToaster();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    getAllBookingData();
   }, []);
+  useEffect(() => {
+    getAllBookingData();
+  }, [currentPage]);
 
-  const data = [
-    {
-      id: 1,
-      name: "Service Name Here",
-      instuction: "Service Instruction",
-      date: "22/4/2024",
-      time: "8:00AM - 9:00PM",
-      status: "Completed",
-    },
-    {
-      id: 2,
-      name: "Service Name Here",
-      instuction: "Service Instruction",
-      date: "22/4/2024",
-      time: "8:00AM - 9:00PM",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      name: "Service Name Here",
-      instuction: "Service Instruction",
-      date: "22/4/2024",
-      time: "8:00AM - 9:00PM",
-      status: "Upcoming",
-    },
-    {
-      id: 4,
-      name: "Service Name Here",
-      instuction: "Service Instruction",
-      date: "22/4/2024",
-      time: "8:00AM - 9:00PM",
-      status: "Completed",
-    },
-    {
-      id: 5,
-      name: "Service Name Here",
-      instuction: "Service Instruction",
-      date: "22/4/2024",
-      time: "8:00AM - 9:00PM",
-      status: "Pending",
-    },
-  ];
+  const getAllBookingData = async () => {
+    setIsLoading(true);
+    const bookingParam = {
+      page: currentPage,
+      limit: 5,
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    };
+    console.log("bookingParam-=", bookingParam);
+    try {
+      const res = await dispatch(pastBookingAction(bookingParam));
+
+      console.log("res-=-=-=-", res);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          setIsLoading(false);
+          setAppointmentData(res?.payload?.data?.serviceList);
+          setTotalPages(res?.payload?.data?.totalPages);
+        } else {
+          setIsLoading(false);
+          toast.error(res.payload.message);
+        }
+      } else {
+        setIsLoading(false);
+        toast.error(res.error.message || res.payload.message);
+      }
+    } catch (error) {
+      setIsLoading(false);
+
+      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+      console.log("Error", error);
+    }
+  };
 
   const handlePageChange = (page) => {
     console.log("page=-=-=", page);
@@ -76,30 +76,32 @@ const PastServices = () => {
   return (
     <>
       <div className='main-service-div'>
-        {isLoading && <Loader />}
-        {!isLoading && (
-          <div className='main-service-table-div'>
-            <div className='content-service-border'>
-              <h1 className='main-service-table-title'>{t("PastList")}</h1>
-            </div>
-            <div className='main-service-table-column'>
+        <div className='main-service-table-div'>
+          <div className='content-service-border'>
+            <h1 className='main-service-table-title'>{t("PastList")}</h1>
+          </div>
+          <div className='main-service-table-column'>
+            <>
               <div className='table-service-div-content'>
                 <DataTableComponent
-                  data={data}
+                  data={appointmentData}
                   isLoading={isLoading}
                   isPayment={false}
+                  page={currentPage}
                 />
               </div>
-              <div className='pagination-service-div'>
-                <PaginationComponent
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </div>
-            </div>
+              {appointmentData?.length > 0 && (
+                <div className='pagination-service-div'>
+                  <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
+            </>
           </div>
-        )}
+        </div>
       </div>
     </>
   );

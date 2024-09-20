@@ -19,7 +19,7 @@
 }
 
 .setting-horizontal-divider {
-  @apply h-px w-full bg-grayAC;
+  @apply h-px w-full bg-grayE1;
 }
 
 .setting-input-container {
@@ -27,7 +27,7 @@
 }
 
 .setting-input-field {
-  @apply w-full pl-5 h-[60px] font-Mulish text-lg font-medium border border-grayAC text-fontColor;
+  @apply w-full pl-5 h-[60px] font-Mulish text-lg font-medium border border-grayE1 text-fontColor;
 }
 
 .button-update {
@@ -39,7 +39,7 @@
 }
 
 .buttons-container {
-  @apply mt-[30px] pl-5 pr-5 mb-[30px] font-Jost flex gap-7  max-md:justify-center;
+  @apply mt-[30px] pl-5 pr-5 mb-[30px] font-Jost flex gap-7  justify-center;
 }
 
 .user-name {
@@ -89,4 +89,7 @@
 .select-input {
   @apply setting-input-field bg-white;
   appearance: none;
+}
+.phone-input-div {
+  @apply w-[100%] h-[60px] font-Mulish text-lg font-normal;
 }

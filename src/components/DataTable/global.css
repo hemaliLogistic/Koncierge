@@ -9,8 +9,13 @@
   @apply font-Jost font-semibold text-[18px];
 }
 .table-text {
-  @apply font-Jost font-light text-[16px] text-fontColor tracking-normal;
+  @apply font-Jost font-light text-[14px] lg:text-[16px] text-fontColor tracking-normal;
 }
 .table-button-text {
   @apply font-Jost font-light text-[14px] text-fontColor tracking-normal;
+}
+.cell-style {
+  border-left: 1px solid rgba(238, 236, 236, 0.8);
+  border-bottom: 0px;
+  justify-content: center;
 }

@@ -35,8 +35,8 @@ const RegistrationPage = () => {
 
   const { resetToken } = useParams();
 
-  const [isHidden, setIsHidden] = useState(false);
-  const [isConfirmHidden, setIsConfirmHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
+  const [isConfirmHidden, setIsConfirmHidden] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   // Form Config
@@ -91,22 +91,22 @@ const RegistrationPage = () => {
           token: resetToken,
         })
       );
-      //   const res = await axiosPost(API_ROUTER.LOGIN, {
-      //     is_google_login: 0,
-      //     email,
-      //     password,
-      //   });
 
       console.log("res", res);
-      if (!res.payload.status) {
+
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          toaster(TOAST_ALERTS.RESET_SUCCESSFULLY, TOAST_TYPES.SUCCESS);
+          methods.reset();
+          router.push("/login");
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          toast.error(res.payload.message);
+        }
+      } else {
         setIsLoading(false);
-        return toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-      }
-      if (res.payload.status) {
-        setIsLoading(false);
-        toaster(TOAST_ALERTS.RESET_SUCCESSFULLY, TOAST_TYPES.SUCCESS);
-        methods.reset();
-        router.push("/login");
+        toast.error(res.error.message || res.payload.message);
       }
     } catch (error) {
       setIsLoading(false);
@@ -116,7 +116,7 @@ const RegistrationPage = () => {
   };
 
   return (
-    <>
+    <div className='main-reset-container'>
       <div className='container-div'>
         <div className='logo-div-section'>
           <div className=''>
@@ -219,8 +219,8 @@ const RegistrationPage = () => {
           </div>
         </div>
       </div>
-      {isLoading && <Loader />}
-    </>
+      {isLoading && <Loader isAuth={true} />}
+    </div>
   );
 };
 

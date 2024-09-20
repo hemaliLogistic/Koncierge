@@ -9,7 +9,7 @@
 }
 
 .segment-nav {
-  @apply hidden lg:flex w-[85%]  bg-white overflow-hidden border-b;
+  @apply hidden lg:flex w-[85%]  bg-white border-b;
 }
 
 .segment-link {
@@ -28,7 +28,7 @@
 }
 
 .segment-text {
-  @apply block text-[16px] text-fontColor font-Jost tracking-wide text-center;
+  @apply block text-[16px] lg:text-[12px] xl:text-[16px] 2xl:text-[16px] text-fontColor font-Jost tracking-wide text-center;
 }
 
 /* modal.css */
@@ -40,7 +40,7 @@
   @apply bg-white p-6 rounded-none shadow-lg w-[70%] sm:w-[50%] lg:w-[30%] xl:w-[30%] 2xl:w-[20%];
 }
 
-.modal-body {
+.modal-body-desc {
   @apply font-Jost font-bold text-black33 text-[22px] w-[100%] sm:w-[80%] text-center;
 }
 
@@ -56,7 +56,7 @@
   @apply flex justify-center items-center bg-grayAC p-2 font-Jost font-normal text-[14px] text-white w-16 sm:w-24 text-center;
 }
 .modal-content-div {
-  @apply bg-white p-6 rounded-none shadow-lg  w-[70%] sm:w-[50%] lg:w-[30%] xl:w-[30%] 2xl:w-[20%];
+  @apply bg-white p-6 rounded-none shadow-lg  w-[70%] sm:w-[50%] lg:w-[30%] xl:w-[40%] 2xl:w-[30%];
 }
 .center-footer-div {
   @apply flex items-center justify-center;
@@ -82,7 +82,7 @@
   @apply flex w-full px-5 space-x-2 py-4 text-center bg-themeColor text-white;
 }
 .mobile-segment {
-  @apply lg:hidden w-[90%];
+  @apply lg:hidden w-[85%];
 }
 .mobile-dropdown-view {
   @apply flex w-[80%] space-x-2 text-white;
@@ -107,4 +107,10 @@
 }
 .textInput-modal {
   @apply w-full h-12 border-[1px] p-2 border-fontColor/20 shadow-sm bg-transparent outline-0 rounded-none;
+}
+.inside-input-right-icon {
+  @apply absolute inset-y-0 right-0 flex items-center pr-3;
+}
+.inside-input-div {
+  @apply mt-7 relative;
 }

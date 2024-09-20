@@ -36,13 +36,27 @@ module.exports = {
         yellowFF: "#FFF4DE",
         greenDC: "#DCFCE7",
         subTextColor: "#9d9d9d",
+        subTextColor: "#9d9d9d",
+        serviceTextColor: "#7F7F7F99",
+        grayE1: "#E1DFDF",
       },
     },
     fontFamily: {
       Jost: ["Jost"],
       Mulish: ["Mulish"],
       Nunito: ["Nunito"],
+      Inter: ["Inter"]
     },
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+      '3xl': '1992px',
+
+    },
+
   },
   plugins: [],
 };

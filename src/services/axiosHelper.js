@@ -1,55 +1,91 @@
 import axiosInstance from "@/utils/axios";
 import { HOST_API } from "../../predict";
+import { getData } from "@/utils/storage";
 
 export const axiosPost = async (
   url,
   data,
-  contentType = "application/json"
+  contentType = "application/json",
+  isFormData
 ) => {
   let response = {};
-  console.log("rocess.env", HOST_API);
-  console.log("rocess.env", process.env.NODE_ENV);
+  let header = {};
+
+  const user = getData("user");
+  const userAuth = user?.token;
+  if (userAuth) {
+    console.log("userAuth Ma");
+    header = {
+      "Content-Type": contentType,
+      Accept: "*/*",
+      Authorization: `Bearer ${userAuth}`,
+    };
+  } else {
+    console.log("else ma ");
+    header = {
+      "Content-Type": contentType,
+      Accept: "*/*",
+    };
+  }
   try {
-    const result = await axiosInstance.post(url, JSON.stringify(data), {
-      headers: {
-        "Content-Type": contentType,
-        Accept: "*/*",
-      },
+    const dataObj = isFormData ? data : JSON.stringify(data);
+
+    const result = await axiosInstance.post(url, dataObj, {
+      headers: header,
     });
     response.data = result?.data || result?.data?.data;
     response.status = result?.status;
+    return response;
   } catch (e) {
-    response.status = false;
     console.log("ERROR", e);
-
     if (e.response) {
-      // Server responded with a status other than 200 range
-      console.log("Response data:", e.response.data);
-      console.log("Response status:", e.response.status);
-      console.log("Response headers:", e.response.headers);
-    } else if (e.request) {
-      // Request was made but no response was received
-      console.log("Request data:", e.request);
+      return {
+        data: e.response.data,
+        status: e.response.status,
+        message: e.response.data.message,
+      };
     } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log("Error message:", e.message);
+      return {
+        data: null,
+        status: false,
+        message: e.message,
+      };
     }
   }
-  return response;
 };
 export const axiosGet = async (
   url,
-  params = {},
+  params = data,
+  isAppend = false,
   contentType = "application/json"
 ) => {
   let response = {};
+  let header = {};
+  let result = null;
+  const user = getData("user");
+  const userAuth = user?.token;
+  if (userAuth) {
+    header = {
+      "Content-Type": contentType,
+      Authorization: `Bearer ${userAuth}`,
+    };
+  } else {
+    header = {
+      "Content-Type": contentType,
+    };
+  }
   try {
-    const result = await axiosInstance.get(url, {
-      headers: {
-        "Content-Type": contentType,
-      },
-      params,
-    });
+    if (isAppend) {
+      result = await axiosInstance.get(url + params, {
+        headers: header,
+      });
+    } else {
+      result = await axiosInstance.get(url, {
+        headers: header,
+        ...(Object.keys(params).length > 0 ? { params } : {}),
+      });
+    }
+
     response.data = result.data;
     response.status = [200, 201].includes(result.status);
   } catch (e) {

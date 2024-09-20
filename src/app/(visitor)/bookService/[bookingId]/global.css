@@ -5,3 +5,6 @@
 .main-service-div {
   @apply flex items-center justify-center mx-auto mt-4;
 }
+.error-text-p {
+  @apply text-redEB font-Jost font-normal text-[16px] pl-2 pt-1 tracking-wide;
+}

@@ -3,54 +3,56 @@
 @tailwind utilities;
 
 .main-container {
-    @apply flex mx-auto mt-10 flex-col w-[95%] xl:w-[85%] lg:w-[90%] py-2 justify-between pb-5 sm:mx-auto;
+  @apply flex mx-auto mt-10 mb-20 flex-col w-[95%] xl:w-[85%] lg:w-[90%] py-2 justify-between pb-5 sm:mx-auto;
 }
-
 
 .notification-header {
-    @apply font-Jost font-semibold text-xl pb-5;
+  @apply font-Jost font-semibold text-xl pb-5;
 }
 
-.horizontal-line-themecolor{
-    @apply h-px w-full bg-themeColor;
+.horizontal-line-themecolor {
+  @apply h-px w-full bg-themeColor;
 }
 
-.horizontal-line-graycolor{
-    @apply h-px w-full bg-grayAC;
+.horizontal-line-graycolor {
+  @apply h-px w-full bg-grayE1;
 }
 
 .notification-box {
-    @apply w-full shadow-[0px_0px_8px_2px_rgba(0,0,0,0.06)] flex flex-col h-full mt-10;
+  @apply w-full shadow-[0px_0px_8px_2px_rgba(0,0,0,0.06)] flex flex-col h-full mt-10;
 }
 
-.notification-detail-container{
-    @apply pt-[20px] pl-[20px] lg:flex pb-5;
+.notification-detail-container {
+  @apply pt-[20px] pl-[20px] lg:flex pb-5;
 }
 
-.left-section{
-    @apply lg:w-5/6;
+.left-section {
+  @apply sm:w-3/4 lg:w-5/6;
 }
 
-.user-profile-image{
-    @apply h-10 w-10;
+.user-profile-image {
+  @apply h-10 w-10;
 }
 
-.user-name{
-    @apply font-Jost font-bold text-xl pt-[6px] pl-[15px];
+.user-name {
+  @apply font-Jost font-bold text-xl pt-[6px] pl-[15px];
 }
 
-.user-message{
-    @apply font-Mulish font-normal text-base pt-2;
+.user-message {
+  @apply font-Mulish font-normal text-base pt-2;
 }
 
-.right-section{
-    @apply lg:w-1/6 w-full pr-[20px];
+.right-section {
+  @apply w-full sm:w-3/12 lg:w-1/6 pr-[20px];
 }
 
-.btn-container{
-    @apply lg:w-[150px] h-[50px] w-full bg-themeColor mt-[34px] justify-center items-center flex 2xl:ml-[45px];
+.btn-container {
+  @apply lg:w-[150px] h-[50px] w-full bg-themeColor mt-[34px] justify-center items-center flex 2xl:ml-[45px];
 }
 
-.btn-text{
-    @apply font-Mulish font-bold text-xl text-white;
+.btn-text {
+  @apply font-Mulish font-bold text-[16px] text-white;
+}
+.pagination-booking-div {
+  @apply flex w-[100%] justify-center items-center h-36;
 }

@@ -18,12 +18,15 @@ import useToaster from "@/hooks/useToaster";
 import "@/utils/global";
 import Loader from "@/components/Loader";
 import { HOST_API } from "../../../../predict";
+import { getData } from "@/utils/storage";
 
 const GetStarted = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log("rocess.env", HOST_API);
-  console.log("rocess.env", process.env.NODE_ENV);
+  const storedFormData = getData("FormData");
+  console.log("storedFormData", storedFormData);
+  const BookingId = getData("Bookingid");
+  console.log("BookingId", BookingId);
   const { t } = useTranslation("common");
   const { location } = useContext(LocationContext);
   const router = useRouter();
@@ -32,7 +35,6 @@ const GetStarted = () => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    console.log("translate", t("Welcome Back"));
     const loginType = localStorage.getItem("loginType");
     if (session?.user && !isLoggingIn && loginType) {
       console.log("issssss=====");
@@ -80,7 +82,11 @@ const GetStarted = () => {
         if (res.payload.status) {
           setIsLoading(false);
           toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
-          router.push("/dashboard");
+          if (storedFormData) {
+            router.push(`/bookService/${BookingId}`);
+          } else {
+            router.push("/dashboard");
+          }
         }
       } catch (error) {
         setIsLoading(false);
@@ -93,7 +99,7 @@ const GetStarted = () => {
   );
 
   return (
-    <>
+    <div className='main-login-container'>
       <div className='container-div'>
         <div className='logo-div-section'>
           <img src='/images/webLogo.png' alt='Property' />
@@ -156,9 +162,9 @@ const GetStarted = () => {
           </div>
         </div>
       </div>
-      {isLoading && <Loader />}
+      {isLoading && <Loader isAuth={true} />}
       {/* <HomePage /> */}
-    </>
+    </div>
   );
 };
 

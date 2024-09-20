@@ -9,7 +9,7 @@
   @apply flex w-[85%] gap-6 flex-col lg:flex-row mb-10;
 }
 .total-booking {
-  @apply bg-greenDC p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+  @apply bg-greenDC p-6 rounded-none shadow-md w-[100%] lg:w-[40%];
 }
 .column-view {
   @apply flex flex-col;
@@ -18,7 +18,7 @@
   @apply text-fontColor text-[24px] font-normal font-Jost tracking-wide opacity-[60%];
 }
 .upcoming-booking {
-  @apply bg-purpleF3 p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+  @apply bg-purpleF3 p-6 rounded-none shadow-md w-[100%] lg:w-[40%];
 }
 .calendar-div {
   @apply mt-2 flex justify-between items-center;
@@ -27,10 +27,10 @@
   @apply text-[50px] font-semibold text-black33 font-Jost;
 }
 .pending-booking {
-  @apply bg-pitchFF p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+  @apply bg-pitchFF p-6 rounded-none shadow-md w-[100%] lg:w-[40%];
 }
 .completed-booking {
-  @apply bg-yellowFF p-6 rounded-lg shadow-md w-[100%] lg:w-[40%];
+  @apply bg-yellowFF p-6 rounded-none shadow-md w-[100%] lg:w-[40%];
 }
 .custom-pagination .nextui-pagination-item {
   @apply w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300;

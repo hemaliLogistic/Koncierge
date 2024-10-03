@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "next-i18next";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
     const [language, setLanguage] = useState("English");
@@ -17,6 +18,8 @@ const Navbar = () => {
     const router = useRouter();
     const { t } = useTranslation("common");
     const windowSize = useWindowSize();
+    const unreadNotificationCount = useSelector((state) => state?.homeApi?.unreadNotificationCount);
+    // console.log("unreadNotificationCount===>", unreadNotificationCount);
 
     useEffect(() => {
         document.addEventListener("click", handleOutsideClick);
@@ -163,11 +166,11 @@ const Navbar = () => {
                     </div>
 
                     {/* Notification Icon */}
-                    <button
+                    {unreadNotificationCount > 0 ? (<button
                         className='nav-notification relative'
                         onClick={() => router.push("/notification")}>
                         <span className='absolute bottom-[10px] left-[8px] bg-themeColor text-white rounded-full h-3 w-3 font-Jost text-[10px] items-center justify-center flex p-[8px]'>
-                            99
+                            {unreadNotificationCount}
                         </span>
                         <Image
                             src='/images/bell.png'
@@ -175,7 +178,8 @@ const Navbar = () => {
                             width={20}
                             height={20}
                         />
-                    </button>
+                    </button>) : ''}
+
                 </div>
 
                 <div className='nav-menu-right'>
@@ -208,20 +212,19 @@ const Navbar = () => {
                             </div>
 
                             {/* Notification Icon */}
-                            <button
+                            {unreadNotificationCount > 0 ? (<button
                                 className='nav-notification relative'
                                 onClick={() => router.push("/notification")}>
-                                <span className='absolute bottom-[22px] left-[10px] bg-themeColor text-white rounded-full h-3 w-3 font-Jost text-[10px] items-center justify-center flex p-[8px]'>
-                                    99
+                                <span className='absolute bottom-[10px] left-[8px] bg-themeColor text-white rounded-full h-3 w-3 font-Jost text-[10px] items-center justify-center flex p-[8px]'>
+                                    {unreadNotificationCount}
                                 </span>
                                 <Image
                                     src='/images/bell.png'
                                     alt='Notification'
-                                    width={25}
-                                    height={25}
-                                    className='mt-1'
+                                    width={20}
+                                    height={20}
                                 />
-                            </button>
+                            </button>) : ''}
                         </div>
 
                         {/* <a href='#' className='mobile-menu-item'>

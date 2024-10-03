@@ -617,7 +617,42 @@ const CommonPageblock = styled.div`
             }
             .text-red-500 {
               position: absolute;
-              font-size: 13px;
+              font-size: 12px;
+              line-height: 15px;
+            }
+            .react-select__input-container,
+            .react-select__value-container {
+              margin: 0px;
+              padding: 0px;
+            }
+            .react-select__control {
+              height: 60px;
+              border: 1px solid rgba(82, 82, 82, 20%);
+              padding: 0px 20px;
+              border-radius: 0px;
+              font-size: 16px;
+              color: #000 !important;
+              font-family: Mulish;
+            }
+            .react-select__input {
+              font-size: 16px;
+              color: #000 !important;
+              outline: none;
+              box-shadow: none;
+              font-family: Mulish;
+              &::placeholder {
+                color: #000 !important;
+              }
+            }
+            .react-select__indicators {
+              .react-select__indicator-separator {
+                display: none;
+              }
+              svg {
+                path {
+                  fill: #000;
+                }
+              }
             }
           }
           .services-option-block {
@@ -1409,7 +1444,8 @@ const CommonPageblock = styled.div`
         }
       }
     }
-    .privacy-section-main { h3 {
+    .privacy-section-main {
+      h3 {
         font-size: 24px;
         line-height: 30px;
         color: #333;

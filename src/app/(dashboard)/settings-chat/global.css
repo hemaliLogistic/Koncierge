@@ -36,7 +36,7 @@
 }
 
 .profile-active-icon{
-  @apply absolute top-9 max-sm:left-[40px] max-md:left-[50px] max-2xl:left-[40px] left-[50px];
+  @apply absolute top-1 max-sm:left-[40px] max-md:left-[50px] max-2xl:left-[40px] left-[65px];
 }
 
 .message-detail-container{
@@ -77,7 +77,7 @@
 }
 
 .current-chat-username{
-  @apply font-Inter font-medium text-xl ml-[10px];
+  @apply font-Inter font-medium text-xl;
 }
 
 .reciever-msg-container{

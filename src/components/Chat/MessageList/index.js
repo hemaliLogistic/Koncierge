@@ -102,17 +102,8 @@ const MessageList = () => {
                 } else {
                     const newMessages = res?.payload?.response;
                     dispatch(setPaginationMessageList(newMessages));
-                    // const scrollHeightBefore = element.scrollHeight;
-                    // await new Promise((resolve) => setTimeout(resolve, 0));
-                    // const newScrollHeight = element.scrollHeight;
-                    // element.scrollTop =
-                    //     element.scrollTop + (newScrollHeight - scrollHeightBefore);
                     await new Promise((resolve) => setTimeout(resolve, 0));
-
-                    // Get the new scroll height after adding the new messages
                     const newScrollHeight = element.scrollHeight;
-
-                    // Adjust the scroll position to keep it at the same place
                     element.scrollTop = newScrollHeight - scrollHeightBefore;
                 }
             } catch (error) {
@@ -127,17 +118,22 @@ const MessageList = () => {
         <div className="settings-chat-right-section">
             <div className="setting-box-shadow h-[640px] flex flex-col">
                 <div className="current-chat-profile-container flex items-center p-4">
-                    <img
-                        className="h-14 w-14"
-                        src={`${selectedUser?.adminProfile
-                            ? selectedUser?.adminProfile
-                            : "/images/chat-profile.svg"
-                            }`}
-                        alt="Profile"
-                    />
-                    <p className="current-chat-username ml-4">
-                        {selectedUser?.adminName}
-                    </p>
+                    <div className="flex items-center">
+                        <img
+                            className="h-14 w-14"
+                            src={selectedUser?.adminProfile ? selectedUser?.adminProfile : "/images/chat-profile.svg"}
+                            alt="Profile"
+                        />
+                        <div className="ml-2">
+                            <p className="current-chat-username">
+                                {selectedUser?.adminName}
+                            </p>
+                            <p className="text-sm text-gray-500"> {/* Add styling for small, disabled text */}
+                                {selectedUser?.isUserOnline ? 'Online' : 'Away'}
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
                 <div className="chat-container flex flex-col flex-1 overflow-hidden" >
                     <div
@@ -152,9 +148,13 @@ const MessageList = () => {
                                 </div>
                                 {groupedMessages[date].map((item, index) =>
                                     item?.senderId === user?.data?.id ? (
-                                        <div key={index} className="reciever-msg-container">
+                                        <div
+                                            key={index}
+                                            className={`${item.isInformative ? "w-full flex justify-center" : "reciever-msg-container"
+                                                }`}
+                                        >
                                             <div className="relative">
-                                                {item.typeOfMessage === "text" && (
+                                                {item.typeOfMessage === "text" && !item.isInformative && (
                                                     <div className="message-box-time-text flex flex-col">
                                                         <div className="message-box">
                                                             <div className="message-boxgrey bg-gray-200 px-4 py-2.5 rounded-full mb-2.5 inline-flex">
@@ -166,11 +166,7 @@ const MessageList = () => {
                                                     </div>
                                                 )}
                                                 {item.typeOfMessage === "image" && (
-                                                    <img
-                                                        src={item.message}
-                                                        alt="Media"
-                                                        className="media-img"
-                                                    />
+                                                    <img src={item.message} alt="Media" className="media-img" />
                                                 )}
                                                 {item.typeOfMessage === "video" && (
                                                     <video controls className="media-img">
@@ -185,12 +181,27 @@ const MessageList = () => {
                                                     </audio>
                                                 )}
                                             </div>
-                                            {/* <img src={item.profile} className="w-10 h-10 rounded-full object-cover" alt="Profile" /> */}
                                         </div>
                                     ) : (
-                                        <div key={index} className="sender-msg-container">
+                                        <div
+                                            key={index}
+                                            className={`${item.isInformative ? "w-full flex justify-center" : "sender-msg-container"
+                                                }`}
+                                        >
                                             <div className="relative">
-                                                {item.typeOfMessage === "text" && (
+                                                {item.isInformative == true && (
+                                                    <div className="message-box-time-text flex flex-col">
+                                                        <div className="message-box">
+                                                            <div className="message-boxgrey bg-gray-200 px-4 py-2.5 rounded-full mb-2.5 inline-flex">
+                                                                <p className="text-sm font-normal leading-5 text-[#131726]">
+                                                                    {item.message}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {!item.isInformative && item.typeOfMessage === "text" && (
                                                     <div className="message-box-time-text flex flex-col">
                                                         <div className="message-box">
                                                             <div className="message-boxgrey bg-gray-200 px-4 py-2.5 rounded-full mb-2.5 inline-flex">
@@ -203,11 +214,7 @@ const MessageList = () => {
                                                 )}
                                                 {item.typeOfMessage === "image" && (
                                                     <>
-                                                        <img
-                                                            src={item.message}
-                                                            alt="Media"
-                                                            className="media-img"
-                                                        />
+                                                        <img src={item.message} alt="Media" className="media-img" />
                                                     </>
                                                 )}
                                                 {item.typeOfMessage === "video" && (
@@ -219,18 +226,22 @@ const MessageList = () => {
                                                     </>
                                                 )}
                                             </div>
-                                            <img
-                                                src={item.profile}
-                                                className="w-10 h-10 rounded-full object-cover pr-2"
-                                                alt="Profile"
-                                            />
+                                            {!item.isInformative && (
+                                                <img
+                                                    src={item.profile}
+                                                    className="w-10 h-10 rounded-full object-cover pr-2"
+                                                    alt="Profile"
+                                                />
+                                            )}
                                         </div>
                                     )
                                 )}
+
                             </div>
                         ))}
                     </div>
-                    <SendMessage />
+                    {!messageList[0]?.chatDisable ? <SendMessage /> : ''}
+
                 </div>
             </div>
         </div>

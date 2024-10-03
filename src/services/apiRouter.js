@@ -5,6 +5,8 @@ export const API_ROUTER = {
     RESET_PASSWORD_USER: "user/reset-password",
     VERIFY_USER: "user/verify-email",
     RESEND_LINK: "user/resend-email-verification",
+    UPDATE_TOKEN: "update-device-token",
+    UNREAD_NOTIFICATION_COUNT: 'notification/unread-notifications',
 
     // Dashboard
 

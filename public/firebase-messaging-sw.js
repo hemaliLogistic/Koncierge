@@ -4,13 +4,13 @@ importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-messaging.js");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCgMQFn3u7eeCG_7faFwUxfnV7mKgbME88",
-  authDomain: "koncierge-e212b.firebaseapp.com",
-  projectId: "koncierge-e212b",
-  storageBucket: "koncierge-e212b.appspot.com",
-  messagingSenderId: "112911186056",
-  appId: "1:112911186056:web:be662ba456c688027b473d",
-  measurementId: "G-DQYJ1YPQ73",
+  apiKey: "AIzaSyBdzQN4lyXIyTaia08QOhmMlJFH60tgwFw",
+  authDomain: "koncierge-57828.firebaseapp.com",
+  projectId: "koncierge-57828",
+  storageBucket: "koncierge-57828.appspot.com",
+  messagingSenderId: "716779991674",
+  appId: "1:716779991674:web:fd6fd9361314580729c1c3",
+  measurementId: "G-ELRPYFQTMZ",
 };
 // eslint-disable-next-line no-undef
 firebase.initializeApp(firebaseConfig);

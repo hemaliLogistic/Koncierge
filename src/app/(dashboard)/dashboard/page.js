@@ -19,35 +19,29 @@ import { useDispatch } from "react-redux";
 import { TOAST_ALERTS } from "@/constants/keywords";
 import { getMessaging, onMessage } from "firebase/messaging";
 import useFcmToken from "@/hooks/useFcmToken";
-// import firebaseApp from "@/utils/Firebase/firebase";
+import firebaseApp from "@/utils/Firebase/firebase";
+import {
+  unreadNotificationCount,
+  updateDeviceToken,
+} from "@/redux/Home/action";
+import { getData } from "@/utils/storage";
 
 const UserDashBoard = () => {
   const { t } = useTranslation("common");
-  const [totalBooking, setTotalBooking] = useState("10");
-  const [pendingBooking, setPendingBooking] = useState("4");
-  const [completedBooking, setCompletedBooking] = useState("15");
-  const [upcomingBooking, setUpcomingBooking] = useState("100");
   const [isLoading, setIsLoading] = useState(true);
   const [active, setActive] = React.useState(1);
-  const tableRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [appointmentData, setAppointmentData] = useState([]);
   const [bookingCount, setBookingCount] = useState("10");
-  // const totalPages = 15; // Adjust this as per your requirement
-  const { toaster } = useToaster();
   const dispatch = useDispatch();
   const { fcmToken, notificationPermissionStatus } = useFcmToken();
-  // console.log("ABCDEFGHI");
-
-  useEffect(() => {
-    // getAllBookingData();
-    console.log("fcmToken-=-=", fcmToken);
-  }, [fcmToken]);
+  const user = getData("user");
 
   useEffect(() => {
     getAllBookingData();
     getBookingCount();
+    UnreadCount();
   }, []);
 
   useEffect(() => {
@@ -61,10 +55,8 @@ const UserDashBoard = () => {
       limit: 5,
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
-    console.log("bookingParam-=", bookingParam);
     try {
       const res = await dispatch(allBookingAction(bookingParam));
-
       if (res.meta.requestStatus === "fulfilled") {
         if (res.payload.status) {
           // setTimeout(() => {
@@ -88,11 +80,58 @@ const UserDashBoard = () => {
     }
   };
 
-  const handleClick = (page) => {
-    if (page > 0 && page <= totalPages) {
-      onPageChange(page);
+  const UnreadCount = async () => {
+    try {
+      const bookingParam = {};
+      const res = await dispatch(unreadNotificationCount(bookingParam));
+      console.log("cpunt Updated Succesfully", res);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          console.log("cpunt Updated Succesfully");
+        } else {
+          console.log("Error for Updated count");
+        }
+      } else {
+        console.log("Error for Updated Token");
+      }
+    } catch (error) {
+      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+      console.log("Error", error);
     }
   };
+
+  const UpdateDeviceToken = async () => {
+    const params = {
+      userId: user?.data?.id,
+      token: fcmToken,
+      deviceType: "web",
+    };
+    console.log("params-=", params);
+    try {
+      const res = await dispatch(updateDeviceToken(params));
+
+      if (res.meta.requestStatus === "fulfilled") {
+        if (res.payload.status) {
+          console.log("token Updated Succesfully");
+        } else {
+          console.log("Error for Updated Token");
+        }
+      } else {
+        console.log("Error for Updated Token");
+      }
+    } catch (error) {
+      toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+      console.log("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    if (fcmToken !== "") {
+      UpdateDeviceToken();
+    }
+    console.log("fcmToken-=-=", fcmToken);
+  }, [fcmToken]);
 
   const handlePageChange = (page) => {
     console.log("page=-=-=", page);

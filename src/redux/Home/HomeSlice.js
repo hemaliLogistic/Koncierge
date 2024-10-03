@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { bookedSlotListAction, checkoutSessionAction, mainCategoryListAction, paymentHistoryAction, requestServiceQutationAction, serviceByMainCategoryListAction } from "./action";
+import { bookedSlotListAction, checkoutSessionAction, mainCategoryListAction, paymentHistoryAction, requestServiceQutationAction, serviceByMainCategoryListAction, unreadNotificationCount, updateDeviceToken } from "./action";
 
 const initialState = {
     isLoading: false,
@@ -11,6 +11,8 @@ const initialState = {
     quatationData: {},
     formData: {},
     isBookingModalOpen: false,
+    deviceToken: {},
+    unreadNotificationCount: {}
 
 };
 
@@ -113,6 +115,32 @@ const HomeSlice = createSlice({
                 state.error = null;
             })
             .addCase(bookedSlotListAction.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.error = payload;
+            })
+            .addCase(updateDeviceToken.pending, (state, { payload }) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(updateDeviceToken.fulfilled, (state, { payload }) => {
+                state.deviceToken = payload;
+                state.isLoading = false;
+                state.error = null;
+            })
+            .addCase(updateDeviceToken.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.error = payload;
+            })
+            .addCase(unreadNotificationCount.pending, (state, { payload }) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(unreadNotificationCount.fulfilled, (state, { payload }) => {
+                state.unreadNotificationCount = payload?.data?.unReadNotifications;
+                state.isLoading = false;
+                state.error = null;
+            })
+            .addCase(unreadNotificationCount.rejected, (state, { payload }) => {
                 state.isLoading = false;
                 state.error = payload;
             });

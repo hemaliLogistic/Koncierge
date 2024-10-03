@@ -21,151 +21,148 @@ import { HOST_API } from "../../../../predict";
 import { getData } from "@/utils/storage";
 
 const GetStarted = () => {
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const storedFormData = getData("FormData");
-  console.log("storedFormData", storedFormData);
-  const BookingId = getData("Bookingid");
-  console.log("BookingId", BookingId);
-  const { t } = useTranslation("common");
-  const { location } = useContext(LocationContext);
-  const router = useRouter();
-  const { toaster } = useToaster();
-  const dispatch = useDispatch();
-  const { data: session } = useSession();
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const storedFormData = getData("FormData");
+    const BookingId = getData("Bookingid");
+    const { t } = useTranslation("common");
+    const { location } = useContext(LocationContext);
+    const router = useRouter();
+    const { toaster } = useToaster();
+    const dispatch = useDispatch();
+    const { data: session } = useSession();
 
-  useEffect(() => {
-    const loginType = localStorage.getItem("loginType");
-    if (session?.user && !isLoggingIn && loginType) {
-      console.log("issssss=====");
-      setIsLoggingIn(true);
-      loginUserCall(session.user);
-    }
-  }, [session, isLoggingIn]);
-
-  const googleLogin = async () => {
-    localStorage.setItem("loginType", "google");
-    await signIn("google", { callbackUrl: "/getStarted" });
-  };
-
-  const handleFacebookSignIn = async () => {
-    localStorage.setItem("loginType", "facebook");
-    await signIn(
-      "facebook",
-      { callbackUrl: "/" },
-      { prompt: "select_account" }
-    );
-  };
-
-  const loginUserCall = useCallback(
-    async (data) => {
-      console.log("location", location);
-      try {
+    useEffect(() => {
         const loginType = localStorage.getItem("loginType");
-        const socialLoginParam = {
-          name: data?.name,
-          email: data?.email,
-          loginType,
-          loggedTimeLatitude: location.latitude,
-          loggedTimeLongitude: location.longitude,
-          socialId: data?.id,
-        };
-
-        setIsLoading(true);
-        const res = await dispatch(loginAction(socialLoginParam));
-
-        if (!res.payload.status) {
-          setIsLoading(false);
-          toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-          return;
+        if (session?.user && !isLoggingIn && loginType) {
+            setIsLoggingIn(true);
+            loginUserCall(session.user);
         }
-        if (res.payload.status) {
-          setIsLoading(false);
-          toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
-          if (storedFormData) {
-            router.push(`/bookService/${BookingId}`);
-          } else {
-            router.push("/dashboard");
-          }
-        }
-      } catch (error) {
-        setIsLoading(false);
+    }, [session, isLoggingIn]);
 
-        toast.error(TOAST_ALERTS.ERROR_MESSAGE);
-        console.error("Error", error);
-      }
-    },
-    [location, dispatch, router, toaster]
-  );
+    const googleLogin = async () => {
+        localStorage.setItem("loginType", "google");
+        await signIn("google", { callbackUrl: "/getStarted" });
+    };
 
-  return (
-    <div className='main-login-container'>
-      <div className='container-div'>
-        <div className='logo-div-section'>
-          <img src='/images/webLogo.png' alt='Property' />
-        </div>
-        <div className='image-div '>
-          <CustomSlider />
-        </div>
-        <div className='form-div'>
-          <div className='center-div'>
-            <img
-              src='/images/webLogo.png'
-              className='logo-image'
-              alt='Property'
-            />
-          </div>
-          <div className='center-form-div'>
-            <div className='title-div'>
-              <p className='login-title'>{t("Get Started")}</p>
-              <p className='login-desc'>{t("Log in or Create an account")}</p>
+    const handleFacebookSignIn = async () => {
+        localStorage.setItem("loginType", "facebook");
+        await signIn(
+            "facebook",
+            { callbackUrl: "/" },
+            { prompt: "select_account" }
+        );
+    };
+
+    const loginUserCall = useCallback(
+        async (data) => {
+            console.log("location", location);
+            try {
+                const loginType = localStorage.getItem("loginType");
+                const socialLoginParam = {
+                    name: data?.name,
+                    email: data?.email,
+                    loginType,
+                    loggedTimeLatitude: location.latitude,
+                    loggedTimeLongitude: location.longitude,
+                    socialId: data?.id,
+                };
+
+                setIsLoading(true);
+                const res = await dispatch(loginAction(socialLoginParam));
+
+                if (!res.payload.status) {
+                    setIsLoading(false);
+                    toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+                    return;
+                }
+                if (res.payload.status) {
+                    setIsLoading(false);
+                    toaster(TOAST_ALERTS.LOGIN_SUCCESS, TOAST_TYPES.SUCCESS);
+                    if (storedFormData) {
+                        router.push(`/bookService/${BookingId}`);
+                    } else {
+                        router.push("/dashboard");
+                    }
+                }
+            } catch (error) {
+                setIsLoading(false);
+
+                toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+                console.error("Error", error);
+            }
+        },
+        [location, dispatch, router, toaster]
+    );
+
+    return (
+        <div className='main-login-container'>
+            <div className='container-div'>
+                <div className='logo-div-section'>
+                    <img src='/images/webLogo.png' alt='Property' />
+                </div>
+                <div className='image-div '>
+                    <CustomSlider />
+                </div>
+                <div className='form-div'>
+                    <div className='center-div'>
+                        <img
+                            src='/images/webLogo.png'
+                            className='logo-image'
+                            alt='Property'
+                        />
+                    </div>
+                    <div className='center-form-div'>
+                        <div className='title-div'>
+                            <p className='login-title'>{t("Get Started")}</p>
+                            <p className='login-desc'>{t("Log in or Create an account")}</p>
+                        </div>
+                        <div className='auth-div'>
+                            <button onClick={handleFacebookSignIn} className='social-div'>
+                                <div className='social-image'>
+                                    <div className='social-image-overlay'></div>
+                                    <img src='images/facebook.png' className='w-6 h-6' />
+                                </div>
+                                <div className='social-text-div'>
+                                    <p className='social-text'>{t("Continue with Facebook")}</p>
+                                </div>
+                            </button>
+                            <button onClick={googleLogin} className='social-div bg-redEB'>
+                                <div className='social-image bg-redEB'>
+                                    <div className='social-image-overlay'></div>
+                                    <img src='images/Google.png' className='w-6 h-6' />
+                                </div>
+                                <div className='social-text-div bg-redEB'>
+                                    <p className='social-text'>{t("Continue with Google")}</p>
+                                </div>
+                            </button>
+                            <button
+                                onClick={() => router.push("/login")}
+                                className='social-div bg-green00'>
+                                <div className='social-image bg-green00'>
+                                    <div className='social-image-overlay'></div>
+                                    <img src='images/mail_white.png' className='w-6 h-6' />
+                                </div>
+                                <div className='social-text-div bg-green00'>
+                                    <p className='social-text'>{t("Login with Email")}</p>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div className='bottom-start-div'>
+                        <p className='register-text mt-0'>{t("First time here?")}</p>
+                        <button>
+                            <Link className='register-btn' href='/register'>
+                                {t("Register")}
+                            </Link>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div className='auth-div'>
-              <button onClick={handleFacebookSignIn} className='social-div'>
-                <div className='social-image'>
-                  <div className='social-image-overlay'></div>
-                  <img src='images/facebook.png' className='w-6 h-6' />
-                </div>
-                <div className='social-text-div'>
-                  <p className='social-text'>{t("Continue with Facebook")}</p>
-                </div>
-              </button>
-              <button onClick={googleLogin} className='social-div bg-redEB'>
-                <div className='social-image bg-redEB'>
-                  <div className='social-image-overlay'></div>
-                  <img src='images/Google.png' className='w-6 h-6' />
-                </div>
-                <div className='social-text-div bg-redEB'>
-                  <p className='social-text'>{t("Continue with Google")}</p>
-                </div>
-              </button>
-              <button
-                onClick={() => router.push("/login")}
-                className='social-div bg-green00'>
-                <div className='social-image bg-green00'>
-                  <div className='social-image-overlay'></div>
-                  <img src='images/mail_white.png' className='w-6 h-6' />
-                </div>
-                <div className='social-text-div bg-green00'>
-                  <p className='social-text'>{t("Login with Email")}</p>
-                </div>
-              </button>
-            </div>
-          </div>
-          <div className='bottom-start-div'>
-            <p className='register-text mt-0'>{t("First time here?")}</p>
-            <button>
-              <Link className='register-btn' href='/register'>
-                {t("Register")}
-              </Link>
-            </button>
-          </div>
+            {isLoading && <Loader isAuth={true} />}
+            {/* <HomePage /> */}
         </div>
-      </div>
-      {isLoading && <Loader isAuth={true} />}
-      {/* <HomePage /> */}
-    </div>
-  );
+    );
 };
 
 export default GetStarted;

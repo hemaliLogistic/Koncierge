@@ -8,9 +8,59 @@ import {
     PaymentHistory,
     RequestServiceQutation,
     ServiceByMainCategoryList,
+    UnreadNotificationCount,
+    UpdateDeviceToken,
 
 } from "./services";
 import { AxiosError } from "axios";
+
+export const updateDeviceToken = createAsyncThunk(
+    "homeSlice/updateDeviceTokenAction",
+    async (payload, { rejectWithValue }) => {
+        // console.log("payload", payload);
+        try {
+            const response = await UpdateDeviceToken(payload);
+
+            const { data, status, message } = response;
+            if (!status) {
+                throw new Error(message);
+            }
+
+            return data;
+        } catch (err) {
+            // console.log("🚀 ~ err:", err);
+            toast.error(err?.response?.data?.message || err.message);
+            if (err instanceof AxiosError) {
+                return rejectWithValue(err?.response?.data?.message);
+            }
+            return rejectWithValue(err.message);
+        }
+    }
+);
+
+export const unreadNotificationCount = createAsyncThunk(
+    "homeSlice/unreadNotificationCountAction",
+    async (payload, { rejectWithValue }) => {
+        // console.log("payload", payload);
+        try {
+            const response = await UnreadNotificationCount(payload);
+
+            const { data, status, message } = response;
+            if (!status) {
+                throw new Error(message);
+            }
+
+            return data;
+        } catch (err) {
+            // console.log("🚀 ~ err:", err);
+            toast.error(err?.response?.data?.message || err.message);
+            if (err instanceof AxiosError) {
+                return rejectWithValue(err?.response?.data?.message);
+            }
+            return rejectWithValue(err.message);
+        }
+    }
+);
 
 export const mainCategoryListAction = createAsyncThunk(
     "homeSlice/mainCategoryListAction",

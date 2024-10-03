@@ -36,9 +36,9 @@ import Loader from "@/components/Loader";
 const Service = () => {
     // hooks
     const dispatch = useDispatch();
-    const categoryData = useSelector((state) => state?.homeApi?.serviceListData);
+    const serviceData = useSelector((state) => state?.homeApi?.serviceListData);
+    console.log("serviceData====>", serviceData);
     const bookedSlotData = useSelector((state) => state.homeApi?.bookedSlotData);
-
     // States
     const user = getData("user");
     const storedFormData = getData("FormData");
@@ -57,6 +57,9 @@ const Service = () => {
     const [mounted, setMounted] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [disabledDates, setDisabledDates] = useState([]);
+    const [changeStartType, setChangeStartType] = useState(false);
+    const [changeEndType, setChangeEndType] = useState(false);
+
     const [isDisabledDate, setIsDisabledDate] = useState(() => () => false);
     const modalRef = useRef(null);
     const dropdownRef = useRef(null);
@@ -91,7 +94,6 @@ const Service = () => {
         }
     };
 
-
     // GetBookedSlot Api Call
     const getBookedSlotListData = async () => {
         setIsLoading(true);
@@ -114,9 +116,6 @@ const Service = () => {
                 setIsLoading(false);
                 toast.error(res.error.message || res.payload.message);
             }
-
-
-
         } catch (error) {
             setIsLoading(false);
 
@@ -128,17 +127,17 @@ const Service = () => {
     useEffect(() => {
         setMounted(true);
     }, []);
+
     useEffect(() => {
-        console.log("bookedSlotData===>", bookedSlotData);
-        if (bookedSlotData.success) {
+        if (bookedSlotData?.success) {
             const newDisabledDates = bookedSlotData.data
-                .filter(slot => slot.alldisable)
-                .map(slot => moment(slot.date, 'YYYY-MM-DD'));
+                .filter((slot) => slot.alldisable)
+                .map((slot) => moment(slot.date, "YYYY-MM-DD"));
 
             const checkDisabledDate = (date) => {
-                const formattedDate = moment(date).format('YYYY-MM-DD');
-                return newDisabledDates.some(disabledDate =>
-                    formattedDate === disabledDate.format('YYYY-MM-DD')
+                const formattedDate = moment(date).format("YYYY-MM-DD");
+                return newDisabledDates.some(
+                    (disabledDate) => formattedDate === disabledDate.format("YYYY-MM-DD")
                 );
             };
             setDisabledDates(newDisabledDates);
@@ -147,9 +146,11 @@ const Service = () => {
     }, [bookedSlotData]);
 
     useEffect(() => {
-        const user = getData("user");
         getServiceListData();
-    }, []);
+        getBookedSlotListData();
+    }, [month, year]);
+
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -176,6 +177,7 @@ const Service = () => {
         };
     }, [isModalVisible, isOpen]);
 
+    // set data from local storage
     useEffect(() => {
         if (storedFormData) {
             Object.keys(storedFormData).forEach((key) => {
@@ -200,8 +202,8 @@ const Service = () => {
                     );
                     setCheckedState(initialCheckedState);
                     //  update selected services
-                    if (categoryData) {
-                        const initialSelectedServices = categoryData.reduce(
+                    if (serviceData) {
+                        const initialSelectedServices = serviceData.reduce(
                             (acc, service, index) => {
                                 if (storedFormData[key].includes(service.id)) {
                                     acc.push(service.serviceName);
@@ -222,13 +224,6 @@ const Service = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if (!storedFormData) {
-            const currentDate = moment(new Date()).format("YYYY/MM/DD");
-            setRequestDate(currentDate);
-            setValue("requestDate", new Date());
-        }
-    }, []);
 
     // Toggle functions //
     const handleClose = () => {
@@ -243,28 +238,27 @@ const Service = () => {
             setRequestDate(formattedDate);
             onChange(formattedDate);
             setValue("requestDate", formattedDate);
-            trigger("requestTime");
         } else {
             setRequestDate(null);
             onChange(null);
-            setValue("requestDate", null);
+            // setValue("requestDate", null);
         }
     };
 
-    const handleBlur = (e, onChange, value) => {
-        const inputDate = moment(e.target.value, "YYYY/MM/DD", true);
-        if (inputDate.isValid()) {
-            const formattedDate = inputDate.format("YYYY/MM/DD");
-            setRequestDate(formattedDate);
-            onChange(formattedDate);
-            setValue("requestDate", formattedDate);
-            trigger("requestTime");
-        } else if (!value) {
-            setRequestDate(null);
-            onChange(null);
-            setValue("requestDate", null);
-        }
-    };
+    // const handleBlur = (e, onChange, value) => {
+    //     const inputDate = moment(e.target.value, "YYYY/MM/DD", true);
+    //     if (inputDate.isValid()) {
+    //         const formattedDate = inputDate.format("YYYY/MM/DD");
+    //         setRequestDate(formattedDate);
+    //         onChange(formattedDate);
+    //         setValue("requestDate", formattedDate);
+    //         trigger("requestTime");
+    //     } else if (!value) {
+    //         setRequestDate(null);
+    //         onChange(null);
+    //         setValue("requestDate", null);
+    //     }
+    // };
 
     // Yup Validation //
     const schema = Yup.object().shape({
@@ -272,12 +266,15 @@ const Service = () => {
             .required("Name is required")
             .min(2, "Name must be at least 2 characters")
             .max(50, "Name must be less than 50 characters"),
+        frequency: Yup.string()
+            .required("Frequency is required")
+            .nullable(),
+        selectInterval: Yup.string()
+            .required("Interval is required")
+            .nullable(),
 
         requestDate: Yup.date()
-            .required("Date is required")
-            .test("is-valid-date", "Date cannot be in the past", function (value) {
-                return moment(value).isSameOrAfter(moment(), "day");
-            }),
+            .required("Date is required"),
 
         requestTime: Yup.string()
             .required("Time is required")
@@ -296,23 +293,146 @@ const Service = () => {
                     }
                     return true;
                 }
+            )
+            .test(
+                "service-data-from-time",
+                `Start time should not be less than the ${serviceData[0]?.fromTime}.`,
+                function (value) {
+                    if (serviceData[0]?.fromTime) {
+                        const serviceFromTime = moment(serviceData[0].fromTime, "HH:mm");
+                        const selectedStartTime = moment(value, "HH:mm");
+
+                        return selectedStartTime.isSameOrAfter(serviceFromTime);
+                    }
+                    return true;
+                }
+            )
+            .test(
+                "not-booked",
+                "The selected time overlaps with a booked slot.",
+                function (value) {
+                    const { requestEndTime } = this.parent;
+                    const bookedHours = getBookedHoursForDate(
+                        requestDate,
+                        bookedSlotData?.data
+                    );
+                    const selectedStartTime = moment(value, "HH:mm");
+                    const selectedEndTime = requestEndTime ? moment(requestEndTime, "HH:mm") : null;
+
+                    return bookedHours.every((time) => {
+                        const bookedTime = moment(time, "HH:mm");
+
+                        // Check if selected time overlaps with booked time
+                        if (selectedStartTime.isSame(bookedTime) ||
+                            (selectedEndTime && bookedTime.isBetween(selectedStartTime, selectedEndTime, null, "[)"))) {
+                            return false; // Overlap found
+                        }
+
+                        return true;
+                    });
+                }
             ),
 
+
+        // requestEndTime: Yup.string()
+        //     .required("End time is required")
+        //     .test(
+        //         "is-valid-time",
+        //         "End time must be at least 30 minutes after the start time.",
+        //         function (value) {
+        //             const { requestTime } = this.parent;
+        //             if (!requestTime) return true;
+
+        //             const requestTimePlus30Min = moment(requestTime, "HH:mm")
+        //                 .add(30, "minutes")
+        //                 .format("HH:mm");
+        //             return value >= requestTimePlus30Min;
+        //         }
+        //     )
+        //     .test(
+        //         "not-booked",
+        //         "This slot is booked or overlaps, please choose another time.",
+        //         function (value) {
+        //             const { requestDate } = this.parent;
+        //             const bookedHours = getBookedHoursForDate(
+        //                 requestDate,
+        //                 bookedSlotData?.data
+        //             );
+        //             const selectedTime = moment(value, "HH:mm");
+        //             // Check if the selected end time is in the array or overlaps with a booked slot
+        //             const isSelectedTimeInvalid = bookedHours.some((time, index) => {
+        //                 const bookedTime = moment(time, "HH:mm");
+        //                 const nextTime =
+        //                     index < bookedHours.length - 1
+        //                         ? moment(bookedHours[index + 1], "HH:mm")
+        //                         : null;
+        //                 // If the selected time matches exactly a booked time, return false
+        //                 if (selectedTime.isSame(bookedTime)) {
+        //                     return true; // Block the time selection
+        //                 }
+        //                 // Check if selected time is between two consecutive booked times
+        //                 if (nextTime && nextTime.diff(bookedTime, "hours") <= 1) {
+        //                     return selectedTime.isBetween(bookedTime, nextTime, null, "[)");
+        //                 }
+
+        //                 return false;
+        //             });
+
+        //             return !isSelectedTimeInvalid;
+        //         }
+        //     ),
+
         requestEndTime: Yup.string()
-            .required("Time is required")
+            .required("End time is required")
             .test(
                 "is-valid-time",
                 "End time must be at least 30 minutes after the start time.",
                 function (value) {
                     const { requestTime } = this.parent;
-                    if (!requestTime) {
-                        return true;
-                    }
-                    const requestTimePlus30Min = moment(requestTime, "HH:mm")
-                        .add(30, "minutes")
-                        .format("HH:mm");
+                    if (!requestTime) return true;
 
+                    const requestTimePlus30Min = moment(requestTime, "HH:mm")
+                        .add(1, "minutes")
+                        .format("HH:mm");
                     return value >= requestTimePlus30Min;
+                }
+            )
+            .test(
+                "service-data-to-time",
+                `End time should not be greater than the ${serviceData[0]?.toTime}.`,
+                function (value) {
+                    if (serviceData[0]?.toTime) {
+                        const serviceToTime = moment(serviceData[0].toTime, "HH:mm");
+                        const selectedEndTime = moment(value, "HH:mm");
+
+                        return selectedEndTime.isSameOrBefore(serviceToTime);
+                    }
+                    return true; // No serviceData means no constraint
+                }
+            )
+            .test(
+                "not-booked",
+                "The selected time overlaps with a booked slot.",
+                function (value) {
+                    const { requestTime } = this.parent;
+                    const bookedHours = getBookedHoursForDate(
+                        requestDate,
+                        bookedSlotData?.data
+                    );
+                    const selectedStartTime = requestTime ? moment(requestTime, "HH:mm") : null;
+                    const selectedEndTime = moment(value, "HH:mm");
+
+                    return bookedHours.every((time) => {
+                        const bookedTime = moment(time, "HH:mm");
+
+                        // Check if selected time overlaps with booked time
+                        if (selectedEndTime.isSame(bookedTime) ||
+                            (selectedStartTime && bookedTime.isBetween(selectedStartTime, selectedEndTime, null, "[)"))) {
+                            return false; // Overlap found
+                        }
+
+                        return true; // No overlap
+                    });
                 }
             ),
 
@@ -366,34 +486,33 @@ const Service = () => {
         resolver: yupResolver(schema),
     });
 
-    console.log("error", errors);
+    const getBookedHoursForDate = (selectedDate, bookedHoursData) => {
+        const foundDate = bookedHoursData?.find((item) =>
+            moment(item.date).isSame(selectedDate, "day")
+        );
+        let tempArray = ["14:00", "15:00", "16:00", "17:00", "19:00"];
+        console.log("tempArray===>", tempArray);
+        return foundDate && !foundDate.alldisable ? tempArray : tempArray;
+        // return foundDate && !foundDate.alldisable ? bookedHours : []; //Real Data
+
+    };
 
     const onSubmit = async (data) => {
-        console.log("data========>", data);
-
-        const selectedService = data.selectedServices;
-
-        const frequancyValue = data?.selectFrequancy?.value;
-
         const interVal = data?.selectInterval?.value;
-
-        // Ensure selectedServices is an array, even if it contains a single service
         const selectedServicesArray = Array.isArray(data.selectedServices)
             ? data.selectedServices
-            : [data.selectedServices]; // Convert to array if it's not already an array
-
-        // Map through the services to extract their IDs
-        const selectedServiceIds = selectedServicesArray.map((service) => service.id);
-
-        // Destructure the selected services from the rest of the form data
-
+            : [data.selectedServices];
+        const selectedServiceIds = selectedServicesArray.map(
+            (service) => service.id
+        );
         const { selectedServices, ...restData } = data;
-
         const requestData = {
             ...data,
             requestDate: requestDate,
+            serviceId: selectedServiceIds[0],
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            interval: interVal,
         };
-
         if (!user) {
             saveData("FormData", requestData);
             setIsModalVisible(true);
@@ -402,21 +521,16 @@ const Service = () => {
         try {
             const requestDataForAPI = {
                 ...restData,
-                serviceId: selectedServiceIds,
+                serviceId: selectedServiceIds[0],
                 requestDate: requestDate,
                 timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                frequency: frequancyValue,
                 interval: interVal,
             };
-
             setIsLoading(true);
-
-            // Dispatch the service request action with the prepared data
             const response = await dispatch(
                 requestServiceQutationAction(requestDataForAPI)
             );
 
-            // Handle the response
             if (response?.payload?.status) {
                 setIsLoading(false);
                 removeData("FormData");
@@ -451,7 +565,6 @@ const Service = () => {
                                     Ut enim ad minim veniam, quis nostrud exercitation ullamco
                                     laboris nisi ut aliquip ex ea commodo consequat.
                                 </p>
-                                {/* <button className='common-btn btn'>Book Now</button> */}
                             </div>
                         </div>
                     </div>
@@ -480,29 +593,29 @@ const Service = () => {
                                                 </p>
                                             )}
                                         </div>
-                                        <div className="services-option-block">
+                                        <div className="form-group">
                                             <Controller
                                                 name="selectedServices"
                                                 control={control}
                                                 render={({ field }) => (
                                                     <Select
                                                         {...field}
-                                                        options={categoryData}
+                                                        options={serviceData}
                                                         getOptionLabel={(option) => option.serviceName}
                                                         getOptionValue={(option) => option.id}
                                                         placeholder="Service Option"
                                                         classNamePrefix="react-select"
-                                                        // components={{ Option: CustomOption }}
                                                         hideSelectedOptions={false}
                                                         closeMenuOnSelect={true}
                                                         isOptionDisabled={(option) => !option.is_available}
+                                                        onChange={(selectedOption) => field.onChange(selectedOption)} // Ensure correct handling of selected value
                                                     />
                                                 )}
                                             />
-                                            {errors.selectedservices && (
-                                                <span style={{ color: "red" }}>
-                                                    {errors.selectedservices.message}
-                                                </span>
+                                            {errors.selectedServices && (
+                                                <p className="text-red-500">
+                                                    {errors.selectedServices.message}
+                                                </p>
                                             )}
                                         </div>
 
@@ -511,23 +624,35 @@ const Service = () => {
                                                 <Controller
                                                     control={control}
                                                     name="requestDate"
-                                                    render={({ field: { onChange, value, onBlur } }) => (
-                                                        <DatePicker
-                                                            minDate={new Date()}
-                                                            selected={value}
-                                                            onChange={(date) => handleDateChange(date, onChange)}
-                                                            onBlur={(e) => handleBlur(e, onChange, value)}
-                                                            placeholderText='MM/DD/YYYY'
-                                                            className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-                                                            filterDate={date => !isDisabledDate(date)} // Disable dates based on your logic
-                                                        />
+                                                    render={({ field: { onChange, ...fields }, fieldState: { error, invalid } }) => (
+                                                        <>
+                                                            <DatePicker
+                                                                {...fields}
+                                                                minDate={new Date()}
+                                                                selected={null}
+                                                                // value={value}// Ensure correct handling of null
+                                                                onChange={(date) => {
+                                                                    if (!date) {
+                                                                        onChange(null); // Ensure no value is selected
+                                                                    } else {
+                                                                        handleDateChange(date, onChange); // Handle date selection
+                                                                    }
+                                                                }}
+                                                                // onBlur={onBlur}
+                                                                placeholderText="YYYY/MM/DD"
+                                                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                                filterDate={(date) => !isDisabledDate(date)}
+                                                                preventOpenOnFocus
+                                                                onFocus={(e) => e.target.blur()}
+                                                                onMonthChange={(month) => {
+                                                                    setMonth(month.getMonth() + 1);
+                                                                    setYear(month.getFullYear());// Update the month state
+                                                                }}
+                                                            />
+                                                        </>
+
                                                     )}
                                                 />
-                                                {errors.requestDate && (
-                                                    <span style={{ color: "red" }}>
-                                                        {errors.requestDate.message}
-                                                    </span>
-                                                )}
                                                 <div className="icon-block-calender">
                                                     <img
                                                         src="/images/calendar-icon.png"
@@ -535,14 +660,46 @@ const Service = () => {
                                                         alt="img"
                                                     />
                                                 </div>
+
+                                                {errors.requestDate && (
+                                                    <p className="text-red-500">
+                                                        {errors.requestDate.message}
+                                                    </p>
+                                                )}
                                             </div>
 
+
                                             {/* Start Time and End Time Pickers */}
-                                            <div className="form-group">
+                                            <div className="form-group" onClick={() => setChangeStartType(true)}>
                                                 <Controller
                                                     control={control}
                                                     name="requestTime"
-                                                    defaultValue={moment().add(1, "hour").format("HH:mm")}
+                                                    render={({ field }) => (
+                                                        <>
+                                                            <input
+                                                                type={changeStartType ? "time" : "text"}
+                                                                onChange={(e) => {
+                                                                    field.onChange(e.target.value);
+                                                                }}
+                                                                value={field.value || ""}
+                                                                placeholder="Start Time"
+                                                                {...field}
+                                                            />
+                                                            {errors.requestTime && (
+                                                                <p className="text-red-500">
+                                                                    {errors.requestTime.message}
+                                                                </p>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                />
+                                            </div>
+
+                                            {/* <div className="form-group">
+                                                <Controller
+                                                    control={control}
+                                                    name="requestTime"
+                                                    // defaultValue={moment().add(1, "hour").format("HH:mm")}
                                                     render={({ field }) => (
                                                         <>
                                                             <TimePicker
@@ -562,13 +719,40 @@ const Service = () => {
                                                         </>
                                                     )}
                                                 />
-                                            </div>
+                                            </div> */}
 
-                                            <div className="form-group">
+
+                                            <div className="form-group" onClick={() => setChangeEndType(true)}>
                                                 <Controller
                                                     control={control}
                                                     name="requestEndTime"
-                                                    defaultValue={moment().add(2, "hour").format("HH:mm")} // Set default end time
+                                                    // defaultValue={moment().add(2, "hour").format("HH:mm")} // Set default end time
+                                                    render={({ field }) => (
+                                                        <>
+                                                            <input
+                                                                type={changeEndType ? "time" : "text"}
+                                                                onChange={(e) => {
+                                                                    field.onChange(e.target.value);
+                                                                }}
+                                                                value={field.value || ""}
+                                                                placeholder="End Time"
+                                                                {...field}
+                                                            />
+                                                            {errors.requestEndTime && (
+                                                                <p className="text-red-500">
+                                                                    {errors.requestEndTime.message}
+                                                                </p>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                />
+                                            </div>
+
+                                            {/* <div className="form-group">
+                                                <Controller
+                                                    control={control}
+                                                    name="requestEndTime"
+                                                    // defaultValue={moment().add(2, "hour").format("HH:mm")} // Set default end time
                                                     render={({ field }) => (
                                                         <>
                                                             <TimePicker
@@ -588,7 +772,7 @@ const Service = () => {
                                                         </>
                                                     )}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="form-group-two">
                                             <div className="form-group">
@@ -608,6 +792,14 @@ const Service = () => {
                                                             getOptionValue={(option) => option.id}
                                                             placeholder="Select Interval"
                                                             classNamePrefix="react-select"
+                                                            onChange={(selectedOption) =>
+                                                                field.onChange(selectedOption.value)
+                                                            }
+                                                            value={
+                                                                field.value
+                                                                    ? { value: field.value, id: field.value }
+                                                                    : null
+                                                            }
                                                             // components={{ Option: CustomOption }}
                                                             hideSelectedOptions={false}
                                                             closeMenuOnSelect={true}
@@ -615,39 +807,22 @@ const Service = () => {
                                                     )}
                                                 />
                                                 {errors.selectInterval && (
-                                                    <span style={{ color: "red" }}>
+                                                    <p className="text-red-500">
                                                         {errors.selectInterval.message}
-                                                    </span>
+                                                    </p>
                                                 )}
                                             </div>
                                             <div className="form-group">
-                                                <Controller
-                                                    name="selectFrequancy"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <Select
-                                                            {...field}
-                                                            options={[
-                                                                { id: "1", value: "1" },
-                                                                { id: "2", value: "2" },
-                                                                { id: "3", value: "3" },
-                                                                { id: "4", value: "4" },
-                                                                { id: "5", value: "5" },
-                                                            ]}
-                                                            getOptionLabel={(option) => option.value}
-                                                            getOptionValue={(option) => option.id}
-                                                            placeholder="Select Frequency"
-                                                            classNamePrefix="react-select"
-                                                            // components={{ Option: CustomOption }}
-                                                            hideSelectedOptions={false}
-                                                            closeMenuOnSelect={true}
-                                                        />
-                                                    )}
+                                                <input
+                                                    type="number"
+                                                    placeholder="Add Frequency"
+                                                    {...register("frequency")}
                                                 />
-                                                {errors.selectFrequancy && (
-                                                    <span style={{ color: "red" }}>
-                                                        {errors.selectFrequancy.message}
-                                                    </span>
+
+                                                {errors.frequency && (
+                                                    <p className="text-red-500">
+                                                        {errors.frequency.message}
+                                                    </p>
                                                 )}
                                             </div>
                                         </div>

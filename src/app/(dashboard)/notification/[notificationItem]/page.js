@@ -200,6 +200,8 @@ const NotificationItem = () => {
             bookTime: notification?.serviceDetail?.requestTime,
             serviceIds: notification?.serviceDetail?.id,
             qutationId: notificationItem,
+            bookEndTime: notification?.serviceDetail?.requestEndTime,
+            bookEndDate: notification?.serviceDetail?.requestEndDate
         };
 
         try {

@@ -19,3 +19,9 @@ export const CheckoutSession = (data) => {
 export const PaymentHistory = (data) => {
     return axiosGet(API_ROUTER.PAYMENT_HISTORY, data);
 };
+export const UpdateDeviceToken = (data) => {
+    return axiosPost(API_ROUTER.UPDATE_TOKEN, data);
+};
+export const UnreadNotificationCount = (data) => {
+    return axiosGet(API_ROUTER.UNREAD_NOTIFICATION_COUNT, data);
+};

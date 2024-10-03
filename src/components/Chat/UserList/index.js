@@ -90,7 +90,11 @@ const UserList = ({ chatIdRef }) => {
                                     {message?.typeOfMessage !== "text" ? (
                                         <p className="message-text">media</p>
                                     ) : (
-                                        <p className="message-text">{message?.message}</p>
+                                        <p className="message-text">
+                                            {message?.message.length > 10
+                                                ? `${message.message.substring(0, 25)}...`
+                                                : message?.message}
+                                        </p>
                                     )}
                                 </div>
 

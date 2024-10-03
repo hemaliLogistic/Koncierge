@@ -50,6 +50,11 @@ const SettingsChat = () => {
     };
 
     const mySocket = io.sails.connect(process.env.NEXT_PUBLIC_HOSTBACKEND_URL);
+
+    console.log(
+      "NEXT_PUBLIC_HOSTBACKEND_URL====>",
+      process.env.NEXT_PUBLIC_HOSTBACKEND_URL
+    );
     mySocket.on("connect", () => {
       console.log("Socket connected");
       mySocket.get(
@@ -71,7 +76,7 @@ const SettingsChat = () => {
   }, [userAuth]);
 
   return (
-    <div className="settings-main-container">
+    <div className='settings-main-container'>
       <UserList chatIdRef={chatIdRef} />
       {selectedUser?.id ? <MessageList /> : <> No Message</>}
     </div>

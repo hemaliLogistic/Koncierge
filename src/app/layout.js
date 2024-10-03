@@ -86,6 +86,7 @@ function RootLayout({ children }) {
         <title>Koncierge</title>
         <meta name='description' content='Koncierge description' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
+
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             {/* <NextUIProvider> */}

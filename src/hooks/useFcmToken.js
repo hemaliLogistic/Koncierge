@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import firebaseApp from "../../public/firebase";
+import firebaseApp from "../utils/Firebase/firebase";
 
 const useFcmToken = () => {
   const [token, setToken] = useState("");
@@ -21,7 +21,7 @@ const useFcmToken = () => {
           if (permission === "granted") {
             const currentToken = await getToken(messaging, {
               vapidKey:
-                "BEdLronsxY2X01q1Qm7pgIjfhMJgHN9JfDBIakY1Kf4hCAchNK7UEGfL0Ytvc3AWpypJSA8n4udffEO6_jn7aYI",
+                "BASZPVoSU2XZlr60lnhnCaHuZ5H3d4txJ-UDM1NGfzT2zs0R1TvTNse4YP_gkwaE5eBZGXXkDIly64dZUsumtbk",
             });
             if (currentToken) {
               // console.log("currentToken", currentToken);

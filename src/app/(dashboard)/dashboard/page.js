@@ -29,6 +29,7 @@ import { getData } from "@/utils/storage";
 const UserDashBoard = () => {
   const { t } = useTranslation("common");
   const [isLoading, setIsLoading] = useState(true);
+  const [isTokenLoading, setIsTokenLoading] = useState(false);
   const [active, setActive] = React.useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -37,6 +38,15 @@ const UserDashBoard = () => {
   const dispatch = useDispatch();
   const { fcmToken, notificationPermissionStatus } = useFcmToken();
   const user = getData("user");
+
+  useEffect(() => {
+    if (fcmToken !== "") {
+      UpdateDeviceToken();
+    } else {
+      setIsTokenLoading(true);
+    }
+    console.log("fcmToken-=-=", fcmToken);
+  }, [fcmToken]);
 
   useEffect(() => {
     getAllBookingData();
@@ -113,25 +123,26 @@ const UserDashBoard = () => {
 
       if (res.meta.requestStatus === "fulfilled") {
         if (res.payload.status) {
+          setIsTokenLoading(false);
+
           console.log("token Updated Succesfully");
         } else {
+          setIsTokenLoading(false);
+
           console.log("Error for Updated Token");
         }
       } else {
+        setIsTokenLoading(false);
+
         console.log("Error for Updated Token");
       }
     } catch (error) {
+      setIsTokenLoading(false);
+
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
       console.log("Error", error);
     }
   };
-
-  useEffect(() => {
-    if (fcmToken !== "") {
-      UpdateDeviceToken();
-    }
-    console.log("fcmToken-=-=", fcmToken);
-  }, [fcmToken]);
 
   const handlePageChange = (page) => {
     console.log("page=-=-=", page);
@@ -286,6 +297,7 @@ const UserDashBoard = () => {
           {/* )} */}
         </div>
       </div>
+      {isTokenLoading && <Loader />}
     </>
   );
 };

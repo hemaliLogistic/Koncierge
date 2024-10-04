@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import firebaseApp from "../utils/Firebase/firebase";
+import { getMessaging, getToken } from "firebase/messaging";
+import firebaseApp from "@/utils/Firebase/firebase";
 
 const useFcmToken = () => {
   const [token, setToken] = useState("");
@@ -11,54 +11,46 @@ const useFcmToken = () => {
     const retrieveToken = async () => {
       try {
         if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-          const messaging = getMessaging(firebaseApp);
-
-          // Retrieve the notification permission status
+          // Request notification permission first
           const permission = await Notification.requestPermission();
           setNotificationPermissionStatus(permission);
 
-          // Check if permission is granted before retrieving the token
+          // If permission is granted, proceed to get the token
           if (permission === "granted") {
+            // Register the service worker and wait until it's ready
+            const registration = await navigator.serviceWorker.register(
+              "/firebase-messaging-sw.js"
+            );
+            await navigator.serviceWorker.ready;
+
+            const messaging = getMessaging(firebaseApp);
+
+            // Get FCM token with the service worker registration
             const currentToken = await getToken(messaging, {
               vapidKey:
                 "BASZPVoSU2XZlr60lnhnCaHuZ5H3d4txJ-UDM1NGfzT2zs0R1TvTNse4YP_gkwaE5eBZGXXkDIly64dZUsumtbk",
+              serviceWorkerRegistration: registration,
             });
-            if (currentToken) {
-              // console.log("currentToken", currentToken);
 
-              setToken(currentToken);
+            if (currentToken) {
+              setToken(currentToken); // Set the token once retrieved
+              console.log("FCM Token:", currentToken); // Optional: Log the token for debugging
             } else {
-              console.log(
-                "No registration token available. Request permission to generate one."
+              console.warn(
+                "No FCM token available. Please check if registration is successful."
               );
             }
+          } else {
+            console.warn("Notification permission was denied.");
           }
         }
       } catch (error) {
-        console.log("An error occurred while retrieving token:", error);
+        console.error("An error occurred while retrieving token:", error);
       }
     };
 
     retrieveToken();
   }, []);
-  useEffect(() => {
-    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      const messaging = getMessaging(firebaseApp);
-      const unsubscribe = onMessage(messaging, (payload) => {
-        console.log("foreground push notification received:", payload);
-        // Handle the received push notification while the app is in the background
-        const notificationTitle = payload.notification.title;
-        const notificationOptions = {
-          body: payload.notification.body,
-          icon: "/images/logo.png", // Replace with your logo URL
-        };
-        new Notification(notificationTitle, notificationOptions);
-      });
-      return () => {
-        unsubscribe(); // Unsubscribe from the onMessage event
-      };
-    }
-  }, [token]);
 
   return { fcmToken: token, notificationPermissionStatus };
 };

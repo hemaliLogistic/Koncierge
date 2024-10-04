@@ -297,7 +297,6 @@ const UserDashBoard = () => {
           {/* )} */}
         </div>
       </div>
-      {isTokenLoading && <Loader />}
     </>
   );
 };

@@ -129,14 +129,16 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
         },
         {
             name: <span className='table-header-text'>{t("Status")}</span>,
-            selector: (row, index) => row.bookingStatus,
+            selector: (row, index) => row?.bookingStatus,
             cell: (row, index) => (
                 <>
+                    {console.log('row?.requestQutationId===>', row)}
                     {row?.bookingStatus === "View Quote" ? (
                         <button
                             className='table-main-div'
                             onClick={() => {
-                                router.push(`/notification/${row?.requestQutationId}`);
+
+                                router.push(`/notification/${row?.id}`);
                             }}>
                             <span
                                 className={
@@ -156,7 +158,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                     ) : (
                         <div className='table-main-div'>
                             <span
-                                className={`table-main-div table-button-text w-20 h-6 text-white px-2 py-1 text-center ${row?.bookingStatus === "View Quote"
+                                className={`table-main-div table-button-text w-20 h-6 text-white px-2 py-1 text-center ${row?.bookingStatus === "View Quote 123"
                                     ? "bg-green-600"
                                     : row?.bookingStatus === "Pending"
                                         ? "bg-yellow-500"

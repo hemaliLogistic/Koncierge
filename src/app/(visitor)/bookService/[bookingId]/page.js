@@ -37,7 +37,6 @@ const Service = () => {
     // hooks
     const dispatch = useDispatch();
     const serviceData = useSelector((state) => state?.homeApi?.serviceListData);
-    console.log("serviceData====>", serviceData);
     const bookedSlotData = useSelector((state) => state.homeApi?.bookedSlotData);
     // States
     const user = getData("user");
@@ -224,6 +223,7 @@ const Service = () => {
         }
     }, []);
 
+    console.log("storedFormData===>", storedFormData);
 
     // Toggle functions //
     const handleClose = () => {
@@ -624,12 +624,12 @@ const Service = () => {
                                                 <Controller
                                                     control={control}
                                                     name="requestDate"
-                                                    render={({ field: { onChange, ...fields }, fieldState: { error, invalid } }) => (
+                                                    render={({ field: { onChange, value, ...fields }, fieldState: { error, invalid } }) => (
                                                         <>
                                                             <DatePicker
                                                                 {...fields}
                                                                 minDate={new Date()}
-                                                                selected={null}
+                                                                selected={value ? new Date(value) : null}
                                                                 // value={value}// Ensure correct handling of null
                                                                 onChange={(date) => {
                                                                     if (!date) {
@@ -681,6 +681,7 @@ const Service = () => {
                                                                 onChange={(e) => {
                                                                     field.onChange(e.target.value);
                                                                 }}
+                                                                onBlur={field.onBlur}
                                                                 value={field.value || ""}
                                                                 placeholder="Start Time"
                                                                 {...field}
@@ -734,6 +735,7 @@ const Service = () => {
                                                                 onChange={(e) => {
                                                                     field.onChange(e.target.value);
                                                                 }}
+                                                                onBlur={field.onBlur}
                                                                 value={field.value || ""}
                                                                 placeholder="End Time"
                                                                 {...field}

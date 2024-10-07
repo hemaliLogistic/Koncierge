@@ -78,7 +78,6 @@ const UserDashBoard = () => {
     try {
       const res = await dispatch(getPrefrenceAction({}));
 
-      console.log("res-=-=-=-", res);
 
       if (res.meta.requestStatus === "fulfilled") {
         if (res.payload.status) {

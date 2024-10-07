@@ -60,7 +60,6 @@ const SendMessage = () => {
 
   const recorderControls = useAudioRecorder();
   const addAudioElement = (blob) => {
-    console.log("blob file=======>", blob);
     setBlobFile(blob);
     setIsImage(false);
     const url = URL.createObjectURL(blob);
@@ -71,7 +70,6 @@ const SendMessage = () => {
     audio.src = url;
     audio.controls = true;
     // dispatch(setFileInput([url]));
-    console.log("url=======>", url);
     dispatch(setFileInput([audioData]));
     dispatch(setSendFileInput([url]));
   };
@@ -114,27 +112,20 @@ const SendMessage = () => {
         "typeOfMessage",
         inputSelector?.setSendFile.length > 0 ? "media" : "text"
       );
-      console.log("setFileInput", inputSelector?.setFileInput);
       if (!isImage) {
-        console.log("inputSelector?.setSendFile123456789==>", blobFile);
-        // formData.append(`media`, inputSelector?.setSendFile[0])
         const blobUrl = inputSelector?.setSendFile[0];
 
-        // If it's a Blob URL, fetch the Blob and append it as a file
         if (blobUrl && blobUrl.startsWith("blob:")) {
           const blobResponse = await fetch(blobUrl);
           const blob = await blobResponse.blob();
 
-          // Optionally, convert the blob to a File with a name
           const file = new File([blob], "file.audio", { type: blob.type });
           formData.append("media", file);
         } else {
           formData.append("media", inputSelector?.setSendFile[0]);
         }
 
-        // formData.append('media', blobFile)
       } else {
-        console.log("in else ===========>");
         for (let i = 0; i < inputSelector?.setSendFile.length; i++) {
           formData.append(`media`, inputSelector?.setSendFile[i]);
         }
@@ -143,10 +134,8 @@ const SendMessage = () => {
       const res = await dispatch(SendMessageAction(formData));
 
       if (!res?.payload) {
-        console.log("if condition ma");
         toast.error(res?.payload?.errors?.[0] || "Something went wrong!");
       } else {
-        console.log("else condition ma");
         setIsImage(false);
         dispatch(setSendMessage(""));
         dispatch(setFileInput([]));
@@ -165,19 +154,7 @@ const SendMessage = () => {
       onSubmit={handleSubmit}
       className="relative flex flex-col items-start"
     >
-      {/* <div className="flex flex-wrap gap-2 mb-4 justify-end">
-                    {inputSelector.setFileInput?.map((image, index) => (
-                        <div key={index} className="relative group">
-                            <img src={image} alt={`Selected ${index}`} className="w-24 h-24 object-cover rounded-lg border border-gray-200 shadow-lg" />
-                            <button
-                                onClick={() => removeImage(index)}
-                                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-75 group-hover:opacity-100 transition-opacity duration-200"
-                            >
-                                ×
-                            </button>
-                        </div>
-                    ))}
-                </div> */}
+     
       <div className="flex flex-wrap gap-2 mb-4 justify-end">
         {inputSelector.setFileInput?.map((media, index) => {
           const isAudio = media.mimeType?.startsWith("audio");
@@ -236,6 +213,7 @@ const SendMessage = () => {
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
+              handleSubmit(e);
             }
           }}
           onChange={(e) => dispatch(setSendMessage(e.target.value))}
@@ -251,7 +229,11 @@ const SendMessage = () => {
           />
         </div>
 
-        <button type="submit" className="text-white rounded-lg px-2 py-1 ml-2">
+        <button
+          type="submit"
+          className="text-white rounded-lg px-2 py-1 ml-2"
+         
+        >
           <img src="/images/send-logo.svg" alt="Send" className="w-5 h-5" />
         </button>
       </div>

@@ -45,7 +45,6 @@ const PastServices = () => {
     try {
       const res = await dispatch(pastBookingAction(bookingParam));
 
-      console.log("res-=-=-=-", res);
 
       if (res.meta.requestStatus === "fulfilled") {
         if (res.payload.status) {

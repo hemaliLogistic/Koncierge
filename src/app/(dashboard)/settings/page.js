@@ -69,8 +69,6 @@ const Settings = () => {
           const profileData = res.payload.data;
           setIsLoading(false);
           setProfileData(profileData);
-          console.log("profileData?.fullImagePath", profileData);
-
           if (noImageData) {
             setProfileImage(profileData?.fullImagePath);
           }
@@ -293,23 +291,24 @@ const Settings = () => {
             Open Modal
           </button>
         </Link> */}
-      <div className='settings-main-container'>
+      <div className="settings-main-container">
         {isLoading && <Loader />}
-        <div className='settings-left-section'>
-          <div className='flex items-center'>
-            <div className='setting-box-shadow flex'>
-              <div className='flex-grow'>
-                <p className='user-name'>User Name</p>
-                <p className='user-description'>{profileData?.name}</p>
-                <div className='setting-icon-container'>
+        <div className="settings-left-section">
+          <div className="flex items-center">
+            <div className="setting-box-shadow flex">
+              <div className="flex-grow">
+                <p className="user-name">User Name</p>
+                <p className="user-description">{profileData?.name}</p>
+                <div className="setting-icon-container">
                   <img
-                    src='/images/key.svg'
-                    alt='Import'
-                    className='setting-icon-img'
+                    src="/images/key.svg"
+                    alt="Import"
+                    className="setting-icon-img"
                   />
                   <button
                     onClick={() => setIsModalVisible(true)}
-                    className='setting-icon-text'>
+                    className="setting-icon-text"
+                  >
                     {t("changePassword")}
                   </button>
                 </div>
@@ -317,23 +316,24 @@ const Settings = () => {
               {/* <div className="setting-image-container">
                   <input type="file" /><img src="/images/import-image.svg" alt="Import" className="setting-image-element" />
                 </div> */}
-              <div className='setting-image-container'>
+              <div className="setting-image-container">
                 <input
-                  type='file'
-                  accept='image/*'
-                  id='imageUpload'
-                  className='hidden'
+                  type="file"
+                  accept="image/*"
+                  id="imageUpload"
+                  className="hidden"
                   onChange={(e) => handleChange1(e)}
                 />
-                <div className='image-upload-label'>
-                  {/* <Image
-                    src={
-                      profileImage
-                        ? profileImage || "/images/loader.gif"
-                        : "images/import-image.svg"
-                    }
-                    alt=''
-                    className='setting-image-element object-cover cursor-pointer'
+                <div className="image-upload-label">
+                  <Image
+                    // src={
+                    //     profileImage
+                    //         ? profileImage || "/images/loader.gif"
+                    //         : "images/import-image.svg"
+                    // }
+                    src="images/import-image.svg"
+                    alt=""
+                    className="setting-image-element object-cover cursor-pointer"
                     onError={handleImageError}
                     onClick={() => {
                       const fileInput = document.getElementById("imageUpload");
@@ -341,45 +341,47 @@ const Settings = () => {
                     }}
                     width={80}
                     height={80}
-                  /> */}
+                  />
                 </div>
               </div>
             </div>
           </div>
 
           <button
-            className='chat-btn-container'
-            onClick={() => router.push("/settings-chat")}>
-            <p className='chat-btn-text'>{t("Chat")}</p>
+            className="chat-btn-container"
+            onClick={() => router.push("/settings-chat")}
+          >
+            <p className="chat-btn-text">{t("Chat")}</p>
           </button>
         </div>
 
-        <div className='settings-right-section'>
-          <div className='setting-box-shadow'>
-            <div className='editprofile-header-container '>
-              <p className='editprofile-header-text'>{t("editProfile")}</p>
+        <div className="settings-right-section">
+          <div className="setting-box-shadow">
+            <div className="editprofile-header-container ">
+              <p className="editprofile-header-text">{t("editProfile")}</p>
             </div>
 
-            <div className='setting-horizontal-divider'></div>
+            <div className="setting-horizontal-divider"></div>
 
             <FormProvider
               methods={methods}
               onSubmit={handleSubmit(onSubmitForm)}
-              className=''>
-              <div className='setting-input-container'>
+              className=""
+            >
+              <div className="setting-input-container">
                 <RHFTextInput
-                  name='name'
+                  name="name"
                   type={"text"}
-                  className='setting-input-field '
-                  placeholder='User Name'
+                  className="setting-input-field "
+                  placeholder="User Name"
                 />
               </div>
 
-              <div className='setting-input-container flex flex-col lg:flex-row gap-7'>
+              <div className="setting-input-container flex flex-col lg:flex-row gap-7">
                 <input
-                  type='text'
-                  placeholder='Email Address'
-                  className='setting-input-field'
+                  type="text"
+                  placeholder="Email Address"
+                  className="setting-input-field"
                   readOnly
                   value={profileData?.email}
                   disabled
@@ -388,7 +390,7 @@ const Settings = () => {
                   name='phoneNumber'
                   render={({ field, fieldState: { error } }) => ( */}
                 <Controller
-                  name='phoneNumber'
+                  name="phoneNumber"
                   control={methods.control}
                   render={({ field }) => (
                     <PhoneInput
@@ -398,8 +400,8 @@ const Settings = () => {
                         handlePhoneChange(phone, country);
                         field.onChange(phone); // Update form state
                       }}
-                      placeholder='Phone Number'
-                      inputClass='w-[100%] h-[60px] font-Mulish text-lg font-normal'
+                      placeholder="Phone Number"
+                      inputClass="w-[100%] h-[60px] font-Mulish text-lg font-normal"
                     />
                   )}
                 />
@@ -407,7 +409,7 @@ const Settings = () => {
                 /> */}
               </div>
 
-              <div className='setting-input-container'>
+              <div className="setting-input-container">
                 {/* <RHFTextInput
                   name="address"
                   type={"text"}
@@ -417,14 +419,14 @@ const Settings = () => {
                 {/* {console.log("profileData?.address", profileData?.address)} */}
                 {profileData && (
                   <Controller
-                    name='address'
+                    name="address"
                     control={methods.control}
                     render={({ field }) => (
                       <PlacesAutocomplete
-                        name='address'
-                        type='text'
-                        className='setting-input-field'
-                        placeholder='Address'
+                        name="address"
+                        type="text"
+                        className="setting-input-field"
+                        placeholder="Address"
                         defaultAddress={profileData?.address}
                         handleAddressChange={(value) => {
                           handleAddressChange(value);
@@ -465,12 +467,13 @@ const Settings = () => {
                 </span>
               </div> */}
 
-              <div className='setting-horizontal-divider mt-[30px]'></div>
-              <div className='buttons-container'>
+              <div className="setting-horizontal-divider mt-[30px]"></div>
+              <div className="buttons-container">
                 <button
-                  type='submit'
+                  type="submit"
                   disabled={!isDirty || isSubmitting}
-                  className={`button-update ${!isDirty ? "opacity-20" : ""}`}>
+                  className={`button-update ${!isDirty ? "opacity-20" : ""}`}
+                >
                   Update Profile
                 </button>
                 {/* <button className='button-cancel'>Cancel</button> */}

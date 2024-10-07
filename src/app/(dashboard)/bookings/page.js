@@ -45,7 +45,6 @@ const Bookings = () => {
     try {
       const res = await dispatch(upcomingBookingAction(bookingParam));
 
-      console.log("res-=-=-=-", res);
 
       if (res.meta.requestStatus === "fulfilled") {
         if (res.payload.status) {

@@ -102,7 +102,6 @@ const LoginPage = () => {
       setIsLoading(true);
       const res = await dispatch(loginAction(loginParams));
 
-      console.log("res-=-=-=-", res);
 
       if (res.meta.requestStatus === "fulfilled") {
         if (res.payload.status) {

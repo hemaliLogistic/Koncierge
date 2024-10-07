@@ -39,28 +39,32 @@ const OurService = () => {
         }
     }, []);
 
-    const handleCheckboxChange = (serviceId, checked, service) => {
-        console.log("checked", checked, serviceId);
+    const handleCheckboxChange = (serviceId, isChecked, service) => {
+        if (isChecked) {
+            // Deselect all other services when one is selected
+            const newCheckedState = Object.keys(checkedState).reduce((acc, key) => {
+                acc[key] = false;
+                return acc;
+            }, {});
 
-        // Update the checked state for the service
-        setCheckedState((prevState) => ({
-            ...prevState,
-            [serviceId]: checked,
-        }));
+            newCheckedState[serviceId] = true;  // Select the current checkbox
 
-        // Update the selected services list
-        setCheckedData((prevState) => {
-            if (checked) {
-                return [...prevState, service];
-            } else {
-                return prevState.filter((item) => item !== service);
-            }
-        });
+            setCheckedState(newCheckedState);  // Update state to reflect only one selection
+            setCheckedData([service]);  // Update selected services
+        } else {
+            setCheckedState((prevState) => ({
+                ...prevState,
+                [serviceId]: false,
+            }));
+            setCheckedData([]);
+        }
     };
+
+    console.log("checkedData===>", checkedData[[0]]);
 
     const handleBookNowClick = (category) => {
         console.log("hello");
-        saveData("checkedFormData", checkedData);
+        saveData("checkedFormData", checkedData[0]);
         saveData("Bookingid", category.id);
         router.push(`/bookService/${category.id}`);
     };
@@ -185,7 +189,7 @@ const OurService = () => {
                                                                             type='checkbox'
                                                                             checked={checkedState[service.id] || false}
                                                                             onChange={(e) => handleCheckboxChange(service.id, e.target.checked, service)}
-                                                                            disabled={!service.is_available}  // Disable the checkbox if is_available is false
+                                                                            disabled={!service.is_available}  // Disable if not available
                                                                         />
                                                                         <label htmlFor={`styled-checkbox-${service.id}`}></label>
                                                                     </div>
@@ -203,12 +207,10 @@ const OurService = () => {
                                                         <p>No services available for this category.</p>
                                                     </>
                                                 )}
-
                                             <div
                                                 className='total-cost-block justify-center items-center'
                                                 data-aos='fade-up'
                                                 data-aos-duration='1100'>
-                                                {/* <h4>Total: $20.00</h4> */}
                                                 <button
                                                     onClick={() => handleBookNowClick(category)}
                                                     className='common-btn'

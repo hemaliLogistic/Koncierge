@@ -7,6 +7,6 @@ module.exports = {
     styledComponents: true,
   },
   images: {
-    domains: ["3.232.124.157"],
+    domains: ["3.232.124.157", "https://koncierge-five.vercel.app"],
   },
 };

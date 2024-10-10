@@ -74,6 +74,7 @@ const MessageList = () => {
 
   // pagination on scroll
   // Get Message List Api call
+
   const handleScroll = async (e) => {
     e.preventDefault();
 
@@ -141,128 +142,25 @@ const MessageList = () => {
             ref={messagesContainerRef} // Ref for scrolling only this div
             onScroll={(e) => handleScroll(e)}
           >
-            {/* {Object.keys(groupedMessages).map((date) => {
-              return (
-                <div key={date}>
-                  <div className="date-header text-center">
-                    {moment(date).format("MMMM Do, YYYY")}
-                  </div>
-                  {groupedMessages[date].map((item, index) =>
-                    item?.senderId === user?.data?.id ? (
-                      <div
-                        key={index}
-                        className={`${
-                          item.isInformative
-                            ? "w-full flex justify-center"
-                            : "reciever-msg-container"
-                        }`}
-                      >
-                        <div className="relative">
-                          {item.typeOfMessage === "text" &&
-                            !item.isInformative && (
-                              <div className="message-box-time-text flex flex-col">
-                                <div className="message-box">
-                                  <div className="message-boxgrey bg-gray-200 px-4 py-2.5 rounded-full mb-2.5 inline-flex">
-                                    <p className="text-sm font-normal leading-5 text-[#131726]">
-                                      {item.message}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          {item.typeOfMessage === "image" && (
-                            <img
-                              src={item.message}
-                              alt="Media"
-                              className="media-img"
-                            />
-                          )}
-                          {item.typeOfMessage === "video" && (
-                            <video controls className="media-img">
-                              <source src={item.message} type="video/mp4" />
-                              Your browser does not support the video tag.
-                            </video>
-                          )}
-                          {item.typeOfMessage === "audio" && (
-                            <audio controls className="media-img">
-                              <source src={item.message} type="audio/mpeg" />
-                              Your browser does not support the audio tag.
-                            </audio>
-                          )}
-                        </div>
-                      </div>
-                    ) : (
-                      <div
-                        key={index}
-                        className={`${
-                          item.isInformative
-                            ? "w-full flex justify-center"
-                            : "sender-msg-container"
-                        }`}
-                      >
-                        <div className="relative">
-                          {item.isInformative == true && (
-                            <div className="message-box-time-text flex flex-col">
-                              <div className="message-box">
-                                <div className="message-boxgrey bg-gray-200 px-4 py-2.5 rounded-full mb-2.5 inline-flex">
-                                  <p className="text-sm font-normal leading-5 text-[#131726]">
-                                    {item.message}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-
-                          {!item.isInformative &&
-                            item.typeOfMessage === "text" && (
-                              <div className="message-box-time-text flex flex-col">
-                                <div className="message-box">
-                                  <div className="message-boxgrey bg-gray-200 px-4 py-2.5 rounded-full mb-2.5 inline-flex">
-                                    <p className="text-sm font-normal leading-5 text-[#131726]">
-                                      {item.message}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          {item.typeOfMessage === "image" && (
-                            <>
-                              <img
-                                src={item.message}
-                                alt="Media"
-                                className="media-img"
-                              />
-                            </>
-                          )}
-                          {item.typeOfMessage === "video" && (
-                            <>
-                              <video controls className="media-img">
-                                <source src={item.message} type="video/mp4" />
-                                Your browser does not support the video tag.
-                              </video>
-                            </>
-                          )}
-                        </div>
-                        {!item.isInformative && (
-                          <img
-                            src={item.profile}
-                            className="w-10 h-10 rounded-full object-cover pr-2"
-                            alt="Profile"
-                          />
-                        )}
-                      </div>
-                    )
-                  )}
-                </div>
-              );
-            })} */}
             {Object.keys(groupedMessages).map((date) => {
+              const isToday = (date) => moment().isSame(date, "day");
+              const isYesterday = (date) =>
+                moment().subtract(1, "days").isSame(date, "day");
+              let displayDate = moment(date).format("MMMM Do, YYYY");
+
+              if (isToday(date)) {
+                displayDate = "Today";
+              } else if (isYesterday(date)) {
+                displayDate = "Yesterday";
+              }
               return (
                 <div key={date}>
-                  <div className="date-header text-center">
+                  {/* <div className="date-header text-center">
                     {moment(date).format("MMMM Do, YYYY")}
-                  </div>
+                  </div> */}
+                  <div className="date-header text-center">{displayDate}</div>
                   {groupedMessages[date].map((item, index) => {
+                    console.log("item==========>",item)
                     return item?.senderId === user?.data?.id ? (
                       <div
                         key={index}
@@ -305,6 +203,18 @@ const MessageList = () => {
                             </audio>
                           )}
                         </div>
+                        {!item.isInformative && (
+                          <img
+                            src={
+                              item.profile
+                                ? item.profile
+                                : "/images/chat-profile.svg"
+                            }
+
+                            className="w-10 h-10 !rounded-full object-cover "
+                            alt="Profile"
+                          />
+                        )}
                       </div>
                     ) : (
                       <div

@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
-import { getMessageAction, SendMessageAction } from "@/redux/Chat/action";
+import { getChatListAction, getMessageAction, SendMessageAction } from "@/redux/Chat/action";
 import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import useToaster from "@/hooks/useToaster";
 import {
   setFileInput,
+  setFilteredUserList1,
   setSendFileInput,
   setSendMessage,
 } from "@/redux/Chat/ChatSlice";
@@ -21,12 +22,32 @@ const SendMessage = () => {
   const dispatch = useDispatch();
   const { toaster } = useToaster();
   const inputSelector = useSelector((state) => state.chatApi);
+  const chatUserList = useSelector((state) => state?.chatApi?.chatUserList);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const selectedUser = useSelector((state) => state?.chatApi?.selectedUser);
+
   const user = getData("user");
   const [isImage, setIsImage] = useState(false);
   const [blobFile, setBlobFile] = useState();
 
   const recorderControlsRef = useRef(null);
+
+  const GetChatUserList = async () => {
+    try {
+      const res = await dispatch(
+        getChatListAction({
+          page: currentPage,
+          limit: 5,
+        })
+      );
+      if(res?.payload?.status){
+        dispatch(setFilteredUserList1(res.payload?.data))
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
 
   const handleFileChange = (e) => {
     setIsImage(true);
@@ -124,7 +145,6 @@ const SendMessage = () => {
         } else {
           formData.append("media", inputSelector?.setSendFile[0]);
         }
-
       } else {
         for (let i = 0; i < inputSelector?.setSendFile.length; i++) {
           formData.append(`media`, inputSelector?.setSendFile[i]);
@@ -140,12 +160,14 @@ const SendMessage = () => {
         dispatch(setSendMessage(""));
         dispatch(setFileInput([]));
         dispatch(setSendFileInput([]));
+        await GetChatUserList();
       }
     } catch (error) {
       console.log("catch ma ", error);
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
     } finally {
       await GetMessageList();
+      
     }
   };
 
@@ -154,7 +176,6 @@ const SendMessage = () => {
       onSubmit={handleSubmit}
       className="relative flex flex-col items-start"
     >
-     
       <div className="flex flex-wrap gap-2 mb-4 justify-end">
         {inputSelector.setFileInput?.map((media, index) => {
           const isAudio = media.mimeType?.startsWith("audio");
@@ -188,40 +209,44 @@ const SendMessage = () => {
         })}
       </div>
 
-      <div className="flex items-center w-full border border-gray-300 rounded-lg px-4 py-2">
-        <input
-          className="hidden"
-          type="file"
-          name="image"
-          onChange={handleFileChange}
-          id="fileInput"
-          accept="image/*,video/*"
-          multiple
-        />
-
-        <label htmlFor="fileInput" className="cursor-pointer mx-2">
-          <img
-            src="/images/gallery-logo.svg"
-            alt="Upload"
-            className="w-5 h-5"
+      <div className="flex items-center w-full border border-gray-300 rounded-lg  ">
+        <div
+          className=" w-12 h-9  flex justify-center items-center my-1 mx-1"
+          onClick={handleFileChange}
+        >
+          <input
+            className="hidden"
+            type="file"
+            name="image"
+            // onChange={handleFileChange}
+            id="fileInput"
+            accept="image/*,video/*"
+            multiple
           />
-        </label>
+          <label
+            htmlFor="fileInput"
+            className="cursor-pointer h-full w-full flex justify-center items-center"
+          >
+            <img src="/images/gallery-logo.svg" alt="Upload" className="" />
+          </label>
+        </div>
 
-        <input
-          type="text"
-          value={inputSelector?.sendMessage}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSubmit(e);
-            }
-          }}
-          onChange={(e) => dispatch(setSendMessage(e.target.value))}
-          className="flex-1 px-2 py-1 text-sm border-none focus:outline-none"
-          placeholder="Type Your Question..."
-        />
+        <div className="flex-1 px-2 py-1 text-sm border-none focus:outline-none">
+          <input
+            type="text"
+            value={inputSelector?.sendMessage}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e);
+              }
+            }}
+            onChange={(e) => dispatch(setSendMessage(e.target.value))}
+            className="flex-1 px-2 py-1 text-sm border-none focus:outline-none w-full "
+            placeholder="Type Your Question..."
+          />
+        </div>
 
-        {/* Voice Recorder Integration */}
         <div>
           <AudioRecorder
             onRecordingComplete={(blob) => addAudioElement(blob)}
@@ -231,8 +256,19 @@ const SendMessage = () => {
 
         <button
           type="submit"
-          className="text-white rounded-lg px-2 py-1 ml-2"
-         
+          // className="text-white rounded-lg px-2 py-1 ml-2"
+          disabled={
+            !inputSelector?.sendMessage?.trim() &&
+            !isImage &&
+            inputSelector?.setSendFile.length === 0
+          }
+          className={`text-white rounded-lg px-2 py-1 ml-2 ${
+            !inputSelector?.sendMessage?.trim() &&
+            !isImage &&
+            inputSelector?.setSendFile.length === 0
+              ? "opacity-50 cursor-not-allowed"
+              : ""
+          }`}
         >
           <img src="/images/send-logo.svg" alt="Send" className="w-5 h-5" />
         </button>

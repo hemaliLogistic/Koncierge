@@ -5,16 +5,18 @@ import "../../../components/NavBar/global.css";
 import "../../../app/(dashboard)/settings-chat/global.css";
 import Navbar from "../../../components/NavBar/NavBar";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedUser } from "@/redux/Chat/ChatSlice";
+import { setFilteredUserList1, setSelectedUser } from "@/redux/Chat/ChatSlice";
 import { getChatListAction } from "@/redux/Chat/action";
 
 const UserList = ({ chatIdRef }) => {
   const dispatch = useDispatch();
   const chatUserList = useSelector((state) => state?.chatApi?.chatUserList);
-
+  const filteredUserList = useSelector(
+    (state) => state?.chatApi?.filteredUserList
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
-  const [filteredUserList, setFilteredUserList] = useState([]);
+  // const [filteredUserList, setFilteredUserList] = useState([]);
 
   useEffect(() => {
     GetChatUserList();
@@ -26,9 +28,11 @@ const UserList = ({ chatIdRef }) => {
       const filteredUsers = chatUserList?.data?.filter((user) =>
         user.adminName.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredUserList(filteredUsers);
+      // setFilteredUserList(filteredUsers);
+      dispatch(setFilteredUserList1(filteredUsers));
     } else {
-      setFilteredUserList(chatUserList?.data);
+      // setFilteredUserList(chatUserList?.data);
+      dispatch(setFilteredUserList1(chatUserList?.data));
     }
   }, [searchTerm, chatUserList]);
 
@@ -69,66 +73,103 @@ const UserList = ({ chatIdRef }) => {
         </div>
 
         <div className="mt-10">
-          {filteredUserList?.map((message) => {
-            const isSelected = message.id === chatIdRef.current;
-            return (
-              <div
-                key={message.id}
-                className={`cursor-pointer ${isSelected ? "bg-gray-400" : ""}`}
-                onClick={() => handleUserClick(message)}
-              >
-                <div
-                  className={`flex pt-[20px]  ${
-                    isSelected ? "!bg-gray-400" : ""
-                  }`}
-                >
-                  <div className="relative flex">
-                    <img
-                      src={
-                        message?.adminProfile
-                          ? `${message.adminProfile}`
-                          : "/images/chat-profile.svg"
-                      }
-                      className="settings-chat-profile-image"
-                    />
-                    {message?.isUserOnline ? (
-                      <img
-                        src="/images/Ellipse179.svg"
-                        className="profile-active-icon"
-                      />
-                    ) : null}
-                  </div>
-
-                  <div className="message-detail-container">
-                    <p
-                      className={`message-username ${
-                        isSelected ? "text-white" : ""
+          {filteredUserList?.length > 0 && filteredUserList ? (
+            <>
+              {filteredUserList?.map((message) => {
+                console.log("Message===========>", message);
+                const isSelected = message.id === chatIdRef.current;
+                const formattedDate = new Date(
+                  message?.date
+                ).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                });
+                return (
+                  <div
+                    key={message.id}
+                    className={`cursor-pointer ${
+                      isSelected ? "bg-gray-400" : ""
+                    }`}
+                    onClick={() => handleUserClick(message)}
+                  >
+                    <div
+                      className={`flex pt-[20px]  ${
+                        isSelected ? "!bg-gray-400" : ""
                       }`}
                     >
-                      {message.adminName}
-                    </p>
-                    {message?.typeOfMessage !== "text" ? (
-                      <p className="message-text">media</p>
-                    ) : (
-                      <p className={`message-text ${isSelected ? "text-white" : ""}`}>
-                        {message?.message.length > 10
-                          ? `${message.message.substring(0, 25)}...`
-                          : message?.message}
-                      </p>
-                    )}
-                  </div>
+                      <div className="relative flex">
+                        <img
+                          src={
+                            message?.adminProfile
+                              ? `${message.adminProfile}`
+                              : "/images/chat-profile.svg"
+                          }
+                          className="settings-chat-profile-image"
+                        />
+                        {message?.isUserOnline ? (
+                          <img
+                            src="/images/Ellipse179.svg"
+                            className="profile-active-icon"
+                          />
+                        ) : null}
+                      </div>
 
-                  <div className="time-detail-container">
-                    <p className={`time-text`}>{message.timeText}</p>
-                    {message.unreadCount > 0 && (
-                      <p className="message-count">{message.unreadCount}</p>
-                    )}
+                      <div className="message-detail-container">
+                        <p
+                          className={`message-username ${
+                            isSelected ? "text-white" : ""
+                          }`}
+                        >
+                          {message.adminName}
+                        </p>
+                        {message?.typeOfMessage !== "text" ? (
+                          <p
+                            className={`message-text ${
+                              isSelected ? "text-white" : ""
+                            }`}
+                          >
+                            media
+                          </p>
+                        ) : (
+                          <p
+                            className={`message-text ${
+                              isSelected ? "text-white" : ""
+                            }`}
+                          >
+                            {message?.message.length > 10
+                              ? `${message.message.substring(0, 25)}...`
+                              : message?.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="time-detail-container">
+                        <p
+                          className={`time-text  ${
+                            isSelected ? "text-white" : ""
+                          }`}
+                        >
+                          {formattedDate}
+                        </p>
+                        {message.unreadCount > 0 && (
+                          <p className="message-count">{message.unreadCount}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="horizontal-line"></div>
                   </div>
-                </div>
-                <div className="horizontal-line"></div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-[calc(100vh-500px)] text-center">
+            <h1 className="text-2xl font-bold text-black">No chats available</h1>
+            <p className="text-lg text-gray-500 mt-2">
+              Once you make a booking and employees are assigned to your appointments, they will appear here for chat.
+            </p>
+          </div>
+          
+          )}
         </div>
       </div>
     </div>

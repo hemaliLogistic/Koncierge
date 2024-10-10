@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 
 const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
   const pathname = usePathname();
-  console.log("Pathname: ", pathname);
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [userAuth, setUserAuth] = useState(null);

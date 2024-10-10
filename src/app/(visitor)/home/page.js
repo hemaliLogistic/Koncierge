@@ -2,7 +2,7 @@
 
 import { getData, removeData, saveData } from "@/utils/storage";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CommonPageblock from "@/components/styles/common.style";
 import Link from "next/link";
 import Slider from "react-slick";
@@ -25,6 +25,7 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [userAuth, setUserAuth] = useState(null);
+  const scrollToRef = useRef(null);
 
   const [visibleItems, setVisibleItems] = useState(3);
   const [seeAllData, setSeeAllData] = useState(false);
@@ -39,6 +40,9 @@ const HomePage = () => {
   const { toaster } = useToaster();
   const dispatch = useDispatch();
   const categoryData = useSelector((state) => state?.homeApi?.categoryData);
+  const ScrollBookNowPortion = useSelector(
+    (state) => state?.homeApi?.footerBookNowButton
+  );
 
   useEffect(() => {
     const user = getData("user");
@@ -104,6 +108,24 @@ const HomePage = () => {
 
   //   const getServiceListData = async () => {};
 
+  const handleScroll = () => {
+    if (scrollToRef.current) {
+      // Calculate the position to scroll to (e.g., 100 pixels above the target section)
+      const scrollToY =
+        scrollToRef.current.getBoundingClientRect().top + window.scrollY - 150; // 100 pixels above
+      window.scrollTo({
+        top: scrollToY,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (ScrollBookNowPortion) {
+      handleScroll();
+    }
+  }, [ScrollBookNowPortion]);
+
   return (
     // <></>
     <CommonPageblock>
@@ -128,6 +150,7 @@ const HomePage = () => {
                 className="common-btn btn"
                 data-aos="fade-up"
                 data-aos-duration="1150"
+                onClick={handleScroll}
               >
                 Book Now
               </button>
@@ -260,7 +283,7 @@ const HomePage = () => {
               <h3>Koncierge Services</h3>
             </div>
             <div className="service-section-main">
-              <div className="service-section-inner">
+              <div className="service-section-inner" ref={scrollToRef}>
                 {!seeAllData
                   ? categoryData.slice(0, visibleItems).map((a, i) => (
                       <div

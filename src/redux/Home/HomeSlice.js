@@ -12,8 +12,8 @@ const initialState = {
     formData: {},
     isBookingModalOpen: false,
     deviceToken: {},
-    unreadNotificationCount: {}
-
+    unreadNotificationCount: {},
+    footerBookNowButton:false
 };
 
 const HomeSlice = createSlice({
@@ -34,6 +34,9 @@ const HomeSlice = createSlice({
         },
         setIsBookingModalOpen: (state, action) => {
             state.isBookingModalOpen = action.payload
+        },
+        setFooterBookNowButton: (state, action) => {
+            state.footerBookNowButton = action.payload
         }
 
     },
@@ -149,5 +152,5 @@ const HomeSlice = createSlice({
 
 export const homeApiSliceReducer = HomeSlice.reducer;
 
-export const { userStore, resetToInitialState, setCategoryData, setServiceListData, setFormData, setIsBookingModalOpen } =
+export const { userStore, resetToInitialState, setCategoryData, setServiceListData, setFormData, setIsBookingModalOpen,setFooterBookNowButton } =
     HomeSlice.actions;

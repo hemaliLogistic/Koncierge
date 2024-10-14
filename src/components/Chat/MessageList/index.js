@@ -114,8 +114,11 @@ const MessageList = () => {
 
   return (
     <div className="settings-chat-right-section">
-      <div className="setting-box-shadow h-[640px] flex flex-col">
-        <div className="current-chat-profile-container flex items-center p-4">
+      <div
+        className="setting-box-shadow h-[640px]  border border-gray-200  flex flex-col"
+        style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)" }}
+      >
+        <div className="current-chat-profile-container border-b border-gray-200 shadow-b-lg  flex items-center p-4">
           <div className="flex items-center">
             <img
               className="h-14 w-14"
@@ -136,9 +139,9 @@ const MessageList = () => {
             </div>
           </div>
         </div>
-        <div className="chat-container flex flex-col flex-1 overflow-hidden">
+        <div className="chat-container flex flex-col flex-1 overflow-hidden ">
           <div
-            className="messages-container flex-1 overflow-y-auto p-2 border border-gray-300 mb-2 max-h-[480px]"
+            className="messages-container flex-1 overflow-y-auto p-2 mb-2 max-h-[480px]"
             ref={messagesContainerRef} // Ref for scrolling only this div
             onScroll={(e) => handleScroll(e)}
           >
@@ -160,7 +163,6 @@ const MessageList = () => {
                   </div> */}
                   <div className="date-header text-center">{displayDate}</div>
                   {groupedMessages[date].map((item, index) => {
-                    console.log("item==========>",item)
                     return item?.senderId === user?.data?.id ? (
                       <div
                         key={index}
@@ -210,7 +212,6 @@ const MessageList = () => {
                                 ? item.profile
                                 : "/images/chat-profile.svg"
                             }
-
                             className="w-10 h-10 !rounded-full object-cover "
                             alt="Profile"
                           />

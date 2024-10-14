@@ -107,7 +107,7 @@ const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
                   {/* Render an empty element initially */}
                   {userAuth !== null ? (
                     <Image
-                      src="/images/userProfile.png"
+                      src="/images/chat-profile.svg"
                       alt="User Avatar"
                       width={40}
                       height={40}

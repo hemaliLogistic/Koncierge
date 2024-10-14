@@ -56,7 +56,10 @@ const UserList = ({ chatIdRef }) => {
 
   return (
     <div className="settings-chat-left-section">
-      <div className="setting-box-shadow h-[640px] max-lg:h-[175px] overflow-auto">
+      <div
+        className="setting-box-shadow h-[640px] max-lg:h-[175px]  border border-gray-200  overflow-auto "
+        style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)" }}
+      >
         <div className="settings-chat-search-input-container">
           <div className="search-container">
             <input
@@ -72,7 +75,7 @@ const UserList = ({ chatIdRef }) => {
           </div>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-4 ">
           {filteredUserList?.length > 0 && filteredUserList ? (
             <>
               {filteredUserList?.map((message) => {
@@ -163,12 +166,14 @@ const UserList = ({ chatIdRef }) => {
             </>
           ) : (
             <div className="flex flex-col items-center justify-center h-[calc(100vh-500px)] text-center">
-            <h1 className="text-2xl font-bold text-black">No chats available</h1>
-            <p className="text-lg text-gray-500 mt-2">
-              Once you make a booking and employees are assigned to your appointments, they will appear here for chat.
-            </p>
-          </div>
-          
+              <h1 className="text-2xl font-bold text-black">
+                No chats available
+              </h1>
+              <p className="text-lg text-gray-500 mt-2">
+                Once you make a booking and employees are assigned to your
+                appointments, they will appear here for chat.
+              </p>
+            </div>
           )}
         </div>
       </div>

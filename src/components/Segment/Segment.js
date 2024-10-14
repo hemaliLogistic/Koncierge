@@ -110,22 +110,36 @@ const Segment = () => {
         </button>
 
         <button
-          onClick={() => router.push("/settings")}
+          onClick={() => router.push("/settings-chat")}
           className={`segment-link ${
-            isActive("/settings") || isActive("/settings-chat") ? "active" : ""
+            isActive("/settings-chat") ? "active" : ""
           }`}
+        >
+          <img src="/images/MsgPng.png" className="segment-icon" />
+          <span
+            className={`segment-text ${
+              isActive("/settings-chat") ? "active" : ""
+            }`}
+          >
+            {t("Chat")}
+          </span>
+        </button>
+
+        <button
+          onClick={() => router.push("/settings")}
+          className={`segment-link ${isActive("/settings") ? "active" : ""}`}
         >
           <img src="/images/settings.png" className="segment-icon" />
           <span className="segment-text">{t("Settings")}</span>
         </button>
-
+        {/* 
         <button
           className="segment-link"
           onClick={() => setIsModalVisible(true)}
         >
           <img src="/images/logout.png" className="segment-icon" />
           <span className="segment-text">{t("Logout")}</span>
-        </button>
+        </button> */}
       </div>
 
       {/* Mobile Dropdown */}

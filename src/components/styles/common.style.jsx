@@ -1052,7 +1052,7 @@ const CommonPageblock = styled.div`
                     color: #7f7f7f;
                     font-size: 18px;
                     line-height: 30px;
-                    margin-bottom: 30px;
+                    margin-bottom: 10px;
                   }
                   .checkbox-custom {
                     .checkbox-custom-inner {

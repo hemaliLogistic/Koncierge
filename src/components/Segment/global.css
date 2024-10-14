@@ -5,7 +5,7 @@
 
 /* segment.css */
 .segment-container {
-  @apply flex items-center justify-center mt-5 sm:mt-14;
+  @apply flex items-center justify-center mt-5 sm:mt-2;
 }
 
 .segment-nav {

@@ -20,11 +20,11 @@
 }
 
 .search-container{
-  @apply w-full mt-5 relative ml-[20px] mr-[20px] max-xl:ml-[10px] max-xl:mr-[10px] max-md:ml-[20px] max-sm:ml-[10px] max-sm:mr-[10px] max-2xl:mr-[10px] max-2xl:ml-[10px];
+  @apply w-full mt-5 relative ml-[20px] mr-[20px] max-xl:ml-[10px] max-xl:mr-[10px] max-md:ml-[20px] max-sm:ml-[10px] max-sm:mr-[10px] max-2xl:mr-[10px] max-2xl:ml-[10px] !border !border-gray-200 !shadow-md;
 }
 
 .settings-chat-search-input{
-  @apply border-2 border-grayAC w-full pt-[11px] pb-[11px] pl-[10px];
+  @apply border border-gray-200  w-full pt-[11px] pb-[11px] pl-[10px];
 }
 
 .settings-search-icon{
@@ -64,7 +64,7 @@
 }
 
 .horizontal-line{
-  @apply h-px w-full bg-grayAC mt-[20px];
+  @apply h-px w-full bg-gray-200 border border-gray-200 shadow-md mt-[20px];
 }
 
 

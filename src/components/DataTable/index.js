@@ -40,7 +40,10 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
   const column = [
     {
       name: (
-        <div className="table-main-div">
+        <div
+          className="table-main-div"
+          style={{ whiteSpace: "nowrap", textAlign: "center", padding: "10px" }}
+        >
           <span className="table-header-text">
             {isPayment ? t("Sr No.") : t("Sr No.")}
           </span>
@@ -145,6 +148,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                     router.push(`/notification/${row?.id}`);
                   }
                 }}
+                style={{ whiteSpace: 'nowrap', textAlign: 'center', padding: '10px' }}
               >
                 <span
                   className={
@@ -170,6 +174,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                     router.push(`/notification/${row?.id}`);
                   }
                 }}
+                style={{ whiteSpace: 'nowrap', textAlign: 'center', padding: '10px' }}
               >
                 <span
                   className={`table-main-div table-button-text w-20 h-6 text-white px-2 py-1 text-center ${

@@ -49,6 +49,8 @@ const Settings = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [addressValue, setAddressValue] = useState("");
 
+  const [isLogOutModalVisible, setIsLogOutModalVisible] = useState(false);
+
   const maxRetries = 10;
 
   const { t } = useTranslation("common");
@@ -282,6 +284,23 @@ const Settings = () => {
   const handleAddressChange = (value) => {
     setAddressValue(value);
   };
+
+  const handleLogOutOpen = () => {
+    setIsLogOutModalVisible(true);
+  };
+
+  const handleLogoutClose = async () => {
+    localStorage.clear();
+    removeData("user");
+    await signOut({ redirect: false });
+    router.push("/");
+  };
+
+  const handleStateClose = () => {
+    setIsLogOutModalVisible(false);
+
+  }
+
   return (
     <>
       {/* {/ <div className='p-4'> /}
@@ -349,9 +368,10 @@ const Settings = () => {
 
           <button
             className="chat-btn-container"
-            onClick={() => router.push("/settings-chat")}
+            // onClick={() => router.push("/settings-chat")}
+            onClick={() => handleLogOutOpen()}
           >
-            <p className="chat-btn-text">{t("Chat")}</p>
+            <p className="chat-btn-text">{t("Logout")}</p>
           </button>
         </div>
 
@@ -499,6 +519,17 @@ const Settings = () => {
           errorMessage={errorMessage}
           setErrorMessage={setErrorMessage}
         />
+
+        {isLogOutModalVisible ? (
+          <Modal
+          isOpen={isLogOutModalVisible}
+          handleClose={handleStateClose}
+          handleLogout={handleLogoutClose}
+          description={"Are you sure you want to LOG OUT?"}
+          leftButton={"Yes"}
+          rightButton={"No"}
+          />
+        ) : null}
       </div>
     </>
   );

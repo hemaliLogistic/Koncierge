@@ -1,5 +1,9 @@
 import React, { useRef, useState } from "react";
-import { getChatListAction, getMessageAction, SendMessageAction } from "@/redux/Chat/action";
+import {
+  getChatListAction,
+  getMessageAction,
+  SendMessageAction,
+} from "@/redux/Chat/action";
 import { TOAST_ALERTS, TOAST_TYPES } from "@/constants/keywords";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +33,7 @@ const SendMessage = () => {
 
   const user = getData("user");
   const [isImage, setIsImage] = useState(false);
+  console.log("Image===============>", isImage);
   const [blobFile, setBlobFile] = useState();
 
   const recorderControlsRef = useRef(null);
@@ -41,8 +46,8 @@ const SendMessage = () => {
           limit: 5,
         })
       );
-      if(res?.payload?.status){
-        dispatch(setFilteredUserList1(res.payload?.data))
+      if (res?.payload?.status) {
+        dispatch(setFilteredUserList1(res.payload?.data));
       }
     } catch (error) {
       console.error("Error", error);
@@ -61,11 +66,13 @@ const SendMessage = () => {
       mediaList.push(mediaUrl);
     }
     if (newFiles.length > 5) {
-      toaster(TOAST_ALERTS, TOAST_TYPES.ERROR);
+      console.log("in error message");
+      toaster(TOAST_ALERTS.REACHED_MAX_IMAGES, TOAST_TYPES.ERROR);
       return;
     }
 
     dispatch(setFileInput(mediaList));
+    dispatch(setSendFileInput(mediaList));
     dispatch(setSendFileInput(newFiles));
   };
 
@@ -114,10 +121,16 @@ const SendMessage = () => {
     e.preventDefault();
     try {
       if (
-        !inputSelector?.sendMessage &&
+        !inputSelector?.sendMessage?.trim() &&
         inputSelector?.setSendFile.length === 0
       ) {
-        toast.error("Please enter a message or select a file.");
+        toast.error("Please enter a valid message or select a file.");
+        return;
+      }
+
+      if (inputSelector?.setSendFile.length > 4) {
+        console.log("in error message");
+        toaster(TOAST_ALERTS.REACHED_MAX_IMAGES, TOAST_TYPES.ERROR);
         return;
       }
 
@@ -133,17 +146,22 @@ const SendMessage = () => {
         "typeOfMessage",
         inputSelector?.setSendFile.length > 0 ? "media" : "text"
       );
+
       if (!isImage) {
         const blobUrl = inputSelector?.setSendFile[0];
 
-        if (blobUrl && blobUrl.startsWith("blob:")) {
+        // Check if it's a blob URL (string) or a File object
+        if (typeof blobUrl === "string" && blobUrl.startsWith("blob:")) {
           const blobResponse = await fetch(blobUrl);
           const blob = await blobResponse.blob();
 
           const file = new File([blob], "file.audio", { type: blob.type });
           formData.append("media", file);
+        } else if (blobUrl instanceof File) {
+          // If it's already a File object, append it directly
+          formData.append("media", blobUrl);
         } else {
-          formData.append("media", inputSelector?.setSendFile[0]);
+          console.error("Invalid blobUrl or file:", blobUrl);
         }
       } else {
         for (let i = 0; i < inputSelector?.setSendFile.length; i++) {
@@ -167,16 +185,15 @@ const SendMessage = () => {
       toast.error(TOAST_ALERTS.ERROR_MESSAGE);
     } finally {
       await GetMessageList();
-      
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative flex flex-col items-start"
+      className="relative flex flex-col items-start px-5 pb-2 "
     >
-      <div className="flex flex-wrap gap-2 mb-4 justify-end">
+      <div className="flex flex-wrap gap-2  justify-end">
         {inputSelector.setFileInput?.map((media, index) => {
           const isAudio = media.mimeType?.startsWith("audio");
 
@@ -212,13 +229,13 @@ const SendMessage = () => {
       <div className="flex items-center w-full border border-gray-300 rounded-lg  ">
         <div
           className=" w-12 h-9  flex justify-center items-center my-1 mx-1"
-          onClick={handleFileChange}
+          // onClick={handleFileChange}
         >
           <input
             className="hidden"
             type="file"
             name="image"
-            // onChange={handleFileChange}
+            onChange={handleFileChange}
             id="fileInput"
             accept="image/*,video/*"
             multiple

@@ -9,6 +9,7 @@ export const TOAST_ALERTS = {
   FORGOT_PASSWORD: "Please check your email",
   RESEND_LINK: "We resend the code to your email",
   UPDATE_PROFILE: "Profile details are updated successfully",
+  REACHED_MAX_IMAGES:"You Can only send 4 images at a time"
 };
 
 export const TOAST_TYPES = {

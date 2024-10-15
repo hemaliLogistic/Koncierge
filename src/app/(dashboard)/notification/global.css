@@ -23,7 +23,7 @@
 }
 
 .notification-detail-container {
-  @apply pt-[20px] pl-[20px] lg:flex pb-5;
+  @apply pt-[15px] pl-[20px] lg:flex pb-5;
 }
 
 .left-section {

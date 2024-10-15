@@ -232,7 +232,7 @@ const NotificationItem = () => {
 
         const date = new Date(dateString);
 
-        return moment(dateString, "HH:mm:ss").format("hh:mm A");
+        return moment(dateString, "HH:mm:ss").format("HH:mm");
     }
     const handleChatClick = (item) => {
         dispatch(setSelectedUser(item?.employeeId));
@@ -318,7 +318,7 @@ const NotificationItem = () => {
                                 </div>
                                 <div className="user-message">
                                     <p className="user-name" style={{ display: "inline" }}>
-                                        Appointment Time:
+                                        Appointment time:
                                     </p>
                                     <p style={{ display: "inline", paddingLeft: "5px" }}>
                                         {formatTime(notification?.serviceDetail?.requestTime)}
@@ -370,7 +370,7 @@ const NotificationItem = () => {
                                         </div>
                                     );
 
-                                    return hasEmployee ? (
+                                    return !hasEmployee ? (
                                         <div
                                             className="notification-detail-container"
                                             key={index}
@@ -380,11 +380,11 @@ const NotificationItem = () => {
                                                     className="service-name"
                                                     onClick={() => handleOpen(index)}
                                                 >
-                                                    <div className="flex justify-between items-center w-full">
+                                                    <div className="flex justify-between items-center w-full pr-4">
                                                         <span>{item?.serviceId?.serviceName}</span>
                                                         <div className="flex items-center">
                                                             <span className="text-right mr-2 font-semibold">
-                                                                $ {item?.serviceId?.price}
+                                                                ${item?.serviceId?.price}
                                                             </span>
                                                             <FontAwesomeIcon
                                                                 icon={
@@ -455,7 +455,7 @@ const NotificationItem = () => {
                                     </div>
 
                                     <div className="amount-container">
-                                        <p className="amount-text">$ {finalValue}</p>
+                                        <p className="amount-text">${finalValue}</p>
                                     </div>
                                 </div>
                                 {!isExpired &&

@@ -141,7 +141,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                     <>
                         {row?.bookingStatus === "View Quote" ? (
                             <div
-                                className="table-main-div"
+                                className="table-main-div w-32" // Ensure fixed width for the parent div
                                 onClick={() => {
                                     if (row?.bookingStatus !== "Requested") {
                                         router.push(`/notification/${row?.id}`);
@@ -152,21 +152,22 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                                 <span
                                     className={
                                         !isPayment
-                                            ? `table-main-div table-button-text w-30 h-6 ${row?.bookingStatus === "View Quote"
-                                                ? "bg-green-600 hsb:text-[10px] text-sm"
+                                            ? `table-main-div table-button-text w-full h-8 ${row?.bookingStatus === "View Quote"
+                                                ? "bg-green-600"
                                                 : row?.bookingStatus === "Pending"
                                                     ? "bg-yellow-500 opacity-40"
-                                                    : "bg-gray-500 hsb:text-[10px] text-sm"
-                                            } text-white px-2 py-1 text-center`
-                                            : ""
+                                                    : "bg-gray-500"
+                                            } text-white px-2 py-1 text-center font-bold`
+                                            : "font-bold w-full"
                                     }
+                                    style={{ minWidth: '150px', display: 'inline-block' }} // Added fixed min-width
                                 >
-                                    {isPayment ? row?.status : row?.bookingStatus === "Expired" ? "Pending Payment" : row?.bookingStatus}
+                                    {isPayment ? row?.status : row?.bookingStatus === "Upcoming" ? "Pending Payment" : row?.bookingStatus}
                                 </span>
                             </div>
                         ) : (
                             <div
-                                className="table-main-div"
+                                className="table-main-div w-32" // Ensure fixed width for the parent div
                                 onClick={() => {
                                     if (row?.bookingStatus !== "Requested") {
                                         router.push(`/notification/${row?.id}`);
@@ -174,17 +175,17 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                                 }}
                                 style={{ whiteSpace: 'nowrap', textAlign: 'center', padding: '10px' }}
                             >
-                                <span
-                                    className={`table-main-div table-button-text w-30 h-6 text-white px-2 py-1 text-center ${row?.bookingStatus === "View Quote"
-                                        ? "bg-green-600 hsb:text-[10px] text-sm"
+                                <p
+                                    className={`table-main-div table-button-text w-full h-8 text-white px-2 py-1 text-center font-bold ${row?.bookingStatus === "View Quote"
+                                        ? "bg-green-600"
                                         : row?.bookingStatus === "Pending"
                                             ? "bg-yellow-500"
                                             : row?.bookingStatus === "Upcoming"
-                                                ? "bg-blue-500 "
+                                                ? "bg-blue-500"
                                                 : row?.bookingStatus === "Rejected"
                                                     ? "bg-red-500"
                                                     : row?.bookingStatus === "Confirmed"
-                                                        ? "bg-green00"
+                                                        ? "bg-green-500"
                                                         : row?.bookingStatus === "Requested"
                                                             ? "bg-orange-500"
                                                             : row?.bookingStatus === "Completed"
@@ -193,13 +194,15 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                                                                     ? "bg-gray-700"
                                                                     : "bg-gray-500"
                                         }`}
+                                    style={{ minWidth: '150px', display: 'inline-block' }} // Added fixed min-width
                                 >
                                     {isPayment ? row?.status : row?.bookingStatus === "Upcoming" ? "Pending Payment" : row?.bookingStatus}
-
-                                </span>
+                                </p>
                             </div>
                         )}
                     </>
+
+
                 );
             },
             sortable: true,

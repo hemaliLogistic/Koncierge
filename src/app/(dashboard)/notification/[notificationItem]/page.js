@@ -79,7 +79,7 @@ const NotificationItem = () => {
                     setNotification(data);
                     setIsExpired(data.isExpired);
                     const totalSum = data?.requestQutations?.reduce(
-                        (accumulator, item) => accumulator + item?.serviceId?.price,
+                        (accumulator, item) => accumulator + item?.price,
                         0
                     );
                     const texValue = totalSum * 0.1;
@@ -333,36 +333,38 @@ const NotificationItem = () => {
 
                 <div>
                     <>
-                        <div>
+                        <div className="mr-2">
                             <div className="horizontal-line-graycolor"></div>
                             {notification?.requestQutations?.length > 0
                                 ? notification?.requestQutations.map((item, index) => {
                                     const hasEmployee = item?.employeeId;
                                     const content = (
-                                        <div className="service-left-section p-4 bg-gray-100 rounded-md">
+                                        <div className="service-left-section w-full p-4 bg-gray-100 rounded-md flex justify-center items-center">
                                             <div className="flex flex-col gap-2">
                                                 <p className="service-name font-semibold text-lg">
                                                     {item?.employeeId?.firstName}{" "}
                                                     {item?.employeeId?.lastName}
                                                 </p>
 
-                                                <div className="service-detail-message text-gray-600">
-                                                    Contact Through: {item?.employeeId?.mobileNumber} OR
-                                                    {notification?.serviceDetail?.bookingStatus !== 'Expired' ? (
+                                                <div className="service-detail-message  text-gray-600">
+                                                    Contact Through: {item?.employeeId?.mobileNumber ? (
                                                         <>
-                                                            <span
-                                                                onClick={() => handleChatClick(item)}
-                                                                className="text-blue-500 underline cursor-pointer mx-1"
-                                                            >
-                                                                Chat
-                                                            </span>
+                                                            {item.employeeId.mobileNumber} OR
+                                                            {notification?.serviceDetail?.bookingStatus !== 'Expired' ? (
+                                                                <span
+                                                                    onClick={() => handleChatClick(item)}
+                                                                    className="text-blue-500 underline cursor-pointer mx-1"
+                                                                >
+                                                                    Chat
+                                                                </span>
+                                                            ) : (
+                                                                <span className="text-blue-500 underline cursor-pointer mx-1">
+                                                                    Chat Ended
+                                                                </span>
+                                                            )}
                                                         </>
                                                     ) : (
-                                                        <>
-                                                            <span className="text-blue-500 underline cursor-pointer mx-1">
-                                                                Chat Ended
-                                                            </span>
-                                                        </>
+                                                        "Once an employee is assigned to this service, you will be able to chat with them regarding your queries"
                                                     )}
                                                 </div>
 
@@ -370,7 +372,7 @@ const NotificationItem = () => {
                                         </div>
                                     );
 
-                                    return !hasEmployee ? (
+                                    return hasEmployee ? (
                                         <div
                                             className="notification-detail-container"
                                             key={index}
@@ -384,7 +386,7 @@ const NotificationItem = () => {
                                                         <span>{item?.serviceId?.serviceName}</span>
                                                         <div className="flex items-center">
                                                             <span className="text-right mr-2 font-semibold">
-                                                                ${item?.serviceId?.price}
+                                                                ${item?.price}
                                                             </span>
                                                             <FontAwesomeIcon
                                                                 icon={
@@ -414,7 +416,12 @@ const NotificationItem = () => {
                                                 </div>
                                             </div>
                                             <div className="amount-container">
-                                                <p className="amount-text">${item?.serviceId?.price}</p>
+                                                {/* <p className="amount-text">${item?.serviceId?.price}
+                                                ${total}
+                                                </p> */}
+                                                <p className="amount-text">
+                                                    ${total}
+                                                </p>
                                             </div>
                                         </div>
                                     );
@@ -422,7 +429,7 @@ const NotificationItem = () => {
                                 : null}
 
                             <>
-                                <div className="notification-detail-container">
+                                {/* <div className="notification-detail-container">
                                     <div className="service-left-section">
                                         <div className="flex-col">
                                             <p className="service-name">Service Amount</p>
@@ -432,7 +439,7 @@ const NotificationItem = () => {
                                     <div className="amount-container">
                                         <p className="amount-text">${total}</p>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="notification-detail-container border-b border-grayE1">
                                     <div className="service-left-section">
                                         <div className="flex-col">
@@ -470,10 +477,11 @@ const NotificationItem = () => {
                                                     alignItems: "center",
                                                     textAlign: "center",
                                                 }}
+                                                onClick={() => handelAccept("pending")}
                                             >
                                                 <p
                                                     className="accept-btn-text"
-                                                    onClick={() => handelAccept("pending")}
+                                                    // onClick={() => handelAccept("pending")}
                                                     style={{
                                                         cursor: "pointer",
                                                     }}
@@ -481,10 +489,10 @@ const NotificationItem = () => {
                                                     {t("Accept")}
                                                 </p>
                                             </div>
-                                            <div className="decline-button-container ">
+                                            <div className="decline-button-container " onClick={() => handelAccept("rejected")}>
                                                 <p
                                                     className="decline-btn-text"
-                                                    onClick={() => handelAccept("rejected")}
+                                                // onClick={() => handelAccept("rejected")}
                                                 >
                                                     {t("Decline")}
                                                 </p>
@@ -500,7 +508,7 @@ const NotificationItem = () => {
                                     notification?.viewQuoteData?.isPaymentComplete === false &&
                                     notification?.viewQuoteData?.isPayment === true ? (
                                     <div
-                                        className="payment-btn-container"
+                                        className="payment-btn-container cursor-pointer"
                                         style={{
                                             display: "flex",
                                             justifyContent: "center",
@@ -508,12 +516,15 @@ const NotificationItem = () => {
                                             textAlign: "center",
                                             marginBottom: "20px",
                                         }}
+                                        onClick={() =>
+                                            handlePayment(notification?.requestQutations)
+                                        }
                                     >
                                         <button
                                             className="payment-btn-text"
-                                            onClick={() =>
-                                                handlePayment(notification?.requestQutations)
-                                            }
+                                        // onClick={() =>
+                                        //     handlePayment(notification?.requestQutations)
+                                        // }
                                         >
                                             {t("Amount to Pay ")}${finalValue}
                                         </button>

@@ -32,6 +32,7 @@ import Header from "@/components/header";
 import CustomOption from "@/components/CustomOption";
 import MultiSelect from "@/components/CustomOption";
 import Loader from "@/components/Loader";
+import { getProfileAction } from "@/redux/Dashboard/action";
 
 const Service = () => {
     // hooks
@@ -58,6 +59,7 @@ const Service = () => {
     const [disabledDates, setDisabledDates] = useState([]);
     const [changeStartType, setChangeStartType] = useState(false);
     const [changeEndType, setChangeEndType] = useState(false);
+    const [profileData, setProfileData] = useState([]);
 
     const [isDisabledDate, setIsDisabledDate] = useState(() => () => false);
     const modalRef = useRef(null);
@@ -91,6 +93,37 @@ const Service = () => {
 
             console.log("Error", error);
             toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+        }
+    };
+
+    useEffect(() => {
+        getProfileData();
+    }, [])
+
+    const getProfileData = async () => {
+        setIsLoading(true);
+
+        try {
+            const res = await dispatch(getProfileAction({}));
+            if (res.meta.requestStatus === "fulfilled") {
+                if (res.payload.status) {
+                    const profileData = res.payload.data;
+                    setIsLoading(false);
+                    setProfileData(profileData);
+
+                } else {
+                    setIsLoading(false);
+                    toast.error(res.payload.message);
+                }
+            } else {
+                setIsLoading(false);
+                toast.error(res.error.message || res.payload.message);
+            }
+        } catch (error) {
+            setIsLoading(false);
+
+            toast.error(TOAST_ALERTS.ERROR_MESSAGE);
+            console.log("Error", error);
         }
     };
 
@@ -218,13 +251,13 @@ const Service = () => {
                 }
             });
         }
-        if (user || storedFormData) {
-            setValue('address', user?.data?.address);
+        if (user && profileData) {
+            setValue('address', profileData?.address);
         }
         if (checkedFormData && !storedFormData) {
             setValue("selectedServices", checkedFormData);
         }
-    }, []);
+    }, [profileData]);
 
     // Toggle functions //
     const handleClose = () => {
@@ -268,9 +301,10 @@ const Service = () => {
             .min(2, "Name must be at least 2 characters")
             .max(50, "Name must be less than 50 characters"),
         frequency: Yup.number()
+            .transform((value, originalValue) => originalValue === "" ? null : value)
+            .nullable()
             .min(0, "Please specify the frequency")
-            .required("Frequency is required")
-            .nullable(),
+            .required("Frequency is required"),
 
         selectInterval: Yup.string()
             .required("Please select an interval")
@@ -459,7 +493,7 @@ const Service = () => {
         resolver: yupResolver(schema),
     });
 
-    console.log("user=====>", user?.data?.address);
+    console.log("user=====>", watch());
 
 
     const getBookedHoursForDate = (selectedDate, bookedHoursData) => {
@@ -597,12 +631,20 @@ const Service = () => {
                                                         hideSelectedOptions={false}
                                                         closeMenuOnSelect={true}
                                                         isOptionDisabled={(option) => !option.is_available}
-                                                        onChange={(selectedOption) =>
-                                                            field.onChange(selectedOption)
-                                                        } // Ensure correct handling of selected value
+                                                        formatOptionLabel={(option, { context }) =>
+                                                            context === 'menu' ? (
+                                                                <div>
+                                                                    {option.serviceName} <span>({option.fromTime} - {option.toTime})</span>
+                                                                </div>
+                                                            ) : (
+                                                                option.serviceName // Display only the serviceName in the input
+                                                            )
+                                                        }
+                                                        onChange={(selectedOption) => field.onChange(selectedOption)} // Ensure correct handling of selected value
                                                     />
                                                 )}
                                             />
+
                                             {errors.selectedServices && (
                                                 <p className="text-red-500">
                                                     {errors.selectedServices.message}

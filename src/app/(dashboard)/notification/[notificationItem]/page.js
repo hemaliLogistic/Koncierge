@@ -382,21 +382,15 @@ const NotificationItem = () => {
                                                     className="service-name"
                                                     onClick={() => handleOpen(index)}
                                                 >
-                                                    <div className="flex justify-between items-center w-full pr-4">
+                                                    <div className="flex items-center w-full pr-4">
                                                         <span>{item?.serviceId?.serviceName}</span>
-                                                        <div className="flex items-center">
-                                                            <span className="text-right mr-2 font-semibold">
-                                                                ${item?.price}
-                                                            </span>
+                                                        <div className="flex items-center ml-2">
                                                             <FontAwesomeIcon
-                                                                icon={
-                                                                    open === index
-                                                                        ? faChevronDown
-                                                                        : faChevronRight
-                                                                }
+                                                                icon={open === index ? faChevronDown : faChevronRight}
                                                             />
                                                         </div>
                                                     </div>
+
                                                 </AccordionHeader>
                                                 <AccordionBody>
                                                     {open === index ? content : null}
@@ -419,9 +413,9 @@ const NotificationItem = () => {
                                                 {/* <p className="amount-text">${item?.serviceId?.price}
                                                 ${total}
                                                 </p> */}
-                                                <p className="amount-text">
+                                                {/* <p className="amount-text">
                                                     ${total}
-                                                </p>
+                                                </p> */}
                                             </div>
                                         </div>
                                     );
@@ -429,7 +423,7 @@ const NotificationItem = () => {
                                 : null}
 
                             <>
-                                {/* <div className="notification-detail-container">
+                                <div className="notification-detail-container">
                                     <div className="service-left-section">
                                         <div className="flex-col">
                                             <p className="service-name">Service Amount</p>
@@ -439,7 +433,7 @@ const NotificationItem = () => {
                                     <div className="amount-container">
                                         <p className="amount-text">${total}</p>
                                     </div>
-                                </div> */}
+                                </div>
                                 <div className="notification-detail-container border-b border-grayE1">
                                     <div className="service-left-section">
                                         <div className="flex-col">

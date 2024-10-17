@@ -33,7 +33,6 @@ const SendMessage = () => {
 
   const user = getData("user");
   const [isImage, setIsImage] = useState(false);
-  console.log("Image===============>", isImage);
   const [blobFile, setBlobFile] = useState();
 
   const recorderControlsRef = useRef(null);
@@ -215,9 +214,15 @@ const SendMessage = () => {
                   />
                 </>
               )}
-              <button
+              {/* <button
                 onClick={() => removeImage(index)}
                 className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-75 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                ×
+              </button> */}
+              <button
+                onClick={() => removeImage(index)}
+                className="absolute top-[-4px] right-[-4px] bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-75 group-hover:opacity-100 transition-opacity duration-200 pb-1"
               >
                 ×
               </button>

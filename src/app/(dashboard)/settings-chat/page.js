@@ -23,6 +23,7 @@ const SettingsChat = () => {
     const [reciveChatData, setReciveChatData] = useState(null);
     const [chatIdCollection, setChatIdCollection] = useState([]);
     const selectedUser = useSelector((state) => state?.chatApi?.selectedUser);
+    const [userList, setUserList] = useState([]);
 
     const reciverFetch = function getlivedata(a, b) {
         console.log("in page.js ====>", { a, b });
@@ -33,6 +34,23 @@ const SettingsChat = () => {
             }
             setReciveChatData(a?.data?.chatMessage);
         }
+        // If action indicates user status update
+        if (a?.action === "userIsOnline") {
+            updateUserStatus(a?.data?.userId, true); // Pass userId and isOnline
+        } else if (a?.action === "userIsOffline") {
+            updateUserStatus(a?.data?.userId, false); // Pass userId and isOnline
+        }
+    };
+
+    const updateUserStatus = (userId, isOnline) => {
+        setUserList(prevState => {
+            return prevState.map(user => {
+                if (user.id === userId) {
+                    return { ...user, isOnline }; // Update the status of the matching user
+                }
+                return user;
+            });
+        });
     };
 
     useEffect(() => {
@@ -53,6 +71,8 @@ const SettingsChat = () => {
 
         mySocket.on("connect", () => {
             console.log("Socket connected");
+
+            mySocket.on("message", reciverFetch)
             mySocket.get(
                 `/api/v1/subscribe-user/${user?.data?.id}`,
                 (resData, jwres) => {
@@ -72,7 +92,7 @@ const SettingsChat = () => {
 
     return (
         <div className="settings-main-container">
-            <UserList chatIdRef={chatIdRef} />
+            <UserList chatIdRef={chatIdRef} userList={userList} />
             {selectedUser?.id ? <MessageList /> : <> No Message</>}
         </div>
     );

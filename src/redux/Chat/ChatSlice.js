@@ -17,6 +17,7 @@ const initialState = {
   // dataToRender:[]
   audioChatInput: "",
   filteredUserList: [],
+  onlineUser: [],
 };
 
 const ChatSlice = createSlice({

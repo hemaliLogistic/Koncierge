@@ -195,7 +195,7 @@ const SendMessage = () => {
                             )}
                             <button
                                 onClick={() => removeImage(index)}
-                                className="absolute top-[-4px] right-[-4px] bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-75 group-hover:opacity-100 transition-opacity duration-200 pb-1"
+                                className="absolute top-[-4px] right-[-4px] bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-75 group-hover:opacity-100 transition-opacity duration-200"
                             >
                                 ×
                             </button>
@@ -254,10 +254,10 @@ const SendMessage = () => {
                         inputSelector?.setSendFile.length === 0
                     }
                     className={`text-white rounded-lg px-2 py-1 ml-2 ${!inputSelector?.sendMessage?.trim() &&
-                            !isImage &&
-                            inputSelector?.setSendFile.length === 0
-                            ? "opacity-50 cursor-not-allowed"
-                            : ""
+                        !isImage &&
+                        inputSelector?.setSendFile.length === 0
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
                         }`}
                 >
                     <img src="/images/send-logo.svg" alt="Send" className="w-5 h-5" />

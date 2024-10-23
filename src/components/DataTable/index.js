@@ -143,7 +143,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                             <div
                                 className="table-main-div w-32" // Ensure fixed width for the parent div
                                 onClick={() => {
-                                    if (row?.bookingStatus !== "Requested") {
+                                    if (row?.bookingStatus !== "Requested" && row?.bookingStatus !== "Rejected") {
                                         router.push(`/notification/${row?.id}`);
                                     }
                                 }}
@@ -169,7 +169,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                             <div
                                 className="table-main-div w-32" // Ensure fixed width for the parent div
                                 onClick={() => {
-                                    if (row?.bookingStatus !== "Requested") {
+                                    if (row?.bookingStatus !== "Requested" && row?.bookingStatus !== "Rejected") {
                                         router.push(`/notification/${row?.id}`);
                                     }
                                 }}

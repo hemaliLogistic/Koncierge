@@ -268,15 +268,29 @@ const NotificationItem = () => {
                     <div className="notification-detail-container">
                         <div className="declined-text-container">
                             <p className="decline-quotation-text">
-                                {t("You have declined this quotation")}
+                                {t("You have declined the quotation")}
                             </p>
                         </div>
                     </div>
                 )}
-            {!isLoading && isExpired && (
+            {!isLoading && isExpired && notification?.serviceDetail?.status == "Expired" && (
                 <div className="notification-detail-container">
                     <p className="decline-btn-text text-[22px]">
-                        Your service has been expired
+                        We regret to inform you that we are unable to attend your service request. If you have made any payment for this service, a refund will be initiated within 24 hours
+                    </p>
+                </div>
+            )}
+            {!isLoading && isExpired && notification?.serviceDetail?.status == "completed" && (
+                <div className="notification-detail-container">
+                    <p className="decline-btn-text text-[22px]">
+                        Your service has been completed. Thank you for choosing us!
+                    </p>
+                </div>
+            )}
+            {!isLoading && isExpired && notification?.serviceDetail?.status == "rejected" && (
+                <div className="notification-detail-container">
+                    <p className="decline-btn-text text-[22px]">
+                        Your service request has been rejected by the admin.
                     </p>
                 </div>
             )}

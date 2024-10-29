@@ -11,11 +11,63 @@ const CommonPageblock = styled.div`
     padding: 30px 0px;
     left: 0px;
     right: 0px;
+    transition: 0.5s;
+    &.scrolled {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      z-index: 9;
+      width: 100%;
+      transition: 0.5s;
+      background-color: #fff;
+      padding: 10px 0px;
+      box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.1);
+      .common-header-inner {
+        border: none;
+        .header-left {
+          a {
+            img {
+              &.logo-defailt {
+                display: none;
+              }
+              &.logo-fixed {
+                display: block;
+              }
+            }
+          }
+        }
+        ul {
+          li {
+            a {
+              color: #333;
+            }
+            &.dropdown-header {
+              .dropdown-header-inner {
+                .dropdown-header-inner-link {
+                  background-color: #006b20;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     .common-header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      .header-left {
+        a {
+          img {
+            width: 340px;
+            &.logo-fixed {
+              display: none;
+            }
+          }
+        }
+      }
       ul {
         margin: 0px;
         padding: 0px;
@@ -174,7 +226,7 @@ const CommonPageblock = styled.div`
       background-image: url(../../images/banner-img.png);
       background-size: cover;
       &::before {
-        content: "";
+        ''content: '';
         position: absolute;
         top: 0px;
         left: 0px;
@@ -366,105 +418,105 @@ const CommonPageblock = styled.div`
           &:nth-child(2) {
             .service-section-text {
               &::before {
-                content: "02";
+                ''content: '02';
               }
             }
           }
           &:nth-child(3) {
             .service-section-text {
               &::before {
-                content: "03";
+                ''content: '03';
               }
             }
           }
           &:nth-child(4) {
             .service-section-text {
               &::before {
-                content: "04";
+                ''content: '04';
               }
             }
           }
           &:nth-child(5) {
             .service-section-text {
               &::before {
-                content: "05";
+                ''content: '05';
               }
             }
           }
           &:nth-child(6) {
             .service-section-text {
               &::before {
-                content: "06";
+                ''content: '06';
               }
             }
           }
           &:nth-child(7) {
             .service-section-text {
               &::before {
-                content: "07";
+                ''content: '07';
               }
             }
           }
           &:nth-child(8) {
             .service-section-text {
               &::before {
-                content: "08";
+                ''content: '08';
               }
             }
           }
           &:nth-child(9) {
             .service-section-text {
               &::before {
-                content: "09";
+                ''content: '09';
               }
             }
           }
           &:nth-child(10) {
             .service-section-text {
               &::before {
-                content: "10";
+                ''content: '10';
               }
             }
           }
           &:nth-child(11) {
             .service-section-text {
               &::before {
-                content: "11";
+                ''content: '11';
               }
             }
           }
           &:nth-child(12) {
             .service-section-text {
               &::before {
-                content: "12";
+                ''content: '12';
               }
             }
           }
           &:nth-child(13) {
             .service-section-text {
               &::before {
-                content: "13";
+                ''content: '13';
               }
             }
           }
           &:nth-child(14) {
             .service-section-text {
               &::before {
-                content: "14";
+                ''content: '14';
               }
             }
           }
           &:nth-child(15) {
             .service-section-text {
               &::before {
-                content: "15";
+                ''content: '15';
               }
             }
           }
           &:nth-child(16) {
             .service-section-text {
               &::before {
-                content: "16";
+                ''content: '16';
               }
             }
           }
@@ -481,7 +533,7 @@ const CommonPageblock = styled.div`
                 color: rgba(0, 0, 0, 0.7);
               }
               &:after {
-                content: "";
+                ''content: '';
                 position: absolute;
                 left: 0px;
                 right: 0px;
@@ -504,7 +556,7 @@ const CommonPageblock = styled.div`
               }
             }
             &::before {
-              content: "01";
+              ''content: '01';
               position: absolute;
               top: 30px;
               left: 20px;
@@ -702,7 +754,7 @@ const CommonPageblock = styled.div`
                     cursor: pointer;
                     padding: 0;
                     &::before {
-                      content: "";
+                      ''content: '';
                       margin-right: 10px;
                       display: inline-block;
                       vertical-align: text-top;
@@ -730,16 +782,16 @@ const CommonPageblock = styled.div`
                   box-shadow: none;
                   background: #ddd;
                 }
-                .styled-checkbox:checked + label:after {
-                  content: "";
+                .styled-che''box:checked + label:after {
+                  content: '';
                   position: absolute;
                   left: 5px;
                   top: 9px;
                   background: white;
                   width: 2px;
                   height: 2px;
-                  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white,
-                    4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+                  ox-shadow: 2px 0 0 white, 4px 0 0 wh ite, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white,
+                    4px -8px 0 white;
                   transform: rotate(45deg);
                 }
               }
@@ -993,7 +1045,7 @@ const CommonPageblock = styled.div`
                   display: none;
                   transition: 0.5s;
                   &::before {
-                    content: "";
+                    ''content: '';
                     position: absolute;
                     top: 0px;
                     left: 0px;
@@ -1066,7 +1118,7 @@ const CommonPageblock = styled.div`
                           cursor: pointer;
                           padding: 0;
                           &::before {
-                            content: "";
+                            ''content: '';
                             margin-right: 10px;
                             display: inline-block;
                             vertical-align: text-top;
@@ -1094,16 +1146,15 @@ const CommonPageblock = styled.div`
                         box-shadow: none;
                         background: #ddd;
                       }
-                      .styled-checkbox:checked + label:after {
-                        content: "";
+                      .styled-che''box:checked + label:after {
+                        content: '';
                         position: absolute;
                         left: 9px;
                         top: 14px;
                         background: #006b20;
                         width: 2px;
                         height: 2px;
-                        box-shadow: 2px 0 0 #006b20, 4px 0 0 #006b20,
-                          4px -2px 0 #006b20, 4px -4px 0 #006b20,
+                        ox-shadow: 2px 0 0 #006b20, 4px 0 0 #006b20, 4px -2px 0 #006b20, 4px -4px 0 #006b20,
                           4px -6px 0 #006b20, 4px -8px 0 #006b20;
                         transform: rotate(45deg);
                       }

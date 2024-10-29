@@ -37,7 +37,7 @@ export const API_ROUTER = {
 
     MAIN_CATEGORY_LIST: "main-category-list",
 
-    GET_NOTIFICATION: "notification/get-notifications",
+    RATTING_SERVICE: "service-rating",
 
     GET_BOOKING_COUNT: "booking-count",
 

@@ -93,3 +93,22 @@
 .nav-menu-language-btn {
   @apply bg-green-700 text-white sm:h-8 sm:w-24 h-5 w-24 font-Jost text-[14px] font-[500];
 }
+.navbar {
+  transition: 0.5s;
+}
+.navbar.scrolled {
+  position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 9;
+    width: 100%;
+    transition: 0.5s;
+    background-color: #fff;
+    padding: 10px 0px;
+    margin-top: 0px !important;
+    box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.1);
+}
+.navbar.scrolled .nav-container {
+  border: none !important;
+}

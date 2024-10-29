@@ -53,13 +53,11 @@ const NotificationItem = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [notification, setNotification] = useState([]);
-
     const [tax, setTax] = useState(0);
     const [taxPercentage, setTaxPercentage] = useState(0);
     const [total, setTotal] = useState(0);
     const [finalValue, setFinalValue] = useState(0);
     const [isExpired, setIsExpired] = useState(false);
-    const [showPaymentForm, setShowPaymentForm] = useState(false);
 
     useEffect(() => {
         GetRequestdataData();
@@ -149,6 +147,12 @@ const NotificationItem = () => {
         }
     };
 
+    const handleReviewClick = async () => {
+        const serviceId = notificationItem;
+        if (serviceId) {
+            router.push(`/review-service/${notificationItem}`);
+        }
+    };
     //   const handlePayment = () => {
     //     setShowPaymentForm(true);
     //   };
@@ -210,7 +214,7 @@ const NotificationItem = () => {
             if (res.meta.requestStatus === "fulfilled") {
                 if (res.payload) {
                     // await GetRequestdataData();
-                    router.replace("/notification");
+                    router.replace(`/notification/${notificationItem}`);
                 } else {
                     toast.error(res.payload.message);
                 }
@@ -281,11 +285,18 @@ const NotificationItem = () => {
                 </div>
             )}
             {!isLoading && isExpired && notification?.serviceDetail?.status == "completed" && (
-                <div className="notification-detail-container">
-                    <p className="decline-btn-text text-[22px]">
+                <div className="notification-detail-container flex justify-between items-center">
+                    <p className="decline-btn-text text-[22px] text-green-600">
                         Your service has been completed. Thank you for choosing us!
                     </p>
+                    <button
+                        className="review-btn text-white bg-green-700 hover:bg-green-600 px-4 py-2 rounded"
+                        onClick={handleReviewClick}
+                    >
+                        Rate Service
+                    </button>
                 </div>
+
             )}
             {!isLoading && isExpired && notification?.serviceDetail?.status == "rejected" && (
                 <div className="notification-detail-container">

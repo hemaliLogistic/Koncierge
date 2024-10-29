@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main-container {
+  @apply flex mx-auto mt-10 flex-col w-[95%] xl:w-[85%] lg:w-[90%] py-2 justify-between pb-5 sm:mx-auto;
+}
+
+.notification-header {
+  @apply font-Jost font-[500] text-[28px] pb-5 text-black33;
+}
+
+.horizontal-line-themecolor {
+  @apply h-px w-full bg-themeColor;
+}
+
+.horizontal-line-graycolor {
+  @apply h-px w-full bg-grayE1;
+}
+
+/* External Tailwind CSS file (styles.css) */
+
+.input-field {
+    @apply w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.star-input {
+    @apply appearance-none w-6 h-6 bg-gray-300 rounded-full cursor-pointer;
+}
+
+.star-input:checked {
+    @apply bg-yellow-500;
+}
+
+.submit-button {
+    @apply w-full bg-blue-500 text-white font-semibold p-2 rounded-md hover:bg-blue-600;
+}
+
+

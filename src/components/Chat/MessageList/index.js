@@ -234,7 +234,7 @@ const MessageList = () => {
                                                                     {" "}
                                                                     {/* Added max-w-lg and break-all */}
                                                                     <p className="text-sm font-normal leading-5 text-[#131726]">
-                                                                        {/* {item.message} */}
+                                                                        {item.message}
                                                                     </p>
                                                                 </div>
                                                             </div>

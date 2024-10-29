@@ -66,7 +66,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                     {isPayment ? t("ServiceType") : t("ServiceType")}
                 </span>
             ),
-            selector: (row, index) => row.serviceName,
+            selector: (row) => (isPayment ? row.serviceName : row.serviceNames),
             cell: (row, index) => (
                 <div className="table-main-div">
                     <span index={index} className="table-text">
@@ -75,6 +75,11 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                 </div>
             ),
             sortable: true,
+            sortFunction: (rowA, rowB) => {
+                const a = isPayment ? rowA.serviceName : rowA.serviceNames;
+                const b = isPayment ? rowB.serviceName : rowB.serviceNames;
+                return a.localeCompare(b); // This ensures case-insensitive string sorting
+            },
             grow: 3,
         },
         {
@@ -157,7 +162,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                                                 : row?.bookingStatus === "Pending"
                                                     ? "bg-yellow-500 opacity-40"
                                                     : "bg-gray-500"
-                                            } text-white px-2 py-1 text-center font-bold`
+                                            } text-white px-2 py-1 text-center font-bold flex items-center justify-center` // Added flex properties
                                             : "font-bold w-full"
                                     }
                                     style={{ minWidth: '150px', display: 'inline-block' }} // Added fixed min-width
@@ -176,7 +181,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                                 style={{ whiteSpace: 'nowrap', textAlign: 'center', padding: '10px' }}
                             >
                                 <p
-                                    className={`table-main-div table-button-text w-full h-8 text-white px-2 py-1 text-center font-bold ${row?.bookingStatus === "View Quote"
+                                    className={`table-main-div table-button-text w-full h-8 text-white px-2 py-1 text-center font-bold flex items-center justify-center ${row?.bookingStatus === "View Quote"
                                         ? "bg-green-600"
                                         : row?.bookingStatus === "Pending"
                                             ? "bg-yellow-500"
@@ -201,13 +206,12 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                             </div>
                         )}
                     </>
-
-
                 );
             },
             sortable: true,
             grow: 2,
         },
+
     ];
 
     // Handler for row click

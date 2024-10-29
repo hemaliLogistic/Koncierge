@@ -40,5 +40,9 @@ export const GetRequestExpire = (data) => {
 };
 
 export const GetBookingCount = (data) => {
-  return axiosGet(API_ROUTER.GET_BOOKING_COUNT, true);
+    return axiosGet(API_ROUTER.GET_BOOKING_COUNT, true);
+};
+
+export const RattingService = (data) => {
+    return axiosPost(API_ROUTER.RATTING_SERVICE, data);
 };

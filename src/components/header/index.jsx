@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
   const pathname = usePathname();
@@ -11,7 +12,9 @@ const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [userAuth, setUserAuth] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false); // New state for scroll detection
-
+  const profileData = useSelector(
+    (state) => state?.dashboardApi?.profileData
+);
   const isHomePage =
     pathname === "/login" ||
     pathname === "/register" ||
@@ -24,6 +27,7 @@ const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
       setUserAuth(user?.token);
     }
   }, []);
+ 
 
   // Add event listener for scroll position
   useEffect(() => {
@@ -116,14 +120,23 @@ const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
                 </li>
                 <li>
                   {userAuth !== null ? (
-                    <Image
-                      src='/images/chat-profile.svg'
-                      alt='User Avatar'
-                      width={40}
-                      height={40}
-                      className='rounded-full cursor-pointer'
-                      onClick={() => router.push('/dashboard')}
-                    />
+                    profileData?.data?.fullImagePath ? (<div className="nav-avatar">
+                        <Image
+                            src={profileData?.data?.fullImagePath}
+                            alt="User Avatar"
+                            width={32}
+                            height={32}
+                            className="w-10 h-10 rounded-full object-cover"
+                        />
+                    </div>) : (<div className="nav-avatar">
+                        <Image
+                            src="/images/chat-profile.svg"
+                            alt="User Avatar"
+                            width={32}
+                            height={32}
+                            className="rounded-full"
+                        />
+                    </div>)
                   ) : (
                     <button onClick={() => router.push('/getStarted')} className='header-btn'>
                       Login

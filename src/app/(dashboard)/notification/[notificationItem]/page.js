@@ -213,7 +213,7 @@ const NotificationItem = () => {
 
             if (res.meta.requestStatus === "fulfilled") {
                 if (res.payload) {
-                    // await GetRequestdataData();
+                    await GetRequestdataData();
                     router.replace(`/notification/${notificationItem}`);
                 } else {
                     toast.error(res.payload.message);

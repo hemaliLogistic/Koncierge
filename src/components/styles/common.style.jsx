@@ -22,6 +22,7 @@ const CommonPageblock = styled.div`
       transition: 0.5s;
       background-color: #fff;
       padding: 10px 0px;
+      z-index:99;
       box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.1);
       .common-header-inner {
         border: none;
@@ -1118,7 +1119,7 @@ const CommonPageblock = styled.div`
                           cursor: pointer;
                           padding: 0;
                           &::before {
-                            ''content: '';
+                            content: '';
                             margin-right: 10px;
                             display: inline-block;
                             vertical-align: text-top;
@@ -1146,7 +1147,7 @@ const CommonPageblock = styled.div`
                         box-shadow: none;
                         background: #ddd;
                       }
-                      .styled-che''box:checked + label:after {
+                      .styled-checkbox:checked + label:after {
                         content: '';
                         position: absolute;
                         left: 9px;
@@ -1154,7 +1155,7 @@ const CommonPageblock = styled.div`
                         background: #006b20;
                         width: 2px;
                         height: 2px;
-                        ox-shadow: 2px 0 0 #006b20, 4px 0 0 #006b20, 4px -2px 0 #006b20, 4px -4px 0 #006b20,
+                        box-shadow: 2px 0 0 #006b20, 4px 0 0 #006b20, 4px -2px 0 #006b20, 4px -4px 0 #006b20,
                           4px -6px 0 #006b20, 4px -8px 0 #006b20;
                         transform: rotate(45deg);
                       }

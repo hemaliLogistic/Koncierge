@@ -22,7 +22,7 @@ export const API_ROUTER = {
     //Home Page
 
     MAIN_CATEGORY_LIST: "main-category-list",
-
+    GET_NOTIFICATION: "notification/get-notifications",
     GET_REQUEST_DATA: "request-qutation-detail/",
 
     GET_PREFRENCES_DATA: "preferences",

@@ -75,9 +75,9 @@ const Notifications = () => {
                         return (
                             <>
                                 <div className='notification-detail-container' key={index}>
-                                    <div className='left-section'>
+                                    <div className='left-section flex items-center'>
                                         <div className='flex'>
-                                            <img
+                                            {/* <img
                                                 src='/images/userProfile.png'
                                                 className='user-profile-image'
                                             />
@@ -89,7 +89,7 @@ const Notifications = () => {
                                                     item?.notificationDataGenerated.qutationSenderData
                                                         ?.lastName
                                                 }
-                                            </p>
+                                            </p> */}
 
                                         </div>
 
@@ -109,16 +109,9 @@ const Notifications = () => {
                                                     }
                                                 }}
                                                 className='btn-container'>
-                                                {item?.notificationDataGenerated
-                                                    ?.userRequestedQutationData?.status === "pending" &&
-                                                    item?.notificationDataGenerated?.userRequestedQutationData
-                                                        ?.isPayment === true ? (
-                                                    <p className='btn-text'>{"View Payment"}</p>
-                                                ) : item?.notificationDataGenerated
-                                                    ?.userRequestedQutationData?.status === "confirmed" &&
-                                                    item?.notificationDataGenerated
-                                                        ?.userRequestedQutationData?.isPaymentComplete ===
-                                                    true ? (
+                                                {item?.notificationType === 'assignEmployee' ? (
+                                                    <p className='btn-text'>{"Pay"}</p>
+                                                ) : item?.notificationType === 'completeService' ? (
                                                     <p className='btn-text'>{"View Details"}</p>
                                                 ) : (
 
@@ -126,7 +119,7 @@ const Notifications = () => {
                                                 )}
                                                 {/* <p className='btn-text'>{t("ViewQuote")}</p> */}
                                             </button>}
-                                    </div>
+                                    </div >
                                 </div>
                                 <div className='horizontal-line-graycolor' />
                             </>
@@ -141,17 +134,19 @@ const Notifications = () => {
                         )}
                     </div>
                 )}
-                {notification && notification.length > 0 && (
-                    <div className='pagination-booking-div'>
-                        <PaginationComponent
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={handlePageChange}
-                        />
-                    </div>
-                )}
-            </div>
-        </div>
+                {
+                    notification && notification.length > 0 && (
+                        <div className='pagination-booking-div'>
+                            <PaginationComponent
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
+                            />
+                        </div>
+                    )
+                }
+            </div >
+        </div >
     );
 };
 

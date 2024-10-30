@@ -84,12 +84,17 @@ const Navbar = () => {
         }
     };
 
+    const handleClick = () => {
+        router.push('/dashboard');
+    };
+
     return (
         <nav className={`navbar ${isScrolled ? "scrolled" : ""}`}>
             <div className="nav-container">
                 {/* Logo */}
                 <div className="nav-logo">
-                    <img src="/images/webLogo.png" alt="Logo" className="nav-img-size" />
+                    <img src="/images/webLogo.png" alt="Logo" className="nav-img-size" onClick={handleClick}
+                        style={{ cursor: 'pointer' }} />
                 </div>
 
                 {/* Navigation Links */}

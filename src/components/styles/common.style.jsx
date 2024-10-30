@@ -227,7 +227,7 @@ const CommonPageblock = styled.div`
       background-image: url(../../images/banner-img.png);
       background-size: cover;
       &::before {
-        ''content: '';
+        content: '';
         position: absolute;
         top: 0px;
         left: 0px;
@@ -419,105 +419,105 @@ const CommonPageblock = styled.div`
           &:nth-child(2) {
             .service-section-text {
               &::before {
-                ''content: '02';
+                content: '02';
               }
             }
           }
           &:nth-child(3) {
             .service-section-text {
               &::before {
-                ''content: '03';
+                content: '03';
               }
             }
           }
           &:nth-child(4) {
             .service-section-text {
               &::before {
-                ''content: '04';
+                content: '04';
               }
             }
           }
           &:nth-child(5) {
             .service-section-text {
               &::before {
-                ''content: '05';
+                content: '05';
               }
             }
           }
           &:nth-child(6) {
             .service-section-text {
               &::before {
-                ''content: '06';
+                content: '06';
               }
             }
           }
           &:nth-child(7) {
             .service-section-text {
               &::before {
-                ''content: '07';
+                content: '07';
               }
             }
           }
           &:nth-child(8) {
             .service-section-text {
               &::before {
-                ''content: '08';
+                content: '08';
               }
             }
           }
           &:nth-child(9) {
             .service-section-text {
               &::before {
-                ''content: '09';
+                content: '09';
               }
             }
           }
           &:nth-child(10) {
             .service-section-text {
               &::before {
-                ''content: '10';
+                content: '10';
               }
             }
           }
           &:nth-child(11) {
             .service-section-text {
               &::before {
-                ''content: '11';
+                content: '11';
               }
             }
           }
           &:nth-child(12) {
             .service-section-text {
               &::before {
-                ''content: '12';
+                content: '12';
               }
             }
           }
           &:nth-child(13) {
             .service-section-text {
               &::before {
-                ''content: '13';
+                content: '13';
               }
             }
           }
           &:nth-child(14) {
             .service-section-text {
               &::before {
-                ''content: '14';
+                content: '14';
               }
             }
           }
           &:nth-child(15) {
             .service-section-text {
               &::before {
-                ''content: '15';
+                content: '15';
               }
             }
           }
           &:nth-child(16) {
             .service-section-text {
               &::before {
-                ''content: '16';
+                content: '16';
               }
             }
           }
@@ -534,7 +534,7 @@ const CommonPageblock = styled.div`
                 color: rgba(0, 0, 0, 0.7);
               }
               &:after {
-                ''content: '';
+                content: '';
                 position: absolute;
                 left: 0px;
                 right: 0px;
@@ -557,7 +557,7 @@ const CommonPageblock = styled.div`
               }
             }
             &::before {
-              ''content: '01';
+              content: '01';
               position: absolute;
               top: 30px;
               left: 20px;
@@ -755,7 +755,7 @@ const CommonPageblock = styled.div`
                     cursor: pointer;
                     padding: 0;
                     &::before {
-                      ''content: '';
+                      content: '';
                       margin-right: 10px;
                       display: inline-block;
                       vertical-align: text-top;
@@ -1046,7 +1046,7 @@ const CommonPageblock = styled.div`
                   display: none;
                   transition: 0.5s;
                   &::before {
-                    ''content: '';
+                    content: '';
                     position: absolute;
                     top: 0px;
                     left: 0px;

@@ -45,6 +45,10 @@ const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+ 
+  const handleClick = () => {
+    router.push('/dashboard');
+};
 
   return (
     <>
@@ -127,6 +131,7 @@ const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
                             width={32}
                             height={32}
                             className="w-10 h-10 rounded-full object-cover"
+                            onClick = {handleClick}
                         />
                     </div>) : (<div className="nav-avatar">
                         <Image
@@ -135,6 +140,7 @@ const Header = ({ onToggleSidebar, isSidebarOpen, isLogin }) => {
                             width={32}
                             height={32}
                             className="rounded-full"
+                            onClick = {handleClick}
                         />
                     </div>)
                   ) : (

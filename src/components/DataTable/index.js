@@ -139,6 +139,24 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
             grow: 1,
         },
         {
+            name: (
+                <span className="table-header-text">
+                    {isPayment ? t("Amount") : ""}
+                </span>
+            ),
+            selector: (row) => row.price,
+            cell: (row) => (
+                <div className="table-main-div">
+                    <span className="table-text">
+                        {isPayment ? `$${row?.price?.toFixed(2)}` : ""}
+                    </span>
+                </div>
+            ),
+            sortable: true,
+            grow: 1,
+            omit: !isPayment, // This will hide the column if isPayment is false
+        },
+        {
             name: <span className="table-header-text">{t("Status")}</span>,
             selector: (row, index) => row.bookingStatus,
             cell: (row, index) => {

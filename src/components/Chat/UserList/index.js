@@ -168,14 +168,20 @@ const UserList = ({ chatIdRef }) => {
                     ) : (
                         <div className="flex flex-col items-center justify-center h-[calc(100vh-500px)] text-center">
                             <h1 className="text-2xl font-bold text-black">
-                                {filteredUserList?.length === 0
-                                    ? "No profiles matched your search input"
-                                    : "No chats available"}
+                                {chatUserList?.length === 0
+                                    ? "No chats available"
+                                    : filteredUserList?.length === 0
+                                        ? "No profiles matched your search input"
+                                        : null}
+
                             </h1>
                             <p className="text-lg text-gray-500 mt-2">
-                                {filteredUserList?.length === 0
-                                    ? "Try searching with a different name."
-                                    : "Once you make a booking and employees are assigned to your appointments, they will appear here for chat."}
+                                {chatUserList?.length === 0
+                                    ? "Once you make a booking and employees are assigned to your appointments, they will appear here for chat."
+                                    : filteredUserList?.length === 0
+                                        ? "Try searching with a different name."
+                                        : null}
+
                             </p>
                         </div>
                     )}

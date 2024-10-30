@@ -27,8 +27,8 @@
 }
 
 .left-section {
-  @apply sm:w-3/4 lg:w-5/6;
-}
+    @apply sm:w-3/4 lg:w-5/6;
+  }
 
 .user-profile-image {
   @apply h-10 w-10;
@@ -43,11 +43,11 @@
 }
 
 .right-section {
-  @apply w-full sm:w-3/12 lg:w-1/6 pr-[20px];
+  @apply flex w-full sm:w-3/12 lg:w-1/6 pr-[20px] items-center;
 }
 
 .btn-container {
-  @apply lg:w-[150px] h-[50px] w-full bg-themeColor mt-[34px] justify-center items-center flex 2xl:ml-[45px];
+  @apply lg:w-[150px] h-[50px] w-full bg-themeColor mt-[2px] justify-center items-center flex 2xl:ml-[45px];
 }
 
 .btn-text {

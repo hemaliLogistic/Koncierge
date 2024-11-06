@@ -14,6 +14,7 @@ import {
     BookService,
     GetRequestExpire,
     GetBookingCount,
+    RattingService,
 } from "./services";
 import { AxiosError } from "axios";
 

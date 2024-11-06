@@ -274,6 +274,8 @@ const UserDashBoard = () => {
                                         isLoading={isLoading}
                                         isPayment={false}
                                         page={currentPage}
+                                        pageType="current"
+
                                     />
                                 </div>
                                 {appointmentData?.length > 0 && (

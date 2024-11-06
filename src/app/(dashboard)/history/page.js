@@ -127,6 +127,8 @@ const History = () => {
                                     data={historyData?.data?.serviceList}
                                     isLoading={isLoading}
                                     isPayment={true}
+                                    pageType="payment"
+
                                 />
                             </div>
                             <div className='pagination-history-div'>

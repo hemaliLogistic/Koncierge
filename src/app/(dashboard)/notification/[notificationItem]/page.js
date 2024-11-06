@@ -33,6 +33,7 @@ import {
     faChevronRight,
     faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
+import { coolGray } from "tailwindcss/colors";
 
 const NotificationItem = () => {
     //   const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -149,8 +150,10 @@ const NotificationItem = () => {
 
     const handleReviewClick = async () => {
         const serviceId = notificationItem;
+        const bookingId = notification?.requestQutations[0]?.bookingId; // Replace this with the actual bookingId
+        console.log("bookingId===>", bookingId);
         if (serviceId) {
-            router.push(`/review-service/${notificationItem}`);
+            router.push(`/review-service/${notificationItem}?bookingId=${bookingId}`);
         }
     };
     //   const handlePayment = () => {
@@ -289,12 +292,23 @@ const NotificationItem = () => {
                     <p className="decline-btn-text text-[22px] text-green-600">
                         Your service has been completed. Thank you for choosing us!
                     </p>
-                    <button
-                        className="review-btn text-white bg-green-700 hover:bg-green-600 px-4 py-2 rounded"
-                        onClick={handleReviewClick}
-                    >
-                        Rate Service
-                    </button>
+                    {
+                        notification?.averageRating == null ? (
+                            <button
+                                className="review-btn text-white bg-green-700 hover:bg-green-600 px-4 py-2 rounded"
+                                onClick={handleReviewClick}
+                            >
+                                Rate Service
+                            </button>
+                        ) : (
+                            <button
+                                className="review-btn text-white bg-green-700 px-4 py-2 rounded"
+                                disabled
+                            >
+                                Rated
+                            </button>
+                        )
+                    }
                 </div>
 
             )}

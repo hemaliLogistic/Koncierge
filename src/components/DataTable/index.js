@@ -8,7 +8,7 @@ import Loader from "../Loader";
 import moment from "moment";
 import { useRouter } from "next/navigation";
 
-const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
+const DataTableComponent = ({ data, isLoading, isPayment, pageType }) => {
     const tableRef = useRef(null);
     const { t } = useTranslation("common");
     const router = useRouter();
@@ -258,7 +258,10 @@ const DataTableComponent = ({ data, isLoading, isPayment, page }) => {
                         <div className="flex h-72 justify-center items-center">
                             {!isLoading && data.length <= 0 && (
                                 <p className="font-Jost text-[22px] font-normal">
-                                    No Bookings Found
+                                    {pageType === "upcoming" && "You have no upcoming bookings. Book a service to see it listed here."}
+                                    {pageType === "pastBookings" && "No completed bookings yet. Once a service is completed, it will appear here."}
+                                    {pageType === "current" && "No bookings found. Once you make a booking, it will appear here."}
+                                    {pageType === "payment" && "No payment records found. Once you make a payment, it will show up here."}
                                 </p>
                             )}
                         </div>

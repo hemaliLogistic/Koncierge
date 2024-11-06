@@ -75,6 +75,8 @@ const PastServices = () => {
                             isLoading={isLoading}
                             isPayment={false}
                             page={currentPage}
+                            pageType="pastBookings"
+
                         />
                     </div>
                     {appointmentData?.length > 0 && (

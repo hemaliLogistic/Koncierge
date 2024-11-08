@@ -220,7 +220,7 @@ export const getPrefrenceAction = createAsyncThunk(
 );
 
 export const bookServiceAction = createAsyncThunk(
-    "dashboardSlice/getProfileAction",
+    "dashboardSlice/bookServiceAction",
     async (payload, { rejectWithValue }) => {
         try {
             const response = await BookService(payload);

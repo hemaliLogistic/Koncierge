@@ -321,11 +321,11 @@ const Service = () => {
                     const { requestDate } = this.parent;
                     const currentDate = moment().format("YYYY/MM/DD");
                     const match = moment(requestDate).format("YYYY/MM/DD");
+                    
                     if (match === currentDate) {
-                        const currentTimePlusOneHour = moment()
-                            .add(1, "hours")
-                            .format("HH:mm");
-                        return value >= currentTimePlusOneHour;
+                        const currentTimePlusOneHour = moment().add(1, "hours").format("HH:mm");
+                        console.log("serviceFromTime, selectedStartTime:", currentTimePlusOneHour, moment(value, "HH:mm").isSameOrAfter(currentTimePlusOneHour), value);
+                        return moment(value, "HH:mm").isSameOrAfter(currentTimePlusOneHour);
                     }
                     return true;
                 }
@@ -337,7 +337,6 @@ const Service = () => {
                     if (serviceData[0]?.fromTime) {
                         const serviceFromTime = moment(serviceData[0].fromTime, "HH:mm");
                         const selectedStartTime = moment(value, "HH:mm");
-
                         return selectedStartTime.isSameOrAfter(serviceFromTime);
                     }
                     return true;
@@ -347,34 +346,17 @@ const Service = () => {
                 "not-booked",
                 "The selected time overlaps with a booked slot.",
                 function (value) {
-                    const { requestEndTime } = this.parent;
-                    const bookedHours = getBookedHoursForDate(
-                        requestDate,
-                        bookedSlotData?.data
-                    );
+                    const { requestEndTime, requestDate } = this.parent;
+                    const bookedHours = getBookedHoursForDate(requestDate, bookedSlotData?.data);
                     const selectedStartTime = moment(value, "HH:mm");
-                    const selectedEndTime = requestEndTime
-                        ? moment(requestEndTime, "HH:mm")
-                        : null;
+                    const selectedEndTime = requestEndTime ? moment(requestEndTime, "HH:mm") : null;
 
                     return bookedHours.every((time) => {
                         const bookedTime = moment(time, "HH:mm");
-
-                        // Check if selected time overlaps with booked time
-                        if (
+                        return !(
                             selectedStartTime.isSame(bookedTime) ||
-                            (selectedEndTime &&
-                                bookedTime.isBetween(
-                                    selectedStartTime,
-                                    selectedEndTime,
-                                    null,
-                                    "[)"
-                                ))
-                        ) {
-                            return false; // Overlap found
-                        }
-
-                        return true;
+                            (selectedEndTime && bookedTime.isBetween(selectedStartTime, selectedEndTime, null, "[)"))
+                        );
                     });
                 }
             ),
@@ -388,10 +370,9 @@ const Service = () => {
                     const { requestTime } = this.parent;
                     if (!requestTime) return true;
 
-                    const requestTimePlus30Min = moment(requestTime, "HH:mm")
-                        .add(1, "minutes")
-                        .format("HH:mm");
-                    return value >= requestTimePlus30Min;
+                    const requestTimePlus30Min = moment(requestTime, "HH:mm").add(30, "minutes");
+                    const selectedEndTime = moment(value, "HH:mm");
+                    return selectedEndTime.isSameOrAfter(requestTimePlus30Min);
                 }
             )
             .test(
@@ -401,47 +382,30 @@ const Service = () => {
                     if (serviceData[0]?.toTime) {
                         const serviceToTime = moment(serviceData[0].toTime, "HH:mm");
                         const selectedEndTime = moment(value, "HH:mm");
-
                         return selectedEndTime.isSameOrBefore(serviceToTime);
                     }
-                    return true; // No serviceData means no constraint
+                    return true;
                 }
             )
             .test(
                 "not-booked",
                 "The selected time overlaps with a booked slot.",
                 function (value) {
-                    const { requestTime } = this.parent;
-                    const bookedHours = getBookedHoursForDate(
-                        requestDate,
-                        bookedSlotData?.data
-                    );
-                    const selectedStartTime = requestTime
-                        ? moment(requestTime, "HH:mm")
-                        : null;
+                    const { requestTime, requestDate } = this.parent;
+                    const bookedHours = getBookedHoursForDate(requestDate, bookedSlotData?.data);
+                    const selectedStartTime = requestTime ? moment(requestTime, "HH:mm") : null;
                     const selectedEndTime = moment(value, "HH:mm");
 
                     return bookedHours.every((time) => {
                         const bookedTime = moment(time, "HH:mm");
-
-                        // Check if selected time overlaps with booked time
-                        if (
+                        return !(
                             selectedEndTime.isSame(bookedTime) ||
-                            (selectedStartTime &&
-                                bookedTime.isBetween(
-                                    selectedStartTime,
-                                    selectedEndTime,
-                                    null,
-                                    "[)"
-                                ))
-                        ) {
-                            return false; // Overlap found
-                        }
-
-                        return true; // No overlap
+                            (selectedStartTime && bookedTime.isBetween(selectedStartTime, selectedEndTime, null, "[)"))
+                        );
                     });
                 }
             ),
+
 
         selectedServices: Yup.object().required("Please select a service option."),
 
@@ -506,7 +470,9 @@ const Service = () => {
     };
 
     const onSubmit = async (data) => {
-        const interVal = data?.selectInterval?.value;
+        const interVal = data?.interval;
+        console.log("requestDataForAPI", interVal)
+
         const selectedServicesArray = Array.isArray(data.selectedServices)
             ? data.selectedServices
             : [data.selectedServices];
@@ -535,6 +501,7 @@ const Service = () => {
                 timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
                 interval: interVal,
             };
+            console.log("requestDataForAPI", requestDataForAPI, interVal)
             setIsLoading(true);
             const response = await dispatch(
                 requestServiceQutationAction(requestDataForAPI)

@@ -201,6 +201,8 @@ const NotificationItem = () => {
             longitude: notification?.serviceDetail?.longitude,
             city: notification?.serviceDetail?.city,
             country: notification?.serviceDetail?.country,
+            interval : notification?.serviceDetail?.interval,
+            frequency : notification?.serviceDetail?.frequency,
             status: status,
             address: notification?.serviceDetail?.address,
             bookDate: notification?.serviceDetail?.requestDate,

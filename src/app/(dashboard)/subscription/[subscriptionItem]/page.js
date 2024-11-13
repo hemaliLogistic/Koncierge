@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "../../../../components/NavBar/global.css";
 
 import "./global.css";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import {
     bookServiceAction,
     getRequestdataAction,
     getRequestExpireAction,
+    getSubscriptiondataAction,
 } from "@/redux/Dashboard/action";
 import Loader from "@/components/Loader";
 import moment from "moment";
@@ -44,7 +45,8 @@ const NotificationItem = () => {
     const { t } = useTranslation("common");
     const dispatch = useDispatch();
     const router = useRouter();
-    const { notificationItem } = useParams();
+    const { subscriptionItem } = useParams();
+
     const [open, setOpen] = useState(null); // State to track which accordion is open
 
     const handleOpen = (index) => {
@@ -53,6 +55,7 @@ const NotificationItem = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [notification, setNotification] = useState([]);
+    const [notificationItem, setNotificationItem] = useState(0);
     const [tax, setTax] = useState(0);
     const [discount, setDiscount] = useState(0);
     const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -60,28 +63,22 @@ const NotificationItem = () => {
     const [total, setTotal] = useState(0);
     const [finalValue, setFinalValue] = useState(0);
     const [isExpired, setIsExpired] = useState(false);
-    const storedFlag = localStorage.getItem('isFromNotification');
-    const [isFromNotification, setIsFromNotification] = useState(storedFlag == 'true');
 
     useEffect(() => {
-        const storedFlag = localStorage.getItem('isFromNotification');
         GetRequestdataData();
-        if (storedFlag) {
-            setIsFromNotification(storedFlag == 'true');
-        }
     }, []);
+
     const GetRequestdataData = async () => {
         setIsLoading(true);
 
         try {
-            const data = { notificationItem: notificationItem, isFromNotification: isFromNotification }
-            const res = await dispatch(getRequestdataAction(data));
+            const res = await dispatch(getSubscriptiondataAction(subscriptionItem));
 
             if (res.meta.requestStatus === "fulfilled") {
                 if (res.payload) {
                     const data = res.payload.data;
                     console.log("data-->>", data);
-
+                    setNotificationItem(data?.requestQutations?.id)
                     setNotification(data);
                     setIsExpired(data.isExpired);
                     const totalSum = data?.requestQutations?.reduce(
@@ -213,8 +210,6 @@ const NotificationItem = () => {
             longitude: notification?.serviceDetail?.longitude,
             city: notification?.serviceDetail?.city,
             country: notification?.serviceDetail?.country,
-            interval : notification?.serviceDetail?.interval,
-            frequency : notification?.serviceDetail?.frequency,
             status: status,
             interval: notification?.serviceDetail?.interval,
             frequency: notification?.serviceDetail?.frequency,
@@ -271,7 +266,7 @@ const NotificationItem = () => {
             <div className="horizontal-line-themecolor"></div>
 
 
-            {!isLoading && notification?.bookingData?.interval && notification?.serviceDetail?.interval != "day" && notification?.serviceDetail?.frequency > 1 && notification?.serviceDetail?.bookingStatus != "Expired" && (
+            {!isLoading && notification?.serviceDetail?.interval != "day" && notification?.serviceDetail?.frequency > 1 && (
                 <div className="notification-detail-container">
                     <p className="decline-btn-text text-[22px]">
                         Your service is booked for multiple sessions from {formatDate(notification?.serviceDetail?.requestDate)} to {formatDate(notification?.serviceDetail?.requestEndDate)}. We’ll notify you with details before each session.
@@ -306,7 +301,7 @@ const NotificationItem = () => {
                         </div>
                     </div>
                 )}
-            {!isLoading && isExpired && notification?.serviceDetail?.status == "Expired" && (
+            {!isLoading && isExpired && (notification?.serviceDetail?.status == "Expired") && (
                 <div className="notification-detail-container">
                     <p className="decline-btn-text text-[22px]">
                         We regret to inform you that we are unable to attend your service request. If you have made any payment for this service, a refund will be initiated within 24 hours

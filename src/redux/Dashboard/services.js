@@ -27,8 +27,13 @@ export const GetNotification = (data) => {
 };
 
 export const GetRequestdata = (data) => {
-    return axiosPost(API_ROUTER.GET_REQUEST_DATA + data);
+    return axiosPost(API_ROUTER.GET_REQUEST_DATA + data.notificationItem, data);
 };
+
+export const GetSubscriptiondata = (data) => {
+    return axiosPost(API_ROUTER.GET_SUBSCRIPTION_DATA + data);
+};
+
 export const GetPrefrenceData = (data) => {
     return axiosGet(API_ROUTER.GET_PREFRENCES_DATA, data);
 };

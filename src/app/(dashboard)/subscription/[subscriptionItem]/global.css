@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main-container {
+  @apply flex mx-auto mt-10 flex-col w-[95%] xl:w-[85%] lg:w-[90%] py-2 justify-between pb-5 sm:mx-auto;
+}
+
+.notification-header {
+  @apply font-Jost font-[500] text-[28px] pb-5 text-black33;
+}
+
+.horizontal-line-themecolor {
+  @apply h-px w-full bg-themeColor;
+}
+
+.horizontal-line-graycolor {
+  @apply h-px w-full bg-grayE1;
+}
+
+.notification-box {
+  @apply w-full shadow-[0px_0px_8px_2px_rgba(0,0,0,0.06)] flex flex-col h-full mt-10;
+}
+
+.notification-detail-container {
+  @apply pt-[15px] pl-[20px] flex pb-5 max-sm:flex-col;
+}
+
+.left-section {
+  @apply w-full pr-5;
+}
+
+.user-profile-image {
+  @apply h-10 w-10;
+}
+
+.user-name {
+  @apply font-Jost font-bold text-xl pt-[6px] pl-[15px];
+}
+
+.user-message {
+  @apply font-Mulish font-normal text-base pt-2;
+}
+
+.service-name {
+  @apply font-Jost font-[450] tracking-wide text-[26px] pt-[6px] text-black33;
+}
+
+.service-left-section {
+  @apply sm:w-[60%] w-full flex bg-white;
+}
+
+.service-detail-message {
+  @apply font-Mulish font-light text-[18px] pt-2 text-serviceTextColor opacity-70;
+}
+
+.amount-container {
+  @apply content-center sm:w-[40%] w-full pr-10 max-sm:mt-6;
+}
+
+.amount-text {
+  @apply font-Jost text-[26px] font-bold text-right text-black33;
+}
+
+.btn-group-container {
+  @apply mt-[30px] ml-[20px] mb-[32px] sm:flex;
+}
+
+.btn-left-section {
+  @apply flex md:w-2/5 w-1/2 gap-[20px] pr-5 max-sm:w-full max-sm:justify-center;
+}
+
+.accept-btn-container {
+  @apply w-[200px] sm:h-[60px] h-[50px] content-center text-center border-2 text-themeColor  hover:text-white border-themeColor hover:bg-themeColor bg-white cursor-pointer;
+}
+
+.accept-btn-text {
+  @apply font-Jost text-[20px] font-semibold;
+}
+.accept-quotation-text {
+  @apply font-Jost text-[25px] font-semibold text-themeColor;
+}
+
+.decline-button-container {
+  @apply w-[200px] sm:h-[60px] h-[50px] ml-[40px] bg-white text-redEB hover:text-white hover:bg-redEB border-redEB  border-2 content-center text-center cursor-pointer;
+}
+
+.decline-btn-text {
+  @apply font-Jost text-[20px] font-semibold;
+}
+.decline-quotation-text {
+  @apply font-Jost text-[22px] font-semibold text-redEB;
+}
+
+.btn-right-section {
+  @apply md:w-3/5 sm:w-1/2 flex sm:justify-end pr-5 max-sm:w-full max-sm:justify-center;
+}
+
+.payment-btn-container {
+  @apply flex p-5 sm:h-[60px] h-[50px] max-sm:mt-[20px] content-center text-center bg-themeColor;
+}
+
+.payment-btn-text {
+  @apply text-white font-Jost text-[20px] font-semibold cursor-pointer;
+}
+.total-text-view {
+  @apply flex items-center justify-between m-10 mb-0;
+}
+.half-div {
+  @apply w-[50%];
+}
+.half-end-div {
+  @apply w-[50%] flex justify-end;
+}
+.total-text {
+  @apply text-[26px] font-Jost text-black33 font-semibold tracking-normal;
+}
+.total-normal-text {
+  @apply text-[26px] font-Jost text-black33 font-normal tracking-normal;
+}

@@ -24,6 +24,7 @@ const Notifications = () => {
 
     useEffect(() => {
         getNotificationData(true);
+        localStorage.setItem('isFromNotification', 'true');
     }, []);
 
     useEffect(() => {
@@ -102,14 +103,14 @@ const Notifications = () => {
                                         {item?.notificationDataGenerated?.userRequestedQutationData?.qutationStatusOfAdmin !== "rejected" &&
                                             <button
                                                 onClick={() => {
-                                                    {
-                                                        router.push(
-                                                            `/notification/${item?.notificationData?.qutationId}`
-                                                        );
-                                                    }
+                                                    const destination = item?.notificationType === "subscriptionQutationSentByAdmin"
+                                                        ? `/subscription/${item?.id}`
+                                                        : `/notification/${item?.notificationData?.qutationId}`;
+                                                    localStorage.setItem('isFromNotification', JSON.stringify(true));
+                                                    router.push(destination)
                                                 }}
                                                 className='btn-container'>
-                                                {item?.notificationType === 'assignEmployee' ? (
+                                                {item?.notificationType === 'assignEmployee' || item?.notificationType === 'subscriptionQutationSentByAdmin' ? (
                                                     <p className='btn-text'>{"Pay"}</p>
                                                 ) : item?.notificationType === 'completeService' ? (
                                                     <p className='btn-text'>{"View Details"}</p>

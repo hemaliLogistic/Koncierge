@@ -15,6 +15,7 @@ import {
     GetRequestExpire,
     GetBookingCount,
     RattingService,
+    GetSubscriptiondata,
 } from "./services";
 import { AxiosError } from "axios";
 
@@ -180,6 +181,29 @@ export const getRequestdataAction = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const response = await GetRequestdata(payload);
+            const { data, status, message } = response;
+            if (!status) {
+                throw new Error(message);
+            }
+
+            return data;
+        } catch (err) {
+            // console.log("🚀 ~ err:", err);
+            toast.error(err?.response?.data?.message || err.message);
+            if (err instanceof AxiosError) {
+                return rejectWithValue(err?.response?.data?.message);
+            }
+            return rejectWithValue(err.message);
+            console.log("first123");
+        }
+    }
+);
+
+export const getSubscriptiondataAction = createAsyncThunk(
+    "dashboardSlice/getSubscriptiondataAction",
+    async (payload, { rejectWithValue }) => {
+        try {
+            const response = await GetSubscriptiondata(payload);
             const { data, status, message } = response;
             if (!status) {
                 throw new Error(message);

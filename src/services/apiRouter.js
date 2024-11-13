@@ -24,6 +24,7 @@ export const API_ROUTER = {
     MAIN_CATEGORY_LIST: "main-category-list",
     GET_NOTIFICATION: "notification/get-notifications",
     GET_REQUEST_DATA: "request-qutation-detail/",
+    GET_SUBSCRIPTION_DATA: "subscription-detail/",
 
     GET_PREFRENCES_DATA: "preferences",
 

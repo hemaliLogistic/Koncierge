@@ -193,6 +193,7 @@ const DataTableComponent = ({ data, isLoading, isPayment, pageType }) => {
                                 className="table-main-div w-32" // Ensure fixed width for the parent div
                                 onClick={() => {
                                     if (row?.bookingStatus !== "Requested" && row?.bookingStatus !== "Rejected") {
+                                        localStorage.setItem('isFromNotification', 'false');
                                         router.push(`/notification/${row?.id}`);
                                     }
                                 }}
